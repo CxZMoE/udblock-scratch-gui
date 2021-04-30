@@ -206,6 +206,8 @@ const GUIComponent = props => {
                         onRequestClose={onRequestCloseBackdropLibrary}
                     />
                 ) : null}
+
+                {/* 顶部菜单栏 */}
                 <MenuBar
                     accountNavOpen={accountNavOpen}
                     authorId={authorId}
@@ -214,17 +216,17 @@ const GUIComponent = props => {
                     canChangeLanguage={canChangeLanguage}
                     canCreateCopy={canCreateCopy}
                     canCreateNew={canCreateNew}
-                    canEditTitle={canEditTitle}
+                    canEditTitle={false}
                     canManageFiles={canManageFiles}
                     canRemix={canRemix}
                     canSave={canSave}
                     canShare={canShare}
                     className={styles.menuBarPosition}
-                    enableCommunity={enableCommunity}
-                    isShared={isShared}
+                    enableCommunity={false}
+                    isShared={false}
                     logo={logo}
                     renderLogin={renderLogin}
-                    showComingSoon={showComingSoon}
+                    showComingSoon={false}
                     onClickAbout={onClickAbout}
                     onClickAccountNav={onClickAccountNav}
                     onClickLogo={onClickLogo}
@@ -232,7 +234,7 @@ const GUIComponent = props => {
                     onLogOut={onLogOut}
                     onOpenRegistration={onOpenRegistration}
                     onProjectTelemetryEvent={onProjectTelemetryEvent}
-                    onSeeCommunity={onSeeCommunity}
+                    onSeeCommunity={false}
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
