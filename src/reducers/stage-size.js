@@ -18,6 +18,7 @@ const reducer = function (state, action) {
     }
 };
 
+
 const setStageSize = function (stageSize) {
     return {
         type: SET_STAGE_SIZE,

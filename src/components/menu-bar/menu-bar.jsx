@@ -83,6 +83,9 @@ import ModeButton from './mode-select-button.jsx';
 import arduinoIcon from './arduino-uno-board.svg'
 import pythonIcon from './python-icon.svg'
 
+
+import {editorToggleCode,editorToggleDefault} from '../../reducers/editor'
+
 const ariaMessages = defineMessages({
     language: {
         id: 'gui.menuBar.LanguageSelector',
@@ -162,6 +165,8 @@ const AboutButton = props => (
 AboutButton.propTypes = {
     onClick: PropTypes.func.isRequired
 };
+
+
 
 class MenuBar extends React.Component {
     constructor(props) {
@@ -399,6 +404,15 @@ class MenuBar extends React.Component {
                         id={"MPython-btn"}
                         title={"MPython"}
                         img={pythonIcon}
+                        onclick={()=>{
+                            console.log(this.props.editorMode)
+                            if (this.props.editorMode == "code"){
+                                this.props.editorToggleDefault();
+                            }else{
+                                this.props.editorToggleCode();
+                            }
+                            
+                        }}
                         className={classNames(
                             styles.menuBarItem
                         )}
@@ -406,17 +420,20 @@ class MenuBar extends React.Component {
 
                     />
                 </MenuItem>
-                <MenuItem>
+                {/* <MenuItem>
                     <ModeButton
                         id={"Arduino-btn"}
                         title={"Arduino"}
                         img={arduinoIcon}
+                        onclick={()=>{
+                            this.props.editorToggleDefault();
+                        }}
                         className={classNames(
                             styles.menuBarItem
                         )}
 
                     />
-                </MenuItem>
+                </MenuItem> */}
             </MenuSection>
 
         )
@@ -867,7 +884,10 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    editorMode: PropTypes.string,
+    editorToggleCode: PropTypes.func,
+    editorToggleDefault: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -878,6 +898,7 @@ MenuBar.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
     const loadingState = state.scratchGui.projectState.loadingState;
     const user = state.session && state.session.session && state.session.session.user;
+
     return {
         aboutMenuOpen: aboutMenuOpen(state),
         accountMenuOpen: accountMenuOpen(state),
@@ -894,9 +915,12 @@ const mapStateToProps = (state, ownProps) => {
         username: user ? user.username : null,
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        editorMode: state.editorMode.editorMode
     };
 };
+
+
 
 const mapDispatchToProps = dispatch => ({
     autoUpdateProject: () => dispatch(autoUpdateProject()),
@@ -917,8 +941,12 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
-    onSeeCommunity: () => dispatch(setPlayer(true))
+    onSeeCommunity: () => dispatch(setPlayer(true)),
+    editorToggleCode: ()=>dispatch(editorToggleCode()),
+    editorToggleDefault: ()=>dispatch(editorToggleDefault())
 });
+
+
 
 export default compose(
     injectIntl,

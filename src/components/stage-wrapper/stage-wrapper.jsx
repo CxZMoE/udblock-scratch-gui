@@ -11,6 +11,7 @@ import Loader from '../loader/loader.jsx';
 
 import styles from './stage-wrapper.css';
 
+
 const StageWrapperComponent = function (props) {
     const {
         isFullScreen,
@@ -18,7 +19,8 @@ const StageWrapperComponent = function (props) {
         isRendererSupported,
         loading,
         stageSize,
-        vm
+        vm,
+        editorMode
     } = props;
 
     return (
@@ -41,6 +43,7 @@ const StageWrapperComponent = function (props) {
                         <Stage
                             stageSize={stageSize}
                             vm={vm}
+                            editorMode={editorMode}
                         /> :
                         null
                 }
@@ -58,7 +61,8 @@ StageWrapperComponent.propTypes = {
     isRtl: PropTypes.bool.isRequired,
     loading: PropTypes.bool,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    editorMode: PropTypes.string
 };
 
 export default StageWrapperComponent;

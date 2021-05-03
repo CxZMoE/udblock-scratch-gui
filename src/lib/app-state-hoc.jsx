@@ -5,6 +5,8 @@ import {createStore, combineReducers, compose} from 'redux';
 import ConnectedIntlProvider from './connected-intl-provider.jsx';
 
 import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
+import editorReducer from '../reducers/editor'
+import editorRefReducer from '../reducers/editor-ref'
 
 import {setPlayer, setFullScreen} from '../reducers/mode.js';
 
@@ -66,10 +68,15 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 } else if (props.showTelemetryModal) {
                     initializedGui = initTelemetryModal(initializedGui);
                 }
+
+                // 编辑器模式Reducer
+                
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,
-                    scratchPaint: ScratchPaintReducer
+                    scratchPaint: ScratchPaintReducer,
+                    editorMode: editorReducer,
+                    editorRef: editorRefReducer,
                 };
                 initialState = {
                     locales: initializedLocales,

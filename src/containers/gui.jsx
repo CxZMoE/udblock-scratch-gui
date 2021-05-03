@@ -41,6 +41,11 @@ import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 
 class GUI extends React.Component {
+
+    constructor(props){
+        super(props)
+    }
+    
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
@@ -55,6 +60,7 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
+        console.log(this.props.editor)
     }
     render () {
         if (this.props.isError) {
@@ -80,8 +86,14 @@ class GUI extends React.Component {
             fetchingProject,
             isLoading,
             loadingStateVisible,
+            setEditorMode,
+            editorMode,
+            editor,
             ...componentProps
         } = this.props;
+
+        
+
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
@@ -113,7 +125,9 @@ GUI.propTypes = {
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    editorMode: PropTypes.string,
+    editor: PropTypes.any
 };
 
 GUI.defaultProps = {
@@ -121,7 +135,8 @@ GUI.defaultProps = {
     onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
     onProjectLoaded: () => {},
     onUpdateProjectId: () => {},
-    onVmInit: (/* vm */) => {}
+    onVmInit: (/* vm */) => {},
+    
 };
 
 const mapStateToProps = state => {
@@ -150,7 +165,9 @@ const mapStateToProps = state => {
         ),
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        editorMode: state.editorMode.editorMode,
+        editor: state.editorRef.o
     };
 };
 
@@ -161,7 +178,7 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
-    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal())
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
 });
 
 const ConnectedGUI = injectIntl(connect(

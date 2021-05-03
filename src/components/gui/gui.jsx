@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import omit from 'lodash.omit';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
-import {connect} from 'react-redux';
+import { defineMessages, FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
 import Renderer from 'scratch-render';
@@ -31,14 +31,19 @@ import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 
-import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
-import {resolveStageSize} from '../../lib/screen-utils';
+import layout, { STAGE_SIZE_MODES } from '../../lib/layout-constants';
+import { resolveStageSize } from '../../lib/screen-utils';
 
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
+
+
+import MonicaEditor from '../monica-editor/monica-editor.jsx';
+import Terminal from 'terminal-in-react';
+import stage from '../../containers/stage.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -119,6 +124,8 @@ const GUIComponent = props => {
         telemetryModalVisible,
         tipsLibraryVisible,
         vm,
+        editorMode,
+        editor,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -238,6 +245,7 @@ const GUIComponent = props => {
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
+                    editorMode={editorMode}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -310,6 +318,7 @@ const GUIComponent = props => {
                                             }}
                                             stageSize={stageSize}
                                             vm={vm}
+                                            editor={editor}
                                         />
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
@@ -341,21 +350,34 @@ const GUIComponent = props => {
                             ) : null}
                         </Box>
 
-                        <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                            <StageWrapper
-                                isFullScreen={isFullScreen}
-                                isRendererSupported={isRendererSupported}
-                                isRtl={isRtl}
-                                stageSize={stageSize}
-                                vm={vm}
-                            />
-                            <Box className={styles.targetWrapper}>
-                                <TargetPane
+
+                        {/* 舞台 */}
+                        {(editorMode == "code") ? (
+                            <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                                <MonicaEditor
+                                    stageSize={stageSize}
+                                    editor={editor}
+                                ></MonicaEditor>
+                            </Box>
+                        ) : (
+                            <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                                {<StageWrapper
+                                    isFullScreen={isFullScreen}
+                                    isRendererSupported={isRendererSupported}
+                                    isRtl={isRtl}
                                     stageSize={stageSize}
                                     vm={vm}
-                                />
+                                />}
+                                <Box className={styles.targetWrapper}>
+                                    <TargetPane
+                                        stageSize={stageSize}
+                                        vm={vm}
+                                    />
+                                </Box>
                             </Box>
-                        </Box>
+                        )}
+
+
                     </Box>
                 </Box>
                 <DragLayer />
@@ -425,7 +447,9 @@ GUIComponent.propTypes = {
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,
     tipsLibraryVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    editorMode: PropTypes.string,
+    editor: PropTypes.any
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
@@ -445,12 +469,14 @@ GUIComponent.defaultProps = {
     isShared: false,
     loading: false,
     showComingSoon: false,
-    stageSizeMode: STAGE_SIZE_MODES.large
+    stageSizeMode: STAGE_SIZE_MODES.large,
+    editorMode: "default",
 };
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    stageSizeMode: state.scratchGui.stageSize.stageSize
+    stageSizeMode: state.scratchGui.stageSize.stageSize,
+    editorMode: state.editorMode.editorMode
 });
 
 export default injectIntl(connect(

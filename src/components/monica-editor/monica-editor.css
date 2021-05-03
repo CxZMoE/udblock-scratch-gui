@@ -1,0 +1,16 @@
+
+.container{
+    margin: 44px 10px 28px 10px;
+    border-radius: 5px;
+    border: 1px solid hsla(0, 0%, 0%, 0.15);
+    padding: 10px;
+    background-color: #FFF;
+    
+}
+
+.editor{
+    min-height: calc(50% - 10px);
+    border-radius: 5px;
+    border: 1px solid hsla(0, 0%, 0%, 0.15);
+    margin-bottom: 10px;
+}

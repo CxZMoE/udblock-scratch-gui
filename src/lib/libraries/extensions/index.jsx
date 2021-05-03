@@ -46,8 +46,8 @@ import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
 import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
-import newblocksIconURL from './newblocks/newblocks.png';
-import newblocksInsetIconURL from './newblocks/newblocks-small.svg';
+import udpiIconURL from './udblock-udpi/udpi.png';
+import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
 
 
 export default [
@@ -323,11 +323,11 @@ export default [
         helpLink: 'https://scratch.mit.edu/vernier'
     },
     {
-        name: '新的方块',
-        extensionId: 'newblocks',
+        name: 'UDPi 开发板',
+        extensionId: 'udblockUDPi',
         collaborator: 'UDRobot',
-        iconURL: newblocksIconURL,
-        insetIconURL: newblocksInsetIconURL,
+        iconURL: udpiIconURL,
+        insetIconURL: udpiInsetIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="Sense push, pull, motion, and spin."
@@ -350,6 +350,6 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://scratch.mit.edu/vernier'
+        helpLink: 'https://forum.udrobot.net/'
     },
 ];

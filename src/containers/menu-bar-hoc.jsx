@@ -10,7 +10,7 @@ const MenuBarHOC = function (WrappedComponent) {
 
             bindAll(this, [
                 'confirmReadyToReplaceProject',
-                'shouldSaveBeforeTransition'
+                'shouldSaveBeforeTransition',
             ]);
         }
         confirmReadyToReplaceProject (message) {
@@ -23,6 +23,7 @@ const MenuBarHOC = function (WrappedComponent) {
         shouldSaveBeforeTransition () {
             return (this.props.canSave && this.props.projectChanged);
         }
+        
         render () {
             const {
                 /* eslint-disable no-unused-vars */
@@ -36,6 +37,8 @@ const MenuBarHOC = function (WrappedComponent) {
                 {...props}
             />);
         }
+
+        
     }
 
     MenuBarContainer.propTypes = {

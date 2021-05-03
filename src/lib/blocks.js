@@ -1,5 +1,8 @@
 import ScratchBlocks from 'scratch-blocks';
 
+import ModifyUDPi from './udrobot-modify/udpi'
+ModifyUDPi(ScratchBlocks);
+
 /**
  * Connect scratch blocks with the vm
  * @param {VirtualMachine} vm - The scratch vm
@@ -353,5 +356,7 @@ export default function (vm) {
         return true;
     };
 
+
+    
     return ScratchBlocks;
 }

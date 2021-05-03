@@ -4,6 +4,7 @@ import propTypes from 'prop-types'
 import Button from '../button/button.jsx';
 import styles from './mode-select-button.css'
 
+
 const ModeButton = ({id,img, title, onclick,className})=>(
     <Button
         id = {id}
@@ -14,6 +15,7 @@ const ModeButton = ({id,img, title, onclick,className})=>(
         disabled={false}
     >
         {title}
+        
     </Button>
 );
 
