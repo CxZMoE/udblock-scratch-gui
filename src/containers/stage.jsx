@@ -87,8 +87,7 @@ class Stage extends React.Component {
             this.state.colorInfo !== nextState.colorInfo ||
             this.props.isFullScreen !== nextProps.isFullScreen ||
             this.state.question !== nextState.question ||
-            this.props.micIndicator !== nextProps.micIndicator ||
-            this.props.isStarted !== nextProps.isStarted || this.props.editorMode != nextProps.editorMode;
+            this.props.micIndicator !== nextProps.micIndicator
     }
     componentDidUpdate(prevProps) {
         if (this.props.isColorPicking && !prevProps.isColorPicking) {
@@ -425,7 +424,6 @@ class Stage extends React.Component {
                 question={this.state.question}
                 onDoubleClick={this.handleDoubleClick}
                 onQuestionAnswered={this.handleQuestionAnswered}
-                editorMode={this.props.editorMode}
                 {...props}
             />
         );
@@ -442,12 +440,10 @@ Stage.propTypes = {
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     useEditorDragStyle: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
-    editorMode: PropTypes.string
 };
 
 Stage.defaultProps = {
     useEditorDragStyle: true,
-    editorMode: "default"
 };
 
 const mapStateToProps = state => {
@@ -458,7 +454,6 @@ const mapStateToProps = state => {
         micIndicator: state.scratchGui.micIndicator,
         // Do not use editor drag style in fullscreen or player mode.
         useEditorDragStyle: !(state.scratchGui.mode.isFullScreen || state.scratchGui.mode.isPlayerOnly),
-        editorMode: state.editorMode.editorMode
     });
 };
 

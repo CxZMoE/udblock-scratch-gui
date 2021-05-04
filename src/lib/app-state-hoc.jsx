@@ -8,6 +8,9 @@ import localesReducer, {initLocale, localesInitialState} from '../reducers/local
 import editorReducer from '../reducers/editor'
 import editorRefReducer from '../reducers/editor-ref'
 
+import terminalReducer from '../reducers/terminaljs'
+
+
 import {setPlayer, setFullScreen} from '../reducers/mode.js';
 
 import locales from 'scratch-l10n';
@@ -77,6 +80,7 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                     scratchPaint: ScratchPaintReducer,
                     editorMode: editorReducer,
                     editorRef: editorRefReducer,
+                    terminal: terminalReducer,
                 };
                 initialState = {
                     locales: initializedLocales,

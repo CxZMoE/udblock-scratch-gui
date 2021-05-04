@@ -30,7 +30,6 @@ const StageComponent = props => {
         onDeactivateColorPicker,
         onDoubleClick,
         onQuestionAnswered,
-        editorMode,
         ...boxProps
     } = props;
 
@@ -151,7 +150,6 @@ StageComponent.propTypes = {
     question: PropTypes.string,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     useEditorDragStyle: PropTypes.bool,
-    editorMode: PropTypes.string
 };
 StageComponent.defaultProps = {
     dragRef: () => { }

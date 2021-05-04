@@ -245,7 +245,6 @@ const GUIComponent = props => {
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
-                    editorMode={editorMode}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -470,7 +469,6 @@ GUIComponent.defaultProps = {
     loading: false,
     showComingSoon: false,
     stageSizeMode: STAGE_SIZE_MODES.large,
-    editorMode: "default",
 };
 
 const mapStateToProps = state => ({

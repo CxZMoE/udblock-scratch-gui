@@ -60,7 +60,7 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
-        console.log(this.props.editor)
+        //console.log(this.props.editor)
     }
     render () {
         if (this.props.isError) {
@@ -87,7 +87,6 @@ class GUI extends React.Component {
             isLoading,
             loadingStateVisible,
             setEditorMode,
-            editorMode,
             editor,
             ...componentProps
         } = this.props;
@@ -126,7 +125,6 @@ GUI.propTypes = {
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
-    editorMode: PropTypes.string,
     editor: PropTypes.any
 };
 
@@ -166,7 +164,6 @@ const mapStateToProps = state => {
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
         vm: state.scratchGui.vm,
-        editorMode: state.editorMode.editorMode,
         editor: state.editorRef.o
     };
 };

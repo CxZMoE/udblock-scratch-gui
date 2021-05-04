@@ -11,7 +11,7 @@ const ModeButton = ({id,img, title, onclick,className})=>(
         iconSrc = {img}
         iconClassName = {classNames(styles.modeSelectButtonFont)}
         onClick = {onclick}
-        className={className}
+        className={classNames(className)}
         disabled={false}
     >
         {title}
@@ -24,7 +24,7 @@ ModeButton.propTypes = {
     img: propTypes.string,
     title: propTypes.string,
     onclick: propTypes.func,
-    className: propTypes.object
+    className: propTypes.string
 };
 
 ModeButton.defaultProps = {
