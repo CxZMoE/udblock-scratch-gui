@@ -58,7 +58,10 @@ import {
     languageMenuOpen,
     openLoginMenu,
     closeLoginMenu,
-    loginMenuOpen
+    loginMenuOpen,
+    openToolMenu,
+    closeToolMenu,
+    toolMenuOpen
 } from '../../reducers/menus';
 
 import collectMetadata from '../../lib/collect-metadata';
@@ -84,7 +87,10 @@ import arduinoIcon from './arduino-uno-board.svg'
 import pythonIcon from './python-icon.svg'
 
 
-import {editorToggleCode,editorToggleDefault} from '../../reducers/editor'
+import {
+    editorToggleCode,
+    editorToggleDefault
+} from '../../reducers/editor'
 
 const ariaMessages = defineMessages({
     language: {
@@ -182,14 +188,34 @@ class MenuBar extends React.Component {
             'handleLanguageMouseUp',
             'handleRestoreOption',
             'getSaveToComputerHandler',
-            'restoreOptionMessage'
+            'restoreOptionMessage',
+            'handleEditorModeSelect'
         ]);
+    }
+    handleEditorModeSelect(){
+        switch (this.props.editorMode) {
+            case "code":
+                this.props.editorToggleDefault();
+                break;
+            case "default":
+                this.props.editorToggleCode();
+                break;
+            default:
+                this.props.editorToggleDefault();
+                break;
+        }
+
+        console.log("blocks.jsx:", this.props.editorMode)
+        this.props.vm.emitWorkspaceUpdate();
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
+        document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
+        
     }
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
+        
     }
     handleClickNew() {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -347,6 +373,7 @@ class MenuBar extends React.Component {
         };
     }
     render() {
+        
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
@@ -396,27 +423,19 @@ class MenuBar extends React.Component {
             </Button>
         );
 
-        
+
         const modeButton = (
             <MenuSection>
                 <MenuItem>
                     <ModeButton
                         id={"MPython-btn"}
-                        title={"MPython"}
+                        title={(this.props.editorMode == "code") ? "打开Scratch" : "打开MPython模式"}
                         img={pythonIcon}
-                        onclick={()=>{
-                            console.log(this.props.editorMode)
-                            if (this.props.editorMode == "code"){
-                                this.props.editorToggleDefault();
-                            }else{
-                                this.props.editorToggleCode();
-                            }
-                            
-                        }}
+
                         className={classNames(
                             styles.menuBarItem
                         )}
-                        
+
 
                     />
                 </MenuItem>
@@ -426,7 +445,7 @@ class MenuBar extends React.Component {
                         title={"Arduino"}
                         img={arduinoIcon}
                         onclick={()=>{
-                            this.props.editorToggleDefault();
+                            this.props.editorToggle();
                         }}
                         className={classNames(
                             styles.menuBarItem
@@ -439,6 +458,7 @@ class MenuBar extends React.Component {
         )
         // Show the About button only if we have a handler for it (like in the desktop app)
         const aboutButton = this.buildAboutMenu(this.props.onClickAbout);
+
         return (
             <Box
                 className={classNames(
@@ -589,12 +609,49 @@ class MenuBar extends React.Component {
                                 </MenuSection>
                             </MenuBarMenu>
                         </div>
+                        <div
+                            className={classNames(styles.menuBarItem, styles.hoverable, {
+                                [styles.active]: this.props.toolMenuOpen
+                            })}
+                            onMouseUp={this.props.onClickTool}
+                        >
+                            <div className={classNames(styles.editMenu)}>
+                                <FormattedMessage
+                                    defaultMessage="硬件工具"
+                                    description=""
+                                    id="gui.menuBar.tool"
+                                />
+                            </div>
+                            <MenuBarMenu
+                                className={classNames(styles.menuBarMenu)}
+                                open={this.props.toolMenuOpen}
+                                place={this.props.isRtl ? 'left' : 'right'}
+                                onRequestClose={this.props.onRequestCloseTool}
+                            >
+                                <MenuSection>
+                                    <MenuItem onClick={() => { this.props.terminal.print("upload"); this.props.onRequestCloseTool() }}>
+                                        <FormattedMessage
+                                            defaultMessage="上传代码"
+                                            description="Menu bar item for turning off turbo mode"
+                                            id="gui.menuBar.upload"
+                                        />
+                                    </MenuItem>
+                                    <MenuItem onClick={() => { this.props.terminal.print("hotrun"); this.props.onRequestCloseTool() }}>
+                                        <FormattedMessage
+                                            defaultMessage="热加载代码"
+                                            description="Menu bar item for turning on turbo mode"
+                                            id="gui.menuBar.hotrun"
+                                        />
+                                    </MenuItem>
+                                </MenuSection>
+                            </MenuBarMenu>
+                        </div>
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onClick={()=>{window.open("https://forum.udrobot.net")}}
+                        onClick={() => { window.open("https://forum.udrobot.net") }}
                     >
                         <img
                             className={styles.helpIcon}
@@ -675,9 +732,9 @@ class MenuBar extends React.Component {
                             </MenuBarItemTooltip>
                         ) : [])}
                     </div>
-
+                    {/* 在这里添加菜单项目 */}
                 </div>
-                {modeButton}
+                { modeButton}
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
                 <div className={styles.accountInfoGroup}>
@@ -808,8 +865,8 @@ class MenuBar extends React.Component {
                     )}
                 </div>
 
-                {aboutButton}
-            </Box>
+                { aboutButton}
+            </Box >
         );
     }
 }
@@ -886,13 +943,12 @@ MenuBar.propTypes = {
     username: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired,
     editorMode: PropTypes.string,
-    editorToggleCode: PropTypes.func,
-    editorToggleDefault: PropTypes.func,
+    editorToggle: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
     logo: scratchLogo,
-    onShare: () => { }
+    onShare: () => { },
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -904,6 +960,7 @@ const mapStateToProps = (state, ownProps) => {
         accountMenuOpen: accountMenuOpen(state),
         fileMenuOpen: fileMenuOpen(state),
         editMenuOpen: editMenuOpen(state),
+        toolMenuOpen: toolMenuOpen(state),
         isRtl: state.locales.isRtl,
         isUpdating: getIsUpdating(loadingState),
         isShowingProject: getIsShowingProject(loadingState),
@@ -916,7 +973,8 @@ const mapStateToProps = (state, ownProps) => {
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
         vm: state.scratchGui.vm,
-        editorMode: state.editorMode.editorMode
+        terminal: state.terminal.o,
+        toolboxXML: state.scratchGui.toolbox.toolboxXML,
     };
 };
 
@@ -931,6 +989,8 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseFile: () => dispatch(closeFileMenu()),
     onClickEdit: () => dispatch(openEditMenu()),
     onRequestCloseEdit: () => dispatch(closeEditMenu()),
+    onClickTool: () => dispatch(openToolMenu()),
+    onRequestCloseTool: () => dispatch(closeToolMenu()),
     onClickLanguage: () => dispatch(openLanguageMenu()),
     onRequestCloseLanguage: () => dispatch(closeLanguageMenu()),
     onClickLogin: () => dispatch(openLoginMenu()),
@@ -942,8 +1002,8 @@ const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
-    editorToggleCode: ()=>dispatch(editorToggleCode()),
-    editorToggleDefault: ()=>dispatch(editorToggleDefault())
+    editorToggleCode: () => dispatch(editorToggleCode()),
+    editorToggleDefault: () => dispatch(editorToggleDefault()),
 });
 
 

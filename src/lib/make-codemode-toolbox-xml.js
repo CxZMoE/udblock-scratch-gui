@@ -404,26 +404,8 @@ const control = function (isInitialSetup, isStage) {
         ${blockSeparator}
         <block type="control_if"/>
         <block type="control_if_else"/>
-        <block id="wait_until" type="control_wait_until"/>
         <block id="repeat_until" type="control_repeat_until"/>
         ${blockSeparator}
-        <block type="control_stop"/>
-        ${blockSeparator}
-        ${isStage ? `
-            <block type="control_create_clone_of">
-                <value name="CLONE_OPTION">
-                    <shadow type="control_create_clone_of_menu"/>
-                </value>
-            </block>
-        ` : `
-            <block type="control_start_as_clone"/>
-            <block type="control_create_clone_of">
-                <value name="CLONE_OPTION">
-                    <shadow type="control_create_clone_of_menu"/>
-                </value>
-            </block>
-            <block type="control_delete_this_clone"/>
-        `}
         ${categorySeparator}
     </category>
     `;
@@ -574,37 +556,37 @@ const operators = function (isInitialSetup) {
         ${blockSeparator}
         <block type="operator_gt">
             <value name="OPERAND1">
-                <shadow type="text">
-                    <field name="TEXT"/>
+                <shadow type="math_number">
+                    <field name="NUM"/>
                 </shadow>
             </value>
             <value name="OPERAND2">
-                <shadow type="text">
-                    <field name="TEXT">50</field>
+                <shadow type="math_number">
+                    <field name="NUM">50</field>
                 </shadow>
             </value>
         </block>
         <block type="operator_lt">
             <value name="OPERAND1">
-                <shadow type="text">
-                    <field name="TEXT"/>
+                <shadow type="math_number">
+                    <field name="NUM"/>
                 </shadow>
             </value>
             <value name="OPERAND2">
-                <shadow type="text">
-                    <field name="TEXT">50</field>
+                <shadow type="math_number">
+                    <field name="NUM">50</field>
                 </shadow>
             </value>
         </block>
         <block type="operator_equals">
             <value name="OPERAND1">
-                <shadow type="text">
-                    <field name="TEXT"/>
+                <shadow type="math_number">
+                    <field name="NUM"/>
                 </shadow>
             </value>
             <value name="OPERAND2">
-                <shadow type="text">
-                    <field name="TEXT">50</field>
+                <shadow type="math_number">
+                    <field name="NUM">50</field>
                 </shadow>
             </value>
         </block>
@@ -766,12 +748,12 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
 
     const everything = [
         xmlOpen,
-        motionXML, gap,
-        looksXML, gap,
-        soundXML, gap,
-        eventsXML, gap,
+        //motionXML, gap,
+        //looksXML, gap,
+        //soundXML, gap,
+        //eventsXML, gap,
         controlXML, gap,
-        sensingXML, gap,
+        //sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
         //myBlocksXML

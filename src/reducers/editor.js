@@ -1,5 +1,5 @@
 
-const reducer = (state={editorMode: "code"},action) =>{
+const reducer = (state={editorMode: "default"},action) =>{
     switch (action.type){
         case "TOGGLE_CODE":
             return {editorMode: "code"}

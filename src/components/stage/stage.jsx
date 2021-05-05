@@ -120,12 +120,13 @@ const StageComponent = props => {
                         width={0}
                     />
                 </Box>
-                {isStarted ? null : (
+                {/* 删除舞台遮罩层 */}
+                {/* {isStarted ? null : (
                     <GreenFlagOverlay
                         className={styles.greenFlagOverlay}
                         wrapperClass={styles.greenFlagOverlayWrapper}
                     />
-                )}
+                )} */}
             </Box>
             {isColorPicking ? (
                 <Box

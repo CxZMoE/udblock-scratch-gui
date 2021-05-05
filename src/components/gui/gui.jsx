@@ -245,6 +245,7 @@ const GUIComponent = props => {
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
+                    editorMode={editorMode}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -269,7 +270,7 @@ const GUIComponent = props => {
                                             id="gui.gui.codeTab"
                                         />
                                     </Tab>
-                                    <Tab
+                                    {editorMode == "code" ? ([]) : <Tab
                                         className={tabClassNames.tab}
                                         onClick={onActivateCostumesTab}
                                     >
@@ -291,20 +292,23 @@ const GUIComponent = props => {
                                             />
                                         )}
                                     </Tab>
-                                    <Tab
-                                        className={tabClassNames.tab}
-                                        onClick={onActivateSoundsTab}
-                                    >
-                                        <img
-                                            draggable={false}
-                                            src={soundsIcon}
-                                        />
-                                        <FormattedMessage
-                                            defaultMessage="Sounds"
-                                            description="Button to get to the sounds panel"
-                                            id="gui.gui.soundsTab"
-                                        />
-                                    </Tab>
+                                    }
+                                    {editorMode == "code" ? ([]) : (
+                                        <Tab
+                                            className={tabClassNames.tab}
+                                            onClick={onActivateSoundsTab}
+                                        >
+                                            <img
+                                                draggable={false}
+                                                src={soundsIcon}
+                                            />
+                                            <FormattedMessage
+                                                defaultMessage="Sounds"
+                                                description="Button to get to the sounds panel"
+                                                id="gui.gui.soundsTab"
+                                            />
+                                        </Tab>
+                                    )}
                                 </TabList>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     <Box className={styles.blocksWrapper}>
@@ -318,6 +322,7 @@ const GUIComponent = props => {
                                             stageSize={stageSize}
                                             vm={vm}
                                             editor={editor}
+                                            editorMode={editorMode}
                                         />
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
@@ -469,6 +474,7 @@ GUIComponent.defaultProps = {
     loading: false,
     showComingSoon: false,
     stageSizeMode: STAGE_SIZE_MODES.large,
+    editorMode: "default",
 };
 
 const mapStateToProps = state => ({

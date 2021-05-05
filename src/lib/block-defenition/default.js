@@ -26,6 +26,7 @@ export default function (Blockly) {
             order = code < 0 ? Blockly.Python.ORDER_UNARY_SIGN :
                 Blockly.Python.ORDER_ATOMIC;
         }
+        console.log(code)
         return [code, order];
     };
 
@@ -56,9 +57,31 @@ export default function (Blockly) {
         var order = Blockly.Python.ORDER_ADDITIVE;
         var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
         var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
-        var code = '('+ argument0 + ' + ' + argument1 + ')';
+        var code = '(' + argument0 + ' + ' + argument1 + ')';
         return [code, order];
     }
+    Blockly.Python['operator_subtract'] = function (block) {
+        var order = Blockly.Python.ORDER_ADDITIVE;
+        var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+        var code = '(' + argument0 + ' - ' + argument1 + ')';
+        return [code, order];
+    }
+    Blockly.Python['operator_multiply'] = function (block) {
+        var order = Blockly.Python.ORDER_ADDITIVE;
+        var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+        var code = '(' + argument0 + ' * ' + argument1 + ')';
+        return [code, order];
+    }
+    Blockly.Python['operator_divide'] = function (block) {
+        var order = Blockly.Python.ORDER_ADDITIVE;
+        var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+        var code = '(' + argument0 + ' / ' + argument1 + ')';
+        return [code, order];
+    }
+
     Blockly.Python['math_single'] = function (block) {
         // Math operators with single operand.
         var operator = block.getFieldValue('OP');
@@ -357,7 +380,7 @@ export default function (Blockly) {
         return [code, Blockly.Python.ORDER_FUNCTION_CALL];
     };
 
-    Blockly.Python['math_random_int'] = function (block) {
+    Blockly.Python['operator_random'] = function (block) {
         // Random integer between [X] and [Y].
         Blockly.Python.definitions_['import_random'] = 'import random';
         var argument0 = Blockly.Python.valueToCode(block, 'FROM',
@@ -368,7 +391,7 @@ export default function (Blockly) {
         return [code, Blockly.Python.ORDER_FUNCTION_CALL];
     };
 
-    Blockly.Python['math_random_float'] = function (block) {
+    Blockly.Python['operator_random_float'] = function (block) {
         // Random fraction between 0 and 1.
         Blockly.Python.definitions_['import_random'] = 'import random';
         return ['random.random()', Blockly.Python.ORDER_FUNCTION_CALL];
@@ -685,4 +708,598 @@ export default function (Blockly) {
 
         return varName + ' = ' + argument0 + '\n';
     };
+
+
+    // Color 颜色
+
+    String.prototype.colorHex = function () {
+        // RGB颜色值的正则
+        var reg = /^(rgb|RGB)/;
+        var color = this;
+        if (reg.test(color)) {
+            var strHex = "#";
+            // 把RGB的3个数值变成数组
+            var colorArr = color.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+            // 转成16进制
+            for (var i = 0; i < colorArr.length; i++) {
+                var hex = Number(colorArr[i]).toString(16);
+                if (hex === "0") {
+                    hex += hex;
+                }
+                strHex += hex;
+            }
+            return strHex;
+        } else {
+            return String(color);
+        }
+    };
+
+    String.prototype.colorRgb = function () {
+        // 16进制颜色值的正则
+        var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+        // 把颜色值变成小写
+        var color = this.toLowerCase();
+        if (reg.test(color)) {
+            // 如果只有三位的值，需变成六位，如：#fff => #ffffff
+            if (color.length === 4) {
+                var colorNew = "#";
+                for (var i = 1; i < 4; i += 1) {
+                    colorNew += color.slice(i, i + 1).concat(color.slice(i, i + 1));
+                }
+                color = colorNew;
+            }
+            // 处理六位的颜色值，转为RGB
+            var colorChange = [];
+            for (var i = 1; i < 7; i += 2) {
+                colorChange.push(parseInt("0x" + color.slice(i, i + 2)));
+            }
+            return "(" + colorChange.join(",") + ")";
+        } else {
+            return color;
+        }
+    };
+
+    Blockly.Python['colour_picker'] = function (block) {
+        // Colour picker.
+        var code = Blockly.Python.quote_(block.getFieldValue('COLOUR'));
+        var code2 = String(code).slice(1, String(code).length - 1).colorRgb()
+        return [code2, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    Blockly.Python['colour_random'] = function (block) {
+        // Generate a random colour.
+        Blockly.Python.definitions_['import_random'] = 'import random';
+        var code = '\'#%06x\' % random.randint(0, 2**24 - 1)';
+        return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+    };
+
+    Blockly.Python['colour_rgb'] = function (block) {
+        // Compose a colour from RGB components expressed as percentages.
+        var functionName = Blockly.Python.provideFunction_(
+            'colour_rgb',
+            ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(r, g, b):',
+                '  r = round(min(100, max(0, r)) * 2.55)',
+                '  g = round(min(100, max(0, g)) * 2.55)',
+                '  b = round(min(100, max(0, b)) * 2.55)',
+                '  return \'#%02x%02x%02x\' % (r, g, b)']);
+        var r = Blockly.Python.valueToCode(block, 'RED',
+            Blockly.Python.ORDER_NONE) || 0;
+        var g = Blockly.Python.valueToCode(block, 'GREEN',
+            Blockly.Python.ORDER_NONE) || 0;
+        var b = Blockly.Python.valueToCode(block, 'BLUE',
+            Blockly.Python.ORDER_NONE) || 0;
+        var code = functionName + '(' + r + ', ' + g + ', ' + b + ')';
+        return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+    };
+
+    Blockly.Python['colour_blend'] = function (block) {
+        // Blend two colours together.
+        var functionName = Blockly.Python.provideFunction_(
+            'colour_blend',
+            ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ +
+                '(colour1, colour2, ratio):',
+                '  r1, r2 = int(colour1[1:3], 16), int(colour2[1:3], 16)',
+                '  g1, g2 = int(colour1[3:5], 16), int(colour2[3:5], 16)',
+                '  b1, b2 = int(colour1[5:7], 16), int(colour2[5:7], 16)',
+                '  ratio = min(1, max(0, ratio))',
+                '  r = round(r1 * (1 - ratio) + r2 * ratio)',
+                '  g = round(g1 * (1 - ratio) + g2 * ratio)',
+                '  b = round(b1 * (1 - ratio) + b2 * ratio)',
+                '  return \'#%02x%02x%02x\' % (r, g, b)']);
+        var colour1 = Blockly.Python.valueToCode(block, 'COLOUR1',
+            Blockly.Python.ORDER_NONE) || '\'#000000\'';
+        var colour2 = Blockly.Python.valueToCode(block, 'COLOUR2',
+            Blockly.Python.ORDER_NONE) || '\'#000000\'';
+        var ratio = Blockly.Python.valueToCode(block, 'RATIO',
+            Blockly.Python.ORDER_NONE) || 0;
+        var code = functionName + '(' + colour1 + ', ' + colour2 + ', ' + ratio + ')';
+        return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+    };
+
+    // 控制延时
+    Blockly.Python['math_positive_number'] = Blockly.Python['math_number']
+    Blockly.Python['math_whole_number'] = Blockly.Python['math_number']
+    Blockly.Python['control_wait'] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+
+        var duration = Blockly.Python.valueToCode(block, "DURATION", Blockly.Python.ORDER_NONE);
+        return `time.sleep(${duration})\n`;
+    };
+    // 控制循环
+    Blockly.Python['control_repeat_ext'] = function (block) {
+        // Repeat n times.
+        var repeats = String(parseInt(Blockly.Python.valueToCode(block, "TIMES", Blockly.ORDER_ATOMIC)));
+        if (Blockly.isNumber(repeats)) {
+            repeats = parseInt(repeats, 10);
+        } else {
+            repeats = 'int(' + repeats + ')';
+        }
+        var branch = Blockly.Python.statementToCode(block, 'SUBSTACK');
+
+        var code = 'for count in range(' + repeats + '):\n' + branch;
+        return code;
+    };
+
+    Blockly.Python['control_repeat'] = Blockly.Python['control_repeat_ext'];
+    Blockly.Python['control_forever'] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
+        var code = "while True:\n"
+        code += statements
+        return code
+    }
+    Blockly.Python['control_repeat_until'] = function (block) {
+        // Do while/until loop.
+        var until = block.getFieldValue('MODE') == 'UNTIL';
+        var argument0 = Blockly.Python.valueToCode(block, 'CONDITION',
+            until ? Blockly.Python.ORDER_LOGICAL_NOT :
+                Blockly.Python.ORDER_NONE) || 'True';
+        var branch = Blockly.Python.statementToCode(block, 'SUBSTACK');
+        if (until) {
+            argument0 = 'not ' + argument0;
+        }
+        return 'while ' + argument0 + ':\n' + branch;
+    };
+
+    Blockly.Python['control_for'] = function (block) {
+        // For loop.
+        var variable0 = Blockly.Python.variableDB_.getName(
+            block.getFieldValue('VAR'), Blockly.VARIABLE_CATEGORY_NAME);
+        var argument0 = Blockly.Python.valueToCode(block, 'FROM',
+            Blockly.Python.ORDER_NONE) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'TO',
+            Blockly.Python.ORDER_NONE) || '0';
+        var increment = Blockly.Python.valueToCode(block, 'BY',
+            Blockly.Python.ORDER_NONE) || '1';
+        var branch = Blockly.Python.statementToCode(block, 'SUBSTACK');
+        branch = Blockly.Python.addLoopTrap(branch, block) || Blockly.Python.PASS;
+
+        var code = '';
+        var range;
+
+        // Helper functions.
+        var defineUpRange = function () {
+            return Blockly.Python.provideFunction_(
+                'upRange',
+                ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ +
+                    '(start, stop, step):',
+                    '  while start <= stop:',
+                    '    yield start',
+                    '    start += abs(step)']);
+        };
+        var defineDownRange = function () {
+            return Blockly.Python.provideFunction_(
+                'downRange',
+                ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ +
+                    '(start, stop, step):',
+                    '  while start >= stop:',
+                    '    yield start',
+                    '    start -= abs(step)']);
+        };
+        // Arguments are legal Python code (numbers or strings returned by scrub()).
+        var generateUpDownRange = function (start, end, inc) {
+            return '(' + start + ' <= ' + end + ') and ' +
+                defineUpRange() + '(' + start + ', ' + end + ', ' + inc + ') or ' +
+                defineDownRange() + '(' + start + ', ' + end + ', ' + inc + ')';
+        };
+
+        if (Blockly.isNumber(argument0) && Blockly.isNumber(argument1) &&
+            Blockly.isNumber(increment)) {
+            // All parameters are simple numbers.
+            argument0 = Number(argument0);
+            argument1 = Number(argument1);
+            increment = Math.abs(Number(increment));
+            if (argument0 % 1 === 0 && argument1 % 1 === 0 && increment % 1 === 0) {
+                // All parameters are integers.
+                if (argument0 <= argument1) {
+                    // Count up.
+                    argument1++;
+                    if (argument0 == 0 && increment == 1) {
+                        // If starting index is 0, omit it.
+                        range = argument1;
+                    } else {
+                        range = argument0 + ', ' + argument1;
+                    }
+                    // If increment isn't 1, it must be explicit.
+                    if (increment != 1) {
+                        range += ', ' + increment;
+                    }
+                } else {
+                    // Count down.
+                    argument1--;
+                    range = argument0 + ', ' + argument1 + ', -' + increment;
+                }
+                range = 'range(' + range + ')';
+            } else {
+                // At least one of the parameters is not an integer.
+                if (argument0 < argument1) {
+                    range = defineUpRange();
+                } else {
+                    range = defineDownRange();
+                }
+                range += '(' + argument0 + ', ' + argument1 + ', ' + increment + ')';
+            }
+        } else {
+            // Cache non-trivial values to variables to prevent repeated look-ups.
+            var scrub = function (arg, suffix) {
+                if (Blockly.isNumber(arg)) {
+                    // Simple number.
+                    arg = Number(arg);
+                } else if (arg.match(/^\w+$/)) {
+                    // Variable.
+                    arg = 'float(' + arg + ')';
+                } else {
+                    // It's complicated.
+                    var varName = Blockly.Python.variableDB_.getDistinctName(
+                        variable0 + suffix, Blockly.VARIABLE_CATEGORY_NAME);
+                    code += varName + ' = float(' + arg + ')\n';
+                    arg = varName;
+                }
+                return arg;
+            };
+            var startVar = scrub(argument0, '_start');
+            var endVar = scrub(argument1, '_end');
+            var incVar = scrub(increment, '_inc');
+
+            if (typeof startVar == 'number' && typeof endVar == 'number') {
+                if (startVar < endVar) {
+                    range = defineUpRange();
+                } else {
+                    range = defineDownRange();
+                }
+                range += '(' + startVar + ', ' + endVar + ', ' + incVar + ')';
+            } else {
+                // We cannot determine direction statically.
+                range = generateUpDownRange(startVar, endVar, incVar);
+            }
+        }
+        code += 'for ' + variable0 + ' in ' + range + ':\n' + branch;
+        return code;
+    };
+
+    Blockly.Python['control_forEach'] = function (block) {
+        // For each loop.
+        var variable0 = Blockly.Python.variableDB_.getName(
+            block.getFieldValue('VAR'), Blockly.VARIABLE_CATEGORY_NAME);
+        var argument0 = Blockly.Python.valueToCode(block, 'LIST',
+            Blockly.Python.ORDER_RELATIONAL) || '[]';
+        var branch = Blockly.Python.statementToCode(block, 'SUBSTACK');
+        branch = Blockly.Python.addLoopTrap(branch, block) || Blockly.Python.PASS;
+        var code = 'for ' + variable0 + ' in ' + argument0 + ':\n' + branch;
+        return code;
+    };
+
+    Blockly.Python['controls_flow_statements'] = function (block) {
+        // Flow statements: continue, break.
+        var xfix = '';
+        if (Blockly.Python.STATEMENT_PREFIX) {
+            // Automatic prefix insertion is switched off for this block.  Add manually.
+            xfix += Blockly.Python.injectId(Blockly.Python.STATEMENT_PREFIX, block);
+        }
+        if (Blockly.Python.STATEMENT_SUFFIX) {
+            // Inject any statement suffix here since the regular one at the end
+            // will not get executed if the break/continue is triggered.
+            xfix += Blockly.Python.injectId(Blockly.Python.STATEMENT_SUFFIX, block);
+        }
+        if (Blockly.Python.STATEMENT_PREFIX) {
+            var loop = Blockly.Constants.Loops
+                .CONTROL_FLOW_IN_LOOP_CHECK_MIXIN.getSurroundLoop(block);
+            if (loop && !loop.suppressPrefixSuffix) {
+                // Inject loop's statement prefix here since the regular one at the end
+                // of the loop will not get executed if 'continue' is triggered.
+                // In the case of 'break', a prefix is needed due to the loop's suffix.
+                xfix += Blockly.Python.injectId(Blockly.Python.STATEMENT_PREFIX, loop);
+            }
+        }
+        switch (block.getFieldValue('FLOW')) {
+            case 'BREAK':
+                return xfix + 'break\n';
+            case 'CONTINUE':
+                return xfix + 'continue\n';
+        }
+        throw Error('Unknown flow statement.');
+    };
+
+    // 逻辑
+    Blockly.Python['control_if'] = function (block) {
+        // If/elseif/else condition.
+        var n = 0;
+        var code = '', branchCode, conditionCode;
+        if (Blockly.Python.STATEMENT_PREFIX) {
+            // Automatic prefix insertion is switched off for this block.  Add manually.
+            code += Blockly.Python.injectId(Blockly.Python.STATEMENT_PREFIX, block);
+        }
+        conditionCode = Blockly.Python.valueToCode(block, 'CONDITION',
+            Blockly.Python.ORDER_NONE) || 'False';
+        branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+            Blockly.Python.PASS;
+        if (Blockly.Python.STATEMENT_SUFFIX) {
+            branchCode = Blockly.Python.prefixLines(
+                Blockly.Python.injectId(Blockly.Python.STATEMENT_SUFFIX, block),
+                Blockly.Python.INDENT) + branchCode;
+        }
+        code += (n == 0 ? 'if ' : 'elif ') + conditionCode + ':\n' + branchCode;
+        return code;
+    };
+
+    Blockly.Python['control_if_else'] = function (block) {
+        var n = 0;
+        var code = '', branchCode, conditionCode;
+        if (Blockly.Python.STATEMENT_PREFIX) {
+            // Automatic prefix insertion is switched off for this block.  Add manually.
+            code += Blockly.Python.injectId(Blockly.Python.STATEMENT_PREFIX, block);
+        }
+        conditionCode = Blockly.Python.valueToCode(block, 'CONDITION',
+            Blockly.Python.ORDER_NONE) || 'False';
+        branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+            Blockly.Python.PASS;
+        if (Blockly.Python.STATEMENT_SUFFIX) {
+            branchCode = Blockly.Python.prefixLines(
+                Blockly.Python.injectId(Blockly.Python.STATEMENT_SUFFIX, block),
+                Blockly.Python.INDENT) + branchCode;
+        }
+        code += (n == 0 ? 'if ' : 'elif ') + conditionCode + ':\n' + branchCode;
+
+        branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK2') ||
+            Blockly.Python.PASS;
+        if (Blockly.Python.STATEMENT_SUFFIX) {
+            branchCode = Blockly.Python.prefixLines(
+                Blockly.Python.injectId(Blockly.Python.STATEMENT_SUFFIX, block),
+                Blockly.Python.INDENT) + branchCode;
+        }
+        code += 'else:\n' + branchCode;
+        return code;
+    };
+
+    function logicCompare(block, operator) {
+        // Comparison operator.
+
+    };
+
+    Blockly.Python['operator_gt'] = function (block) {
+        var order = Blockly.Python.ORDER_ATOMIC;
+        var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order);
+        var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order);
+        var code = `${argument0} > ${argument1}`.replaceAll("'", "");;
+        return [code, order];
+    }
+    Blockly.Python['operator_lt'] = function (block) {
+        var order = Blockly.Python.ORDER_ATOMIC;
+        var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order);
+        var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order);
+        var code = `${argument0} < ${argument1}`.replaceAll("'", "");
+        return [code, order];
+    }
+
+    Blockly.Python['operator_equals'] = function (block) {
+        var order = Blockly.Python.ORDER_ATOMIC;
+        var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
+        var code = `${argument0} == ${argument1}`.replaceAll("'", "");;
+        return [code, order];
+    }
+    Blockly.Python['operator_and'] = function (block) {
+        var order = Blockly.Python.ORDER_ATOMIC;
+        var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
+        var code = `${argument0} and ${argument1}`.replaceAll("'", "");;
+        return [code, order];
+    }
+    Blockly.Python['operator_or'] = function (block) {
+        var order = Blockly.Python.ORDER_ATOMIC;
+        var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
+        var code = `${argument0} or ${argument1}`.replaceAll("'", "");;
+        return [code, order];
+    }
+    Blockly.Python['operator_not'] = function (block) {
+        var order = Blockly.Python.ORDER_ATOMIC;
+        var argument0 = Blockly.Python.valueToCode(block, 'OPERAND', order) || '0';
+        var code = `not ${argument0}`.replaceAll("'", "");;
+        return [code, order];
+    }
+    Blockly.Python['operator_join'] = function (block) {
+        var element0 = Blockly.Python.valueToCode(block, 'STRING1',
+            Blockly.Python.ORDER_NONE) || '\'\'';
+        var element1 = Blockly.Python.valueToCode(block, 'STRING2',
+            Blockly.Python.ORDER_NONE) || '\'\'';
+        var code = Blockly.Python.text.forceString_(element0)[0] + ' + ' +
+            Blockly.Python.text.forceString_(element1)[0];
+        return [code, Blockly.Python.ORDER_ADDITIVE];
+    }
+    Blockly.Python['operator_letter_of'] = function (block) {
+        // Get letter at index.
+        // Note: Until January 2013 this block did not have the WHERE input.
+        var text = Blockly.Python.valueToCode(block, 'STRING', Blockly.Python.ORDER_ATOMIC) || '\'\'';
+        var at = Blockly.Python.getAdjustedInt(block, 'LETTER');
+        var code = text + '[' + at + ']';
+        return [code, Blockly.Python.ORDER_MEMBER];
+    };
+    Blockly.Python['operator_length'] = function (block) {
+        // Is the string null or array empty?
+        var text = Blockly.Python.valueToCode(block, 'STRING',
+            Blockly.Python.ORDER_NONE) || '\'\'';
+        return ['len(' + text + ')', Blockly.Python.ORDER_FUNCTION_CALL];
+    };
+    Blockly.Python['operator_contains'] = function (block) {
+        // Is the string null or array empty?
+        var text = Blockly.Python.valueToCode(block, 'STRING1',
+            Blockly.Python.ORDER_NONE) || '\'\'';
+        var content = Blockly.Python.valueToCode(block, 'STRING2',
+            Blockly.Python.ORDER_NONE) || '\'\'';
+        return ['(' + text + '.find(' + content + ') >= 0)', Blockly.Python.ORDER_FUNCTION_CALL];
+    };
+    Blockly.Python['operator_mod'] = function (block) {
+        // Remainder computation.
+        var argument0 = Blockly.Python.valueToCode(block, 'NUM1',
+            Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+        var argument1 = Blockly.Python.valueToCode(block, 'NUM2',
+            Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+        var code = argument0 + ' % ' + argument1;
+        return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
+    };
+    Blockly.Python['operator_round'] = function (block) {
+        // Remainder computation.
+        var argument0 = Blockly.Python.valueToCode(block, 'NUM',
+            Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+        var code = 'round(' + argument0 + ')';
+        return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
+    };
+    Blockly.Python['operator_mathop'] = function (block) {
+        // Math operators with single operand.
+        var operator = block.getFieldValue('OPERATOR');
+        var code;
+        var arg;
+        if (operator == 'NEG') {
+            // Negation is a special case given its different operator precedence.
+            code = Blockly.Python.valueToCode(block, 'NUM',
+                Blockly.Python.ORDER_UNARY_SIGN) || '0';
+            return ['-' + code, Blockly.Python.ORDER_UNARY_SIGN];
+        }
+        Blockly.Python.definitions_['import_math'] = 'import math';
+        if (operator == 'SIN' || operator == 'COS' || operator == 'TAN') {
+            arg = Blockly.Python.valueToCode(block, 'NUM',
+                Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+        } else {
+            arg = Blockly.Python.valueToCode(block, 'NUM',
+                Blockly.Python.ORDER_NONE) || '0';
+        }
+        // First, handle cases which generate values that don't need parentheses
+        // wrapping the code.
+        switch (operator) {
+            case 'abs':
+                code = 'math.fabs(' + arg + ')';
+                break;
+            case 'sqrt':
+                code = 'math.sqrt(' + arg + ')';
+                break;
+            case 'log':
+                code = 'math.log(' + arg + ')';
+                break;
+            case 'ln':
+                code = 'math.log10(' + arg + ')';
+                break;
+            case 'e ^':
+                code = 'math.exp(' + arg + ')';
+                break;
+            case '10 ^':
+                code = 'math.pow(10,' + arg + ')';
+                break;
+            case 'round':
+                code = 'round(' + arg + ')';
+                break;
+            case 'ceiling':
+                code = 'math.ceil(' + arg + ')';
+                break;
+            case 'floor':
+                code = 'math.floor(' + arg + ')';
+                break;
+            case 'sin':
+                code = 'math.sin(' + arg + ' / 180.0 * math.pi)';
+                break;
+            case 'cos':
+                code = 'math.cos(' + arg + ' / 180.0 * math.pi)';
+                break;
+            case 'tan':
+                code = 'math.tan(' + arg + ' / 180.0 * math.pi)';
+                break;
+        }
+        if (code) {
+            return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+        }
+        // Second, handle cases which generate values that may need parentheses
+        // wrapping the code.
+        switch (operator) {
+            case 'asin':
+                code = 'math.asin(' + arg + ') / math.pi * 180';
+                break;
+            case 'acos':
+                code = 'math.acos(' + arg + ') / math.pi * 180';
+                break;
+            case 'atan':
+                code = 'math.atan(' + arg + ') / math.pi * 180';
+                break;
+            default:
+                throw Error('Unknown math operator: ' + operator);
+        }
+        return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
+    };
+
+    Blockly.Python['logic_operation'] = function (block) {
+        // Operations 'and', 'or'.
+        var operator = (block.getFieldValue('OP') == 'AND') ? 'and' : 'or';
+        var order = (operator == 'and') ? Blockly.Python.ORDER_LOGICAL_AND :
+            Blockly.Python.ORDER_LOGICAL_OR;
+        var argument0 = Blockly.Python.valueToCode(block, 'A', order);
+        var argument1 = Blockly.Python.valueToCode(block, 'B', order);
+        if (!argument0 && !argument1) {
+            // If there are no arguments, then the return value is false.
+            argument0 = 'False';
+            argument1 = 'False';
+        } else {
+            // Single missing arguments have no effect on the return value.
+            var defaultArgument = (operator == 'and') ? 'True' : 'False';
+            if (!argument0) {
+                argument0 = defaultArgument;
+            }
+            if (!argument1) {
+                argument1 = defaultArgument;
+            }
+        }
+        var code = argument0 + ' ' + operator + ' ' + argument1;
+        return [code, order];
+    };
+
+    Blockly.Python['logic_negate'] = function (block) {
+        // Negation.
+        var argument0 = Blockly.Python.valueToCode(block, 'BOOL',
+            Blockly.Python.ORDER_LOGICAL_NOT) || 'True';
+        var code = 'not ' + argument0;
+        return [code, Blockly.Python.ORDER_LOGICAL_NOT];
+    };
+
+    Blockly.Python['logic_boolean'] = function (block) {
+        // Boolean values true and false.
+        var code = (block.getFieldValue('BOOL') == 'TRUE') ? 'True' : 'False';
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    Blockly.Python['logic_null'] = function (block) {
+        // Null data type.
+        return ['None', Blockly.Python.ORDER_ATOMIC];
+    };
+
+    Blockly.Python['logic_ternary'] = function (block) {
+        // Ternary operator.
+        var value_if = Blockly.Python.valueToCode(block, 'CONDITION',
+            Blockly.Python.ORDER_CONDITIONAL) || 'False';
+        var value_then = Blockly.Python.valueToCode(block, 'THEN',
+            Blockly.Python.ORDER_CONDITIONAL) || 'None';
+        var value_else = Blockly.Python.valueToCode(block, 'ELSE',
+            Blockly.Python.ORDER_CONDITIONAL) || 'None';
+        var code = value_then + ' if ' + value_if + ' else ' + value_else;
+        return [code, Blockly.Python.ORDER_CONDITIONAL];
+    };
+
+
 }

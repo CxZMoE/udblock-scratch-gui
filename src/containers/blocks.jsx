@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import debounce from 'lodash.debounce';
 import defaultsDeep from 'lodash.defaultsdeep';
 import makeToolboxXML from '../lib/make-toolbox-xml';
+import makeCodeModeToolboxXML from '../lib/make-codemode-toolbox-xml';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VMScratchBlocks from '../lib/blocks';
@@ -26,6 +27,7 @@ import { closeExtensionLibrary, openSoundRecorder, openConnectionModal } from '.
 import { activateCustomProcedures, deactivateCustomProcedures } from '../reducers/custom-procedures';
 import { setConnectionModalExtensionId } from '../reducers/connection-modal';
 import { updateMetrics } from '../reducers/workspace-metrics';
+
 
 import {
     activateTab,
@@ -57,6 +59,9 @@ const DroppableBlocks = DropAreaHOC([
 class Blocks extends React.Component {
     constructor(props) {
         super(props);
+
+        this._firstInit = true;
+        this._firstExtLoad = true;
 
         Blockly = VMScratchBlocks(props.vm);
         bindAll(this, [
@@ -95,7 +100,7 @@ class Blocks extends React.Component {
         // 初始化默认方块
         initDefaultBlocks(Blockly);
         initUDPiBlocks(Blockly);
-        
+
         this.state = {
             prompt: null
         };
@@ -107,17 +112,19 @@ class Blocks extends React.Component {
     updateCodeBox(workspace) {
         //Blockly.Msg.console.println("hello")
         //console.log(Blockly)
-        if (this.props.editorMode == "code"){
+        if (this.props.editorMode == "code") {
             let codeText = Blockly.Python.workspaceToCode(this.workspace);
             let codeSplit = codeText.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
             codeText = codeSplit.join("")
             console.log(codeText)
-            this.props.editor.setValue(codeText);
-        }else{
+            if (this.props.editor != undefined) {
+                this.props.editor.setValue(codeText);
+            }
+        } else {
             console.log("不是代码模式，不输出")
         }
 
-        
+
         //document.getElementById("UDCodeArea").firstChild.innerText = codeText
         //alert(codeText)
     }
@@ -372,7 +379,7 @@ class Blocks extends React.Component {
     onVisualReport(data) {
         this.workspace.reportValue(data.id, data.value);
     }
-    getToolboxXML() {
+    getToolboxXML(isExtLoad) {
         // Use try/catch because this requires digging pretty deep into the VM
         // Code inside intentionally ignores several error situations (no stage, etc.)
         // Because they would get caught by this try/catch
@@ -385,11 +392,24 @@ class Blocks extends React.Component {
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
-            return makeToolboxXML(false, target.isStage, target.id, dynamicBlocksXML,
-                targetCostumes[targetCostumes.length - 1].name,
-                stageCostumes[stageCostumes.length - 1].name,
-                targetSounds.length > 0 ? targetSounds[targetSounds.length - 1].name : ''
-            );
+            console.log("blocks.jsx:", this.props.editorMode)
+
+            switch (this.props.editorMode) {
+                case "default":
+                    return makeToolboxXML(false, target.isStage, target.id, dynamicBlocksXML,
+                        targetCostumes[targetCostumes.length - 1].name,
+                        stageCostumes[stageCostumes.length - 1].name,
+                        targetSounds.length > 0 ? targetSounds[targetSounds.length - 1].name : ''
+                    );
+                case "code":
+                    return makeCodeModeToolboxXML(false, target.isStage, target.id, dynamicBlocksXML,
+                        targetCostumes[targetCostumes.length - 1].name,
+                        stageCostumes[stageCostumes.length - 1].name,
+                        targetSounds.length > 0 ? targetSounds[targetSounds.length - 1].name : ''
+                );
+
+            }
+
         } catch {
             return null;
         }
@@ -464,6 +484,9 @@ class Blocks extends React.Component {
                         defineDynamicBlock(Blockly, categoryInfo, blockInfo, extendedOpcode);
                     Blockly.Blocks[extendedOpcode] = blockDefinition;
                 });
+
+
+                // 修改工具箱的方块央样式
                 ModifyUDPi(Blockly)
                 //this.updateToolbox()
                 //this.handleBlocksInfoUpdate(categoryInfo);
@@ -479,7 +502,7 @@ class Blocks extends React.Component {
         defineBlocks(categoryInfo.blocks);
 
         // Update the toolbox with new blocks if possible
-        const toolboxXML = this.getToolboxXML();
+        const toolboxXML = this.getToolboxXML(true);
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
         }
@@ -577,6 +600,7 @@ class Blocks extends React.Component {
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
             editor,
+            editorMode,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -699,7 +723,7 @@ Blocks.defaultOptions = {
 
 Blocks.defaultProps = {
     isVisible: true,
-    options: Blocks.defaultOptions
+    options: Blocks.defaultOptions,
 };
 
 const mapStateToProps = state => ({
@@ -714,7 +738,6 @@ const mapStateToProps = state => ({
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
-    editorMode: state.editorMode.editorMode,
     editor: state.editorRef.o,
 });
 
@@ -740,7 +763,7 @@ const mapDispatchToProps = dispatch => ({
     },
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
-    }
+    },
 });
 
 export default errorBoundaryHOC('Blocks')(

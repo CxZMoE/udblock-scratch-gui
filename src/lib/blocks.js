@@ -2,6 +2,7 @@ import ScratchBlocks from 'scratch-blocks';
 
 import ModifyUDPi from './udrobot-modify/udpi'
 ModifyUDPi(ScratchBlocks);
+console.log(ScratchBlocks)
 
 /**
  * Connect scratch blocks with the vm
