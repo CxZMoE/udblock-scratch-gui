@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
 
+
 class Controls extends React.Component {
     constructor (props) {
         super(props);
@@ -15,13 +16,17 @@ class Controls extends React.Component {
         ]);
     }
     handleGreenFlagClick (e) {
+
         e.preventDefault();
+        
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
         } else {
             if (!this.props.isStarted) {
+                console.log("sad1")
                 this.props.vm.start();
             }
+            console.log("sad")
             this.props.vm.greenFlag();
         }
     }
@@ -59,9 +64,11 @@ Controls.propTypes = {
 const mapStateToProps = state => ({
     isStarted: state.scratchGui.vmStatus.running,
     projectRunning: state.scratchGui.vmStatus.running,
-    turbo: state.scratchGui.vmStatus.turbo
+    turbo: state.scratchGui.vmStatus.turbo,
+    editorMode: state.editorMode.editorMode
 });
 // no-op function to prevent dispatch prop being passed to component
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = () => ({
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

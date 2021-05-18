@@ -220,10 +220,10 @@ const GUIComponent = props => {
                     authorId={authorId}
                     authorThumbnailUrl={authorThumbnailUrl}
                     authorUsername={authorUsername}
-                    canChangeLanguage={canChangeLanguage}
+                    canChangeLanguage={false}
                     canCreateCopy={canCreateCopy}
                     canCreateNew={canCreateNew}
-                    canEditTitle={false}
+                    canEditTitle={canEditTitle}
                     canManageFiles={canManageFiles}
                     canRemix={canRemix}
                     canSave={canSave}
@@ -249,7 +249,8 @@ const GUIComponent = props => {
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
-                        <Box className={styles.editorWrapper}>
+                        { editorMode=="code"?
+                        <Box className={styles.editorWrapperCode}>
                             <Tabs
                                 forceRenderTabPanel
                                 className={tabClassNames.tabs}
@@ -349,15 +350,122 @@ const GUIComponent = props => {
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                 </TabPanel>
                             </Tabs>
-                            {backpackVisible ? (
+                            {/* {backpackVisible ? (
                                 <Backpack host={backpackHost} />
-                            ) : null}
+                            ) : null} */}
+                        </Box>:(
+                            <Box className={styles.editorWrapper}>
+                            <Tabs
+                                forceRenderTabPanel
+                                className={tabClassNames.tabs}
+                                selectedIndex={activeTabIndex}
+                                selectedTabClassName={tabClassNames.tabSelected}
+                                selectedTabPanelClassName={tabClassNames.tabPanelSelected}
+                                onSelect={onActivateTab}
+                            >
+                                <TabList className={tabClassNames.tabList}>
+                                    <Tab className={tabClassNames.tab}>
+                                        <img
+                                            draggable={false}
+                                            src={codeIcon}
+                                        />
+                                        <FormattedMessage
+                                            defaultMessage="Code"
+                                            description="Button to get to the code panel"
+                                            id="gui.gui.codeTab"
+                                        />
+                                    </Tab>
+                                    {editorMode == "code" ? ([]) : <Tab
+                                        className={tabClassNames.tab}
+                                        onClick={onActivateCostumesTab}
+                                    >
+                                        <img
+                                            draggable={false}
+                                            src={costumesIcon}
+                                        />
+                                        {targetIsStage ? (
+                                            <FormattedMessage
+                                                defaultMessage="Backdrops"
+                                                description="Button to get to the backdrops panel"
+                                                id="gui.gui.backdropsTab"
+                                            />
+                                        ) : (
+                                            <FormattedMessage
+                                                defaultMessage="Costumes"
+                                                description="Button to get to the costumes panel"
+                                                id="gui.gui.costumesTab"
+                                            />
+                                        )}
+                                    </Tab>
+                                    }
+                                    {editorMode == "code" ? ([]) : (
+                                        <Tab
+                                            className={tabClassNames.tab}
+                                            onClick={onActivateSoundsTab}
+                                        >
+                                            <img
+                                                draggable={false}
+                                                src={soundsIcon}
+                                            />
+                                            <FormattedMessage
+                                                defaultMessage="Sounds"
+                                                description="Button to get to the sounds panel"
+                                                id="gui.gui.soundsTab"
+                                            />
+                                        </Tab>
+                                    )}
+                                </TabList>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    <Box className={styles.blocksWrapper}>
+                                        <Blocks
+                                            canUseCloud={canUseCloud}
+                                            grow={1}
+                                            isVisible={blocksTabVisible}
+                                            options={{
+                                                media: `${basePath}static/blocks-media/`
+                                            }}
+                                            stageSize={stageSize}
+                                            vm={vm}
+                                            editor={editor}
+                                            editorMode={editorMode}
+                                        />
+                                    </Box>
+                                    <Box className={styles.extensionButtonContainer}>
+                                        <button
+                                            className={styles.extensionButton}
+                                            title={intl.formatMessage(messages.addExtension)}
+                                            onClick={onExtensionButtonClick}
+                                        >
+                                            <img
+                                                className={styles.extensionButtonIcon}
+                                                draggable={false}
+                                                src={addExtensionIcon}
+                                            />
+                                        </button>
+                                    </Box>
+                                    <Box className={styles.watermark}>
+                                        <Watermark />
+                                    </Box>
+                                </TabPanel>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
+                                </TabPanel>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    {soundsTabVisible ? <SoundTab vm={vm} /> : null}
+                                </TabPanel>
+                            </Tabs>
+                            {/* {backpackVisible && editorMode != "code"? (
+                                <Backpack host={backpackHost} />
+                            ) : null} */}
                         </Box>
+                        )
+                        }
 
 
                         {/* 舞台 */}
                         {(editorMode == "code") ? (
-                            <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                            <Box className={classNames(styles.stageAndTargetWrapperCode, styles[stageSize])}
+                            >
                                 <MonicaEditor
                                     stageSize={stageSize}
                                     editor={editor}

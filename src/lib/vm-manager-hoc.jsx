@@ -38,6 +38,12 @@ const vmManagerHOC = function (WrappedComponent) {
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();
             }
+
+            setInterval(() => {
+                if (this.props.isStarted && this.props.editorMode == "code") {
+                    this.props.vm.stopAll();
+                }
+            }, 500);
         }
         componentDidUpdate (prevProps) {
             // if project is in loading state, AND fonts are loaded,
@@ -131,7 +137,8 @@ const vmManagerHOC = function (WrappedComponent) {
             projectId: state.scratchGui.projectState.projectId,
             loadingState: loadingState,
             isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
-            isStarted: state.scratchGui.vmStatus.started
+            isStarted: state.scratchGui.vmStatus.started,
+            editorMode: state.editorMode.editorMode
         };
     };
 

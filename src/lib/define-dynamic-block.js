@@ -56,6 +56,10 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
         switch (blockInfo.blockType) {
         case BlockType.COMMAND:
         case BlockType.CONDITIONAL:
+        case BlockType.EVHAT:
+            this.setOutputShape(ScratchBlocks.OUTPUT_SHAPE_SQUARE);
+            this.setNextStatement(!blockInfo.isTerminal);
+            break;
         case BlockType.LOOP:
             this.setOutputShape(ScratchBlocks.OUTPUT_SHAPE_SQUARE);
             this.setPreviousStatement(true);

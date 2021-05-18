@@ -1,7 +1,7 @@
 const reducer = (state={o: undefined}, action)=>{    
     switch(action.type){
         case "TERMINAL_ASSIGN":
-            console.log("assign")
+            //console.log("assign")
             return {o: action.value}
         case "TERMINAL_REMOVE":
             return {o: undefined}

@@ -1,4 +1,5 @@
 import Blockly from 'scratch-blocks'
+import BlockUtility from 'scratch-vm/src/engine/block-utility';
 
 const  initPythonGenerator = () =>{
     // Add code generator callback
@@ -110,6 +111,7 @@ const  initPythonGenerator = () =>{
         Blockly.Python.PASS = this.INDENT + 'pass\n';
         // Create a dictionary of definitions to be printed before the code.
         Blockly.Python.definitions_ = Object.create(null);
+        
         // Create a dictionary mapping desired function names in definitions_
         // to actual function names (to avoid collisions with user functions).
         Blockly.Python.functionNames_ = Object.create(null);
@@ -137,6 +139,8 @@ const  initPythonGenerator = () =>{
                 Blockly.Names.DEVELOPER_VARIABLE_TYPE) + ' = None');
         }
         Blockly.Python.definitions_['variables'] = defvars.join('\n');
+
+        
     };
 
     /**

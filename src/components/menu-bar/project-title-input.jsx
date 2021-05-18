@@ -31,7 +31,7 @@ const ProjectTitleInput = ({
         placeholder={intl.formatMessage(messages.projectTitlePlaceholder)}
         tabIndex="0"
         type="text"
-        value={projectTitle}
+        value={"UDBlock作品"}
         onSubmit={onSubmit}
     />
 );

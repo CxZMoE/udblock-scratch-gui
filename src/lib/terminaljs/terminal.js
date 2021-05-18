@@ -110,6 +110,7 @@ class TerminalJS {
 
 		this.print = function (message) {
 			var output = this._output;
+
 			return new Promise(function (resolve, reject) {
 				var newLine = document.createElement('div')
 				newLine.textContent = message
@@ -119,6 +120,8 @@ class TerminalJS {
 					output.innerHTML = ""
 					terminalLineLength = 0;
 				}
+				let s = document.getElementById('UDTerminal')
+				s.scrollTop = s.scrollHeight
 				resolve()
 			})
 		}

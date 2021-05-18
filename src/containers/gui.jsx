@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import ReactModal from 'react-modal';
 import VM from 'scratch-vm';
-import {injectIntl, intlShape} from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 
 import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import {
@@ -38,20 +38,55 @@ import vmManagerHOC from '../lib/vm-manager-hoc.jsx';
 import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
-import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
+import { setIsScratchDesktop } from '../lib/isScratchDesktop.js';
+import VMScratchBlocks from '../lib/blocks';
 
 class GUI extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
+        Blockly = VMScratchBlocks(props.vm);
     }
-    
-    componentDidMount () {
+
+
+    componentDidMount() {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
+
+        // 修改工具箱悬浮习性
+        var injectDiv = document.getElementsByClassName("injectionDiv")[0];
+        var blocklyFlyout = document.getElementsByClassName("blocklyFlyout")[0];
+        //var blocklyBlockMenuClipRect = document.getElementById("blocklyBlockMenuClipRect");
+
+        var zIndex_prev = blocklyFlyout.style.zIndex
+        var mouseIsIn = false;
+        blocklyFlyout.addEventListener("mouseover", function () {
+            if (!mouseIsIn) {
+                //console.log("over")
+                injectDiv.style.overflow = "hidden";
+                blocklyFlyout.style.overflow = "visible";
+                blocklyFlyout.style.zIndex = "9999"
+            }
+            mouseIsIn = true;
+
+            //blocklyBlockMenuClipRect.width = "500px";
+        })
+        blocklyFlyout.addEventListener("mouseout", function () {
+            if (mouseIsIn) {
+                //console.log("out")
+                injectDiv.style.overflow = "visible";
+                blocklyFlyout.style.overflow = "hidden";
+                blocklyFlyout.style.zIndex = zIndex_prev;
+            }
+            mouseIsIn = false;
+
+            //blocklyBlockMenuClipRect.width = "248px";
+        })
+
+
     }
-    componentDidUpdate (prevProps) {
+    componentDidUpdate(prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
             this.props.onUpdateProjectId(this.props.projectId);
         }
@@ -61,8 +96,9 @@ class GUI extends React.Component {
             this.props.onProjectLoaded();
         }
         //console.log(this.props.editor)
+        Blockly.svgResize(Blockly.getMainWorkspace())
     }
-    render () {
+    render() {
         if (this.props.isError) {
             throw new Error(
                 `Error in Scratch GUI [location=${window.location}]: ${this.props.error}`);
@@ -91,7 +127,7 @@ class GUI extends React.Component {
             ...componentProps
         } = this.props;
 
-        
+
 
         return (
             <GUIComponent
@@ -131,10 +167,10 @@ GUI.propTypes = {
 GUI.defaultProps = {
     isScratchDesktop: false,
     onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
-    onProjectLoaded: () => {},
-    onUpdateProjectId: () => {},
-    onVmInit: (/* vm */) => {},
-    
+    onProjectLoaded: () => { },
+    onUpdateProjectId: () => { },
+    onVmInit: (/* vm */) => { },
+
 };
 
 const mapStateToProps = state => {

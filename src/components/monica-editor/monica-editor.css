@@ -2,7 +2,7 @@
 .container{
     margin: 44px 10px 28px 10px;
     border-radius: 5px;
-    border: 1px solid hsla(0, 0%, 0%, 0.15);
+    /* border: 1px solid hsla(0, 0%, 0%, 0.15); */
     padding: 10px;
     background-color: #FFF;
     
@@ -11,6 +11,48 @@
 .editor{
     min-height: calc(50% - 10px);
     border-radius: 5px;
-    border: 1px solid hsla(0, 0%, 0%, 0.15);
+    /* border: 1px solid hsla(0, 0%, 0%, 0.15); */
     margin-bottom: 10px;
+}
+
+.serialInput{
+    color: #000;
+    /* position: fixed; 
+    bottom: 30px;
+    right: calc(5% - 5px);  */
+    border-radius: 5px;
+    /* border: 1px solid #666; */
+    border: none;
+    box-shadow: 0px 0px  3px inset rgba(0, 0, 0, 0.4);
+    height: auto;
+    line-height: 30px; 
+    font-size: 20px;
+    width: 70%;
+    opacity: 1;
+    padding: 0 3px;
+    background-color: #FFF;
+    transition: ease-in-out 0.3s;
+    margin-top: 10px;
+    text-decoration: none;
+    outline:0 none !important;
+}
+
+.serialBtn{
+    line-height: 30px;
+    border-radius: 5px;
+    background-color: #ff8f34;
+    color: #FFF;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 20%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    overflow: hidden;
+
+}
+.serialInput:hover{
+    opacity: 1;
 }

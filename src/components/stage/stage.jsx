@@ -33,9 +33,8 @@ const StageComponent = props => {
         ...boxProps
     } = props;
 
-    const stageDimensions = getStageDimensions(stageSize, isFullScreen);
+    var stageDimensions = getStageDimensions(stageSize, isFullScreen);
 
-   
     return (
         
         <React.Fragment>

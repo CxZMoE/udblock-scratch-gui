@@ -745,6 +745,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
 
     console.log(categoriesXML)
     categoriesXML = categoriesXML.slice();
+    // 移除已存在的类别并且重新加载
     const moveCategory = categoryId => {
         const index = categoriesXML.findIndex(categoryInfo => categoryInfo.id === categoryId);
         if (index >= 0) {
@@ -774,7 +775,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
-        //myBlocksXML
+        myBlocksXML
     ];
 
     for (const extensionCategory of categoriesXML) {

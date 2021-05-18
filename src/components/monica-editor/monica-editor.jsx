@@ -1,10 +1,10 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import styles from './monica-editor.css';
 //import Terminal from 'terminal-in-react';
 import Box from '../../components/box/box.jsx';
 import { connect } from 'react-redux';
-
+import classNames from 'classnames';
 
 import { getStageDimensions } from '../../lib/screen-utils.js';
 
@@ -21,19 +21,23 @@ import Terminal from '../terminal/terminal.jsx'
 class MonicaEditor extends React.Component {
     constructor(props) {
         super(props)
-
+        
     }
     //
 
     loadMonaco() {
+        console.log("加载编辑器")
         loader.init().then(monaco => {
             console.log("加载Monaco编辑器")
             const wrapper = document.getElementById("monaco-editor-dom");
             const properties = {
-                value: "# UDRobot 儿童指挥编程",
+                value: "# UDRobot MicroPython Code",
                 language: "python",
+                minimap: {
+                    enabled: false
+                }
             }
-            let editor = monaco.editor.create(wrapper, properties);
+            var editor = monaco.editor.create(wrapper, properties);
             this.props.onEditorCreate(editor);
             window.onresize = function () {
                 if (editor) {
@@ -41,11 +45,13 @@ class MonicaEditor extends React.Component {
 
                 }
             };
+
         })
     }
 
     componentDidMount() {
         this.loadMonaco();
+        
     }
 
     render() {
@@ -60,21 +66,24 @@ class MonicaEditor extends React.Component {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    height: "100%",
-                    width: stageDimensions.width,
+                    flexGrow: "1",
                     borderRadius: "5px",
                     border: "1px solid hsla(0, 0%, 0%, 0.15)",
                     marginTop: "45px",
                     backgroundColor: "#FFF",
-                    padding: "10px"
+                    padding: "10px",
+                    overflow: "hidden",
+                    flexGrow: "1",
+                    flexWrap: "nowrap"
                 }}
             >
                 <Box
                     style={{
                         borderRadius: "5px",
-                        border: "1px solid hsla(0, 0%, 0%, 0.15)",
-                        minHeight: "50%",
-                        width: (stageDimensions.width - 10) + "px",
+                        // border: "1px solid hsla(0, 0%, 0%, 0.15)",
+                        height: "50%",
+                        maxHeight: "50%",
+                        width: "100%",
                     }}
                 >
                     <div
@@ -91,13 +100,15 @@ class MonicaEditor extends React.Component {
                         position: "relative",
                         fontWeight: "bold",
                         alignSelf: "center",
-                        height: "100%",
-                        width: (stageDimensions.width - 10) + "px",
+                        height: "45%",
+                        maxHeight: "45%",
+                        width: "100%",
                         marginTop: "10px",
-                        marginBottom: "20px",
+                        // marginBottom: "20px",
                         borderRadius: "5px",
-                        border: "1px solid hsla(0, 0%, 0%, 0.15)",
-                        padding: "5px"
+                        // border: "1px solid hsla(0, 0%, 0%, 0.15)",
+                        padding: "5px",
+                        flexGrow: "1",
                     }}
                 >
                     {/* <Terminal
@@ -134,12 +145,26 @@ class MonicaEditor extends React.Component {
                     /> */}
                     <Terminal
                         style={{
-                            height: "100%"
+                            height: "100%",
                         }}
                     >
 
                     </Terminal>
 
+                </Box>
+                <Box
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                        height: "35px"
+                    }}
+                >
+                    <input id="serialInput" className={classNames(styles.serialInput)} type="text" placeholder="输入要发送的消息"></input>
+                    <span id="serialOpenBtn" className={classNames(styles.serialBtn)}>打开串口</span>
+                    <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送消息</span>
                 </Box>
 
             </Box>
@@ -152,7 +177,6 @@ MonicaEditor.propTypes = {
 };
 
 const mapStateToProps = state => ({
-
 })
 
 const mapDispatchToProps = dispatch => ({

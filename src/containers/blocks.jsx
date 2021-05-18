@@ -41,7 +41,13 @@ import initPythonGenerator from '../lib/block-generators/python'
 // 方块定义文件
 import initDefaultBlocks from '../lib/block-defenition/default'
 import initUDPiBlocks from '../lib/block-defenition/udpi'
+import initUDPiPlusBlocks from '../lib/block-defenition/udpi_plus'
+import initUDBlockEXTBMFBlocks from '../lib/block-defenition/udblockextb_mf'
+import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
+import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
+
 import ModifyUDPi from '../lib/udrobot-modify/udpi'
+import ModifyUDPiPlus from '../lib/udrobot-modify/udpi_plus'
 
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
@@ -64,6 +70,345 @@ class Blocks extends React.Component {
         this._firstExtLoad = true;
 
         Blockly = VMScratchBlocks(props.vm);
+
+
+        // 本地化
+        Blockly.ScratchMsgs.locales["zh-cn"] =
+        {
+            "CONTROL_FOREVER": "重复执行",
+            "CONTROL_REPEAT": "重复执行 %1 次",
+            "CONTROL_IF": "如果 %1 那么",
+            "CONTROL_ELSE": "否则",
+            "CONTROL_STOP": "停止",
+            "CONTROL_STOP_ALL": "全部脚本",
+            "CONTROL_STOP_THIS": "这个脚本",
+            "CONTROL_STOP_OTHER": "该角色的其他脚本",
+            "CONTROL_WAIT": "等待 %1 秒",
+            "CONTROL_WAITUNTIL": "等待 %1",
+            "CONTROL_REPEATUNTIL": "重复执行直到 %1",
+            "CONTROL_WHILE": "当 %1 重复执行",
+            "CONTROL_FOREACH": "对于 %2 中的每个 %1",
+            "CONTROL_STARTASCLONE": "当作为克隆体启动时",
+            "CONTROL_CREATECLONEOF": "克隆 %1",
+            "CONTROL_CREATECLONEOF_MYSELF": "自己",
+            "CONTROL_DELETETHISCLONE": "删除此克隆体",
+            "CONTROL_COUNTER": "计数器",
+            "CONTROL_INCRCOUNTER": "计数器加一",
+            "CONTROL_CLEARCOUNTER": "计数器归零",
+            "CONTROL_ALLATONCE": "所有脚本",
+            "DATA_SETVARIABLETO": "将 %1 设为 %2",
+            "DATA_CHANGEVARIABLEBY": "将 %1 增加 %2",
+            "DATA_SHOWVARIABLE": "显示变量 %1",
+            "DATA_HIDEVARIABLE": "隐藏变量 %1",
+            "DATA_ADDTOLIST": "将 %1 加入 %2",
+            "DATA_DELETEOFLIST": "删除 %2 的第 %1 项",
+            "DATA_DELETEALLOFLIST": "删除 %1 的全部项目",
+            "DATA_INSERTATLIST": "在 %3 的第 %2 项前插入 %1",
+            "DATA_REPLACEITEMOFLIST": "将 %2 的第 %1 项替换为 %3",
+            "DATA_ITEMOFLIST": "%2 的第 %1 项",
+            "DATA_ITEMNUMOFLIST": "%2 中第一个 %1 的编号",
+            "DATA_LENGTHOFLIST": "%1 的项目数",
+            "DATA_LISTCONTAINSITEM": "%1 包含 %2 ?",
+            "DATA_SHOWLIST": "显示列表 %1",
+            "DATA_HIDELIST": "隐藏列表 %1",
+            "DATA_INDEX_ALL": "全部",
+            "DATA_INDEX_LAST": "末尾",
+            "DATA_INDEX_RANDOM": "随机",
+            "EVENT_WHENFLAGCLICKED": "当 %1 被点击",
+            "EVENT_WHENTHISSPRITECLICKED": "当角色被点击",
+            "EVENT_WHENSTAGECLICKED": "当舞台被点击",
+            "EVENT_WHENTOUCHINGOBJECT": "当该角色碰到 %1",
+            "EVENT_WHENBROADCASTRECEIVED": "当接收到 %1",
+            "EVENT_WHENBACKDROPSWITCHESTO": "当背景换成 %1",
+            "EVENT_WHENGREATERTHAN": "当 %1 > %2",
+            "EVENT_WHENGREATERTHAN_TIMER": "计时器",
+            "EVENT_WHENGREATERTHAN_LOUDNESS": "响度",
+            "EVENT_BROADCAST": "广播 %1",
+            "EVENT_BROADCASTANDWAIT": "广播 %1 并等待",
+            "EVENT_WHENKEYPRESSED": "当按下 %1 键",
+            "EVENT_WHENKEYPRESSED_SPACE": "空格",
+            "EVENT_WHENKEYPRESSED_LEFT": "←",
+            "EVENT_WHENKEYPRESSED_RIGHT": "→",
+            "EVENT_WHENKEYPRESSED_DOWN": "↓",
+            "EVENT_WHENKEYPRESSED_UP": "↑",
+            "EVENT_WHENKEYPRESSED_ANY": "任意",
+            "LOOKS_SAYFORSECS": "说 %1 %2 秒",
+            "LOOKS_SAY": "说 %1",
+            "LOOKS_HELLO": "你好！",
+            "LOOKS_THINKFORSECS": "思考 %1 %2 秒",
+            "LOOKS_THINK": "思考 %1",
+            "LOOKS_HMM": "嗯……",
+            "LOOKS_SHOW": "显示",
+            "LOOKS_HIDE": "隐藏",
+            "LOOKS_HIDEALLSPRITES": "隐藏所有角色",
+            "LOOKS_EFFECT_COLOR": "颜色",
+            "LOOKS_EFFECT_FISHEYE": "鱼眼",
+            "LOOKS_EFFECT_WHIRL": "漩涡",
+            "LOOKS_EFFECT_PIXELATE": "像素化",
+            "LOOKS_EFFECT_MOSAIC": "马赛克",
+            "LOOKS_EFFECT_BRIGHTNESS": "亮度",
+            "LOOKS_EFFECT_GHOST": "虚像",
+            "LOOKS_CHANGEEFFECTBY": "将 %1 特效增加 %2",
+            "LOOKS_SETEFFECTTO": "将 %1 特效设定为 %2",
+            "LOOKS_CLEARGRAPHICEFFECTS": "清除图形特效",
+            "LOOKS_CHANGESIZEBY": "将大小增加 %1",
+            "LOOKS_SETSIZETO": "将大小设为 %1",
+            "LOOKS_SIZE": "大小",
+            "LOOKS_CHANGESTRETCHBY": "伸缩%1",
+            "LOOKS_SETSTRETCHTO": "设置伸缩为%1 %",
+            "LOOKS_SWITCHCOSTUMETO": "换成 %1 造型",
+            "LOOKS_NEXTCOSTUME": "下一个造型",
+            "LOOKS_SWITCHBACKDROPTO": "换成 %1 背景",
+            "LOOKS_GOTOFRONTBACK": "移到最 %1 ",
+            "LOOKS_GOTOFRONTBACK_FRONT": "前面",
+            "LOOKS_GOTOFRONTBACK_BACK": "后面",
+            "LOOKS_GOFORWARDBACKWARDLAYERS": "%1 %2 层",
+            "LOOKS_GOFORWARDBACKWARDLAYERS_FORWARD": "前移",
+            "LOOKS_GOFORWARDBACKWARDLAYERS_BACKWARD": "后移",
+            "LOOKS_BACKDROPNUMBERNAME": "背景 %1",
+            "LOOKS_COSTUMENUMBERNAME": "造型 %1",
+            "LOOKS_NUMBERNAME_NUMBER": "编号",
+            "LOOKS_NUMBERNAME_NAME": "名称",
+            "LOOKS_SWITCHBACKDROPTOANDWAIT": "换成 %1 背景并等待",
+            "LOOKS_NEXTBACKDROP_BLOCK": "下一个背景",
+            "LOOKS_NEXTBACKDROP": "下一个背景",
+            "LOOKS_PREVIOUSBACKDROP": "上一个背景",
+            "LOOKS_RANDOMBACKDROP": "随机背景",
+            "MOTION_MOVESTEPS": "移动 %1 步",
+            "MOTION_TURNLEFT": "左转 %1 %2 度",
+            "MOTION_TURNRIGHT": "右转 %1 %2 度",
+            "MOTION_POINTINDIRECTION": "面向 %1 方向",
+            "MOTION_POINTTOWARDS": "面向 %1",
+            "MOTION_POINTTOWARDS_POINTER": "鼠标指针",
+            "MOTION_POINTTOWARDS_RANDOM": "随机方向",
+            "MOTION_GOTO": "移到 %1",
+            "MOTION_GOTO_POINTER": "鼠标指针",
+            "MOTION_GOTO_RANDOM": "随机位置",
+            "MOTION_GOTOXY": "移到 x: %1 y: %2",
+            "MOTION_GLIDESECSTOXY": "在 %1 秒内滑行到 x: %2 y: %3",
+            "MOTION_GLIDETO": "在 %1 秒内滑行到 %2",
+            "MOTION_GLIDETO_POINTER": "鼠标指针",
+            "MOTION_GLIDETO_RANDOM": "随机位置",
+            "MOTION_CHANGEXBY": "将x坐标增加 %1",
+            "MOTION_SETX": "将x坐标设为 %1",
+            "MOTION_CHANGEYBY": "将y坐标增加 %1",
+            "MOTION_SETY": "将y坐标设为 %1",
+            "MOTION_IFONEDGEBOUNCE": "碰到边缘就反弹",
+            "MOTION_SETROTATIONSTYLE": "将旋转方式设为 %1",
+            "MOTION_SETROTATIONSTYLE_LEFTRIGHT": "左右翻转",
+            "MOTION_SETROTATIONSTYLE_DONTROTATE": "不可旋转",
+            "MOTION_SETROTATIONSTYLE_ALLAROUND": "任意旋转",
+            "MOTION_XPOSITION": "x 坐标",
+            "MOTION_YPOSITION": "y 坐标",
+            "MOTION_DIRECTION": "方向",
+            "MOTION_SCROLLRIGHT": "向右滚动 %1",
+            "MOTION_SCROLLUP": "向上滚动 %1",
+            "MOTION_ALIGNSCENE": "和场景 %1 对齐",
+            "MOTION_ALIGNSCENE_BOTTOMLEFT": "左下角",
+            "MOTION_ALIGNSCENE_BOTTOMRIGHT": "右下角",
+            "MOTION_ALIGNSCENE_MIDDLE": "中间",
+            "MOTION_ALIGNSCENE_TOPLEFT": "左上角",
+            "MOTION_ALIGNSCENE_TOPRIGHT": "右上角",
+            "MOTION_XSCROLL": "x滚动位置",
+            "MOTION_YSCROLL": "y滚动位置",
+            "MOTION_STAGE_SELECTED": "选中了舞台：不可使用运动类积木",
+            "OPERATORS_ADD": "%1 + %2",
+            "OPERATORS_SUBTRACT": "%1 - %2",
+            "OPERATORS_MULTIPLY": "%1 * %2",
+            "OPERATORS_DIVIDE": "%1 / %2",
+            "OPERATORS_RANDOM": "在 %1 和 %2 之间取随机数",
+            "OPERATORS_GT": "%1 > %2",
+            "OPERATORS_LT": "%1 < %2",
+            "OPERATORS_EQUALS": "%1 = %2",
+            "OPERATORS_AND": "%1 与 %2",
+            "OPERATORS_OR": "%1 或 %2",
+            "OPERATORS_NOT": "%1 不成立",
+            "OPERATORS_JOIN": "连接 %1 和 %2",
+            "OPERATORS_JOIN_APPLE": "苹果",
+            "OPERATORS_JOIN_BANANA": "香蕉",
+            "OPERATORS_LETTEROF": "%2 的第 %1 个字符",
+            "OPERATORS_LETTEROF_APPLE": "果",
+            "OPERATORS_LENGTH": "%1 的字符数",
+            "OPERATORS_CONTAINS": "%1 包含 %2 ?",
+            "OPERATORS_MOD": "%1 除以 %2 的余数",
+            "OPERATORS_ROUND": "四舍五入 %1",
+            "OPERATORS_MATHOP": "%1 %2",
+            "OPERATORS_MATHOP_ABS": "绝对值",
+            "OPERATORS_MATHOP_FLOOR": "向下取整",
+            "OPERATORS_MATHOP_CEILING": "向上取整",
+            "OPERATORS_MATHOP_SQRT": "平方根",
+            "OPERATORS_MATHOP_SIN": "sin",
+            "OPERATORS_MATHOP_COS": "cos",
+            "OPERATORS_MATHOP_TAN": "tan",
+            "OPERATORS_MATHOP_ASIN": "asin",
+            "OPERATORS_MATHOP_ACOS": "acos",
+            "OPERATORS_MATHOP_ATAN": "atan",
+            "OPERATORS_MATHOP_LN": "ln",
+            "OPERATORS_MATHOP_LOG": "log",
+            "OPERATORS_MATHOP_EEXP": "e ^",
+            "OPERATORS_MATHOP_10EXP": "10 ^",
+            "PROCEDURES_DEFINITION": "定义 %1",
+            "SENSING_TOUCHINGOBJECT": "碰到 %1 ?",
+            "SENSING_TOUCHINGOBJECT_POINTER": "鼠标指针",
+            "SENSING_TOUCHINGOBJECT_EDGE": "舞台边缘",
+            "SENSING_TOUCHINGCOLOR": "碰到颜色 %1 ?",
+            "SENSING_COLORISTOUCHINGCOLOR": "颜色 %1 碰到 %2 ?",
+            "SENSING_DISTANCETO": "到 %1 的距离",
+            "SENSING_DISTANCETO_POINTER": "鼠标指针",
+            "SENSING_ASKANDWAIT": "询问 %1 并等待",
+            "SENSING_ASK_TEXT": "你叫什么名字？",
+            "SENSING_ANSWER": "回答",
+            "SENSING_KEYPRESSED": "按下 %1 键?",
+            "SENSING_MOUSEDOWN": "按下鼠标?",
+            "SENSING_MOUSEX": "鼠标的x坐标",
+            "SENSING_MOUSEY": "鼠标的y坐标",
+            "SENSING_SETDRAGMODE": "将拖动模式设为 %1",
+            "SENSING_SETDRAGMODE_DRAGGABLE": "可拖动",
+            "SENSING_SETDRAGMODE_NOTDRAGGABLE": "不可拖动",
+            "SENSING_LOUDNESS": "响度",
+            "SENSING_LOUD": "响声？",
+            "SENSING_TIMER": "计时器",
+            "SENSING_RESETTIMER": "计时器归零",
+            "SENSING_OF": "%2 的 %1",
+            "SENSING_OF_XPOSITION": "x 坐标",
+            "SENSING_OF_YPOSITION": "y 坐标",
+            "SENSING_OF_DIRECTION": "方向",
+            "SENSING_OF_COSTUMENUMBER": "造型编号",
+            "SENSING_OF_COSTUMENAME": "造型名称",
+            "SENSING_OF_SIZE": "大小",
+            "SENSING_OF_VOLUME": "音量",
+            "SENSING_OF_BACKDROPNUMBER": "背景编号",
+            "SENSING_OF_BACKDROPNAME": "背景名称",
+            "SENSING_OF_STAGE": "舞台",
+            "SENSING_CURRENT": "当前时间的 %1",
+            "SENSING_CURRENT_YEAR": "年",
+            "SENSING_CURRENT_MONTH": "月",
+            "SENSING_CURRENT_DATE": "日",
+            "SENSING_CURRENT_DAYOFWEEK": "星期",
+            "SENSING_CURRENT_HOUR": "时",
+            "SENSING_CURRENT_MINUTE": "分",
+            "SENSING_CURRENT_SECOND": "秒",
+            "SENSING_DAYSSINCE2000": "2000年至今的天数",
+            "SENSING_USERNAME": "用户名",
+            "SENSING_USERID": "用户id",
+            "SOUND_PLAY": "播放声音 %1",
+            "SOUND_PLAYUNTILDONE": "播放声音 %1 等待播完",
+            "SOUND_STOPALLSOUNDS": "停止所有声音",
+            "SOUND_SETEFFECTO": "将 %1 音效设为 %2",
+            "SOUND_CHANGEEFFECTBY": "将 %1 音效增加 %2",
+            "SOUND_CLEAREFFECTS": "清除音效",
+            "SOUND_EFFECTS_PITCH": "音调",
+            "SOUND_EFFECTS_PAN": "左右平衡",
+            "SOUND_CHANGEVOLUMEBY": "将音量增加 %1",
+            "SOUND_SETVOLUMETO": "将音量设为 %1%",
+            "SOUND_VOLUME": "音量",
+            "SOUND_RECORD": "录制…",
+            "CATEGORY_MOTION": "运动",
+            "CATEGORY_LOOKS": "外观",
+            "CATEGORY_SOUND": "声音",
+            "CATEGORY_EVENTS": "事件",
+            "CATEGORY_CONTROL": "控制",
+            "CATEGORY_SENSING": "侦测",
+            "CATEGORY_OPERATORS": "运算",
+            "CATEGORY_VARIABLES": "变量",
+            "CATEGORY_MYBLOCKS": "自制积木",
+            "DUPLICATE": "复制",
+            "DELETE": "删除",
+            "ADD_COMMENT": "添加注释",
+            "REMOVE_COMMENT": "删除注释",
+            "DELETE_BLOCK": "删除",
+            "DELETE_X_BLOCKS": "删除 %1 积木",
+            "DELETE_ALL_BLOCKS": "删除全部 %1 积木？",
+            "CLEAN_UP": "整理积木",
+            "HELP": "帮助",
+            "UNDO": "撤销",
+            "REDO": "重做",
+            "EDIT_PROCEDURE": "编辑",
+            "SHOW_PROCEDURE_DEFINITION": "查看定义",
+            "WORKSPACE_COMMENT_DEFAULT_TEXT": "说些什么……",
+            "COLOUR_HUE_LABEL": "颜色",
+            "COLOUR_SATURATION_LABEL": "饱和度",
+            "COLOUR_BRIGHTNESS_LABEL": "亮度",
+            "CHANGE_VALUE_TITLE": "更改变量：",
+            "RENAME_VARIABLE": "修改变量名",
+            "RENAME_VARIABLE_TITLE": "将所有的「%1」变量名改为：",
+            "RENAME_VARIABLE_MODAL_TITLE": "修改变量名",
+            "NEW_VARIABLE": "建立一个变量",
+            "NEW_VARIABLE_TITLE": "新变量名：",
+            "VARIABLE_MODAL_TITLE": "新建变量",
+            "VARIABLE_ALREADY_EXISTS": "已经存在名为「%1」的变量。",
+            "VARIABLE_ALREADY_EXISTS_FOR_ANOTHER_TYPE": "已经存在一个名为「%1」的变量，其类型为「%2」。",
+            "DELETE_VARIABLE_CONFIRMATION": "删除%1处「%2」变量吗？",
+            "CANNOT_DELETE_VARIABLE_PROCEDURE": "无法删除变量「%1」，因为函数「%2」的定义中用到了它",
+            "DELETE_VARIABLE": "删除变量「%1」",
+            "NEW_PROCEDURE": "制作新的积木",
+            "PROCEDURE_ALREADY_EXISTS": "已经存在名为「%1」的程序。",
+            "PROCEDURE_DEFAULT_NAME": "积木名称",
+            "PROCEDURE_USED": "在删除一个积木定义前，请先把该积木从所有使用的地方删除。",
+            "NEW_LIST": "建立一个列表",
+            "NEW_LIST_TITLE": "新的列表名：",
+            "LIST_MODAL_TITLE": "新建列表",
+            "LIST_ALREADY_EXISTS": "名为 「%1」 的列表已存在。",
+            "RENAME_LIST_TITLE": "将所有的「%1」列表改名为：",
+            "RENAME_LIST_MODAL_TITLE": "修改列表名",
+            "DEFAULT_LIST_ITEM": "'item'",
+            "DELETE_LIST": "删除「%1」列表",
+            "RENAME_LIST": "修改列表名",
+            "NEW_BROADCAST_MESSAGE": "新消息",
+            "NEW_BROADCAST_MESSAGE_TITLE": "新消息的名称：",
+            "BROADCAST_MODAL_TITLE": "新消息",
+            "DEFAULT_BROADCAST_MESSAGE_NAME": "消息1"
+        };
+
+        // 解决toLowerCase的问题
+        Blockly.Names.prototype.getName = function (name, type) {
+            if (name == null) {
+                return ""
+            }
+            if (type == Blockly.Variables.NAME_TYPE) {
+                var varName = this.getNameForUserVariable_(name);
+                if (varName) {
+                    name = varName;
+                }
+            }
+            var normalized = name.toLowerCase() + '_' + type;
+
+            var isVarType = type == Blockly.Variables.NAME_TYPE ||
+                type == Blockly.Names.DEVELOPER_VARIABLE_TYPE;
+
+            var prefix = isVarType ? this.variablePrefix_ : '';
+            if (normalized in this.db_) {
+                return prefix + this.db_[normalized];
+            }
+            var safeName = this.getDistinctName(name, type);
+            this.db_[normalized] = safeName.substr(prefix.length);
+            return safeName;
+        };
+
+        Blockly.VerticalFlyout.prototype.setMetrics_ = function (xyRatio) {
+            var metrics = this.getMetrics_();
+            // This is a fix to an apparent race condition.
+            if (!metrics) {
+                return;
+            }
+            function isNumber(obj) {
+                return typeof obj === 'number' && isFinite(obj)
+            }
+
+            if (isNumber(xyRatio.y)) {
+                this.workspace_.scrollY = -metrics.contentHeight * xyRatio.y;
+            }
+            this.workspace_.translate(this.workspace_.scrollX + metrics.absoluteLeft,
+                this.workspace_.scrollY + metrics.absoluteTop);
+
+            this.clipRect_.setAttribute('height', Math.max(0, metrics.viewHeight) + 'px');
+            this.clipRect_.setAttribute('width', metrics.viewWidth + 100 + 'px');
+
+            if (this.categoryScrollPositions) {
+                this.selectCategoryByScrollPosition(-this.workspace_.scrollY);
+            }
+        };
+
         bindAll(this, [
             'attachVM',
             'detachVM',
@@ -100,6 +445,11 @@ class Blocks extends React.Component {
         // 初始化默认方块
         initDefaultBlocks(Blockly);
         initUDPiBlocks(Blockly);
+        initUDPiPlusBlocks(Blockly);
+        initUDBlockEXTBMFBlocks(Blockly);
+        initUDBlockEXTBSMBlocks(Blockly);
+        initUDBlockEXTBIOBlocks(Blockly);
+
 
         this.state = {
             prompt: null
@@ -112,16 +462,12 @@ class Blocks extends React.Component {
     updateCodeBox(workspace) {
         //Blockly.Msg.console.println("hello")
         //console.log(Blockly)
-        if (this.props.editorMode == "code") {
-            let codeText = Blockly.Python.workspaceToCode(this.workspace);
-            let codeSplit = codeText.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
-            codeText = codeSplit.join("")
-            console.log(codeText)
-            if (this.props.editor != undefined) {
-                this.props.editor.setValue(codeText);
-            }
-        } else {
-            console.log("不是代码模式，不输出")
+        let codeText = Blockly.Python.workspaceToCode(this.workspace);
+        let codeSplit = codeText.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
+        codeText = codeSplit.join("")
+        //console.log(codeText)
+        if (this.props.editor != undefined) {
+            this.props.editor.setValue('# UDRobot MicroPython Code\n' + codeText);
         }
 
 
@@ -141,7 +487,9 @@ class Blocks extends React.Component {
         );
         this.workspace = Blockly.inject(this.blocks, workspaceConfig);
         this.workspace.addChangeListener(() => {
-            this.updateCodeBox(this.workspace)
+            if (this.props.editorMode == "code") {
+                this.updateCodeBox(this.workspace)
+            }
         })
         // Register buttons under new callback keys for creating variables,
         // lists, and procedures from extensions.
@@ -406,7 +754,7 @@ class Blocks extends React.Component {
                         targetCostumes[targetCostumes.length - 1].name,
                         stageCostumes[stageCostumes.length - 1].name,
                         targetSounds.length > 0 ? targetSounds[targetSounds.length - 1].name : ''
-                );
+                    );
 
             }
 
@@ -460,11 +808,74 @@ class Blocks extends React.Component {
         // workspace to be 'undone' here.
         this.workspace.clearUndo();
     }
+
+    removeExtendBoards(a) {
+        for (var i = 0; i < a.children.length; i++) {
+            var category = a.children.item(i);
+            // 找到motion分类，打印他的所有block
+            if (String(category.getAttribute("id")).startsWith("udblockEXTB")) {
+                category.remove();
+            }
+        }
+    }
+
+    getExtbCatogories(a) {
+        var collect = []
+        for (var i = 0; i < a.children.length; i++) {
+            var category = a.children.item(i);
+            // 找到motion分类，打印他的所有block
+            if (String(category.getAttribute("id")).startsWith("udblockEXTB")) {
+                collect.push(category)
+            }
+        }
+        return collect;
+    }
+
+    getMotherBoardCatogories(a) {
+        var collect = []
+        for (var i = 0; i < a.children.length; i++) {
+            var category = a.children.item(i);
+            // 找到motion分类，打印他的所有block
+            if (String(category.getAttribute("id")).startsWith("udblockUDPi")) {
+                collect.push(category)
+            }
+        }
+        return collect;
+    }
+
+    getCategory(a, id) {
+        {
+            for (var i = 0; i < a.children.length; i++) {
+                var category = a.children.item(i);
+                // 找到motion分类，打印他的所有block
+                if (category.getAttribute("id") == id) {
+                    return category;
+
+                }
+            }
+            return null
+        }
+    }
+
+    getCategoryBlocks(category) {
+        // 收集插件方块
+        var blockCollection = []
+        for (var j = 0; j < category.children.length; j++) {
+            var block = category.children.item(j);
+            blockCollection.push(block);
+        }
+        console.log("收集到的方块: ", blockCollection)
+        return blockCollection;
+    }
+
     handleExtensionAdded(categoryInfo) {
+        console.log("插件信息：", categoryInfo)
         const defineBlocks = blockInfoArray => {
+            //console.log("blockInfoArray:", JSON.stringify(blockInfoArray))
             if (blockInfoArray && blockInfoArray.length > 0) {
                 const staticBlocksJson = [];
                 const dynamicBlocksInfo = [];
+                dynamicBlocksInfo.push()
                 blockInfoArray.forEach(blockInfo => {
                     if (blockInfo.info && blockInfo.info.isDynamic) {
                         dynamicBlocksInfo.push(blockInfo);
@@ -488,7 +899,9 @@ class Blocks extends React.Component {
 
                 // 修改工具箱的方块央样式
                 ModifyUDPi(Blockly)
-                //this.updateToolbox()
+                ModifyUDPiPlus(Blockly)
+                this.updateToolbox()
+
                 //this.handleBlocksInfoUpdate(categoryInfo);
             }
         };
@@ -501,11 +914,74 @@ class Blocks extends React.Component {
         defineBlocks(categoryInfo.menus);
         defineBlocks(categoryInfo.blocks);
 
+
+
         // Update the toolbox with new blocks if possible
-        const toolboxXML = this.getToolboxXML(true);
-        if (toolboxXML) {
-            this.props.updateToolboxState(toolboxXML);
-        }
+        var toolboxXML = this.getToolboxXML(true);
+
+        // if (toolboxXML) {
+        //     // 创建新的XML
+        //     var a = Blockly.Xml.textToDom(toolboxXML);
+        //     var motherBoardCategories = this.getCategory(a, "udblockUDPi");
+
+        //     if (motherBoardCategories.length <= 1) {
+        //         // 判断插件类型，如果是拓展类型则判断主板是否添加，如果主板已经添加，则在主板的XML中添加拓展的XML
+        //         if (String(categoryInfo.id).startsWith("udblockEXTB")) {// 是插件类型
+        //             // 检查主板存在
+        //             motherBoardCategory = motherBoardCategories[0]
+
+        //             if (motherBoardCategory != null) {
+        //                 motherBoardCategory = motherBoardCategories[0]
+        //                 // 从XML中获取到插件
+        //                 var extCategory = this.getCategory(a, categoryInfo.id);
+        //                 var blockCollection = this.getCategoryBlocks(extCategory);
+
+        //                 // 移除插件分类
+        //                 console.log(blockCollection)
+        //                 //extCategory.remove();
+        //                 this.removeExtendBoards(a);
+
+        //                 console.log(blockCollection)
+
+        //                 // 先在主板分类里面添加一个标签
+        //                 var label = document.createElement("label")
+        //                 label.setAttribute("text", '子拓展 ' + categoryInfo.name)
+        //                 motherBoardCategory.appendChild(label)
+
+        //                 // 主板分类添加东西
+        //                 for (var index in blockCollection) {
+        //                     motherBoardCategory.appendChild(blockCollection[index]);
+        //                 }
+
+        //                 toolboxXML = Blockly.Xml.domToText(a);
+        //                 console.log("新的工具箱XML：", toolboxXML)
+
+
+        //             } else {
+        //                 // var ext = this.getCategory(a, categoryInfo.id)
+        //                 // if (ext != null) {
+        //                 //     ext.remove();
+        //                 // }
+        //                 this.removeExtendBoards(a);
+        //                 console.log("删除之前添加的拓展")
+        //                 this.props.vm.deleteExtension(categoryInfo.id)
+
+        //                 console.log("请先添加主板")
+        //             }
+        //         } else {
+        //             if (String(categoryInfo.id).startsWith("udblockUDPi")) {
+        //                 var mc = this.getMotherBoardCatogories(a)
+
+        //                 // 是主板
+        //                 this.removeExtendBoards(a);
+
+        //             }
+        //         }
+        //     }
+
+        //     toolboxXML = Blockly.Xml.domToText(a);
+        this.props.updateToolboxState(toolboxXML);
+
     }
     handleBlocksInfoUpdate(categoryInfo) {
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
@@ -739,6 +1215,7 @@ const mapStateToProps = state => ({
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     editor: state.editorRef.o,
+    editorMode: state.editorMode.editorMode
 });
 
 const mapDispatchToProps = dispatch => ({

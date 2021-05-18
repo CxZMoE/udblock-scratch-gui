@@ -79,7 +79,7 @@ const StageHeaderComponent = function (props) {
                 </a>
             </div>
         ) : (
-            <Button
+            [<Button
                 className={styles.stageButton}
                 onClick={onSetStageUnFull}
                 onKeyPress={onKeyPress}
@@ -91,7 +91,7 @@ const StageHeaderComponent = function (props) {
                     src={unFullScreenIcon}
                     title={props.intl.formatMessage(messages.fullscreenControl)}
                 />
-            </Button>
+            </Button>]
         );
         header = (
             <Box className={styles.stageHeaderWrapperOverlay}>

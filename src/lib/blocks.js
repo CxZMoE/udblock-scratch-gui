@@ -1,7 +1,10 @@
 import ScratchBlocks from 'scratch-blocks';
 
-import ModifyUDPi from './udrobot-modify/udpi'
-ModifyUDPi(ScratchBlocks);
+// import ModifyUDPi from './udrobot-modify/udpi'
+// import ModifyUDPiPlus from './udrobot-modify/udpi'
+
+// ModifyUDPi(ScratchBlocks);
+// ModifyUDPiPlus(ScratchBlocks);
 console.log(ScratchBlocks)
 
 /**

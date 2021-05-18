@@ -189,16 +189,23 @@ class MenuBar extends React.Component {
             'handleRestoreOption',
             'getSaveToComputerHandler',
             'restoreOptionMessage',
-            'handleEditorModeSelect'
+            'handleEditorModeSelect',
+            'onPortSelect'
         ]);
+        this.state = {
+            com: null
+        }
     }
-    handleEditorModeSelect(){
+    handleEditorModeSelect() {
         switch (this.props.editorMode) {
             case "code":
                 this.props.editorToggleDefault();
+                this.handleClickNew();
+                
                 break;
             case "default":
                 this.props.editorToggleCode();
+                this.handleClickNew();
                 break;
             default:
                 this.props.editorToggleDefault();
@@ -206,16 +213,23 @@ class MenuBar extends React.Component {
         }
 
         console.log("blocks.jsx:", this.props.editorMode)
-        this.props.vm.emitWorkspaceUpdate();
+        //this.props.vm.emitWorkspaceUpdate();
+    }
+
+
+    onPortSelect(comName) {
+        this.setState({
+            com: comName
+        })
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
         document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
-        
+
     }
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
-        
+
     }
     handleClickNew() {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -373,7 +387,7 @@ class MenuBar extends React.Component {
         };
     }
     render() {
-        
+
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
@@ -609,43 +623,149 @@ class MenuBar extends React.Component {
                                 </MenuSection>
                             </MenuBarMenu>
                         </div>
-                        <div
-                            className={classNames(styles.menuBarItem, styles.hoverable, {
-                                [styles.active]: this.props.toolMenuOpen
-                            })}
-                            onMouseUp={this.props.onClickTool}
-                        >
-                            <div className={classNames(styles.editMenu)}>
-                                <FormattedMessage
-                                    defaultMessage="硬件工具"
-                                    description=""
-                                    id="gui.menuBar.tool"
-                                />
-                            </div>
-                            <MenuBarMenu
-                                className={classNames(styles.menuBarMenu)}
-                                open={this.props.toolMenuOpen}
-                                place={this.props.isRtl ? 'left' : 'right'}
-                                onRequestClose={this.props.onRequestCloseTool}
-                            >
-                                <MenuSection>
-                                    <MenuItem onClick={() => { this.props.terminal.print("upload"); this.props.onRequestCloseTool() }}>
+                        {this.props.editorMode == "code" ? (
+                            <React.Fragment>
+                                <div
+                                    className={classNames(styles.menuBarItem, styles.hoverable, {
+                                        [styles.active]: this.props.toolMenuOpen
+                                    })}
+                                    onMouseUp={this.props.onClickTool}
+                                >
+                                    <div className={classNames(styles.editMenu)}>
                                         <FormattedMessage
-                                            defaultMessage="上传代码"
-                                            description="Menu bar item for turning off turbo mode"
-                                            id="gui.menuBar.upload"
+                                            defaultMessage="硬件工具"
+                                            description=""
+                                            id="gui.menuBar.tool"
                                         />
-                                    </MenuItem>
-                                    <MenuItem onClick={() => { this.props.terminal.print("hotrun"); this.props.onRequestCloseTool() }}>
-                                        <FormattedMessage
-                                            defaultMessage="热加载代码"
-                                            description="Menu bar item for turning on turbo mode"
-                                            id="gui.menuBar.hotrun"
-                                        />
-                                    </MenuItem>
-                                </MenuSection>
-                            </MenuBarMenu>
+                                    </div>
+                                    <MenuBarMenu
+                                        className={classNames(styles.menuBarMenu)}
+                                        open={this.props.toolMenuOpen}
+                                        place={this.props.isRtl ? 'left' : 'right'}
+                                        onRequestClose={this.props.onRequestCloseTool}
+                                    >
+                                        <MenuSection>
+                                            <MenuItem onClick={() => {
+                                                var terminal = this.props.terminal
+                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
+                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+
+                                                    terminal.ws.onopen = (e) => {
+                                                        terminal.ws.send(`closecom:${terminal.com}`)
+                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                    }
+                                                    terminal.ws.onmessage = function (e) {
+                                                        terminal.print(e.data)
+                                                    }
+                                                }
+
+                                                terminal.ws.send(`closecom:${terminal.com}`)
+
+                                                terminal.print("开始上传代码");
+                                                this.props.onRequestCloseTool()
+                                                var request = new XMLHttpRequest();
+                                                request.open("POST", "http://127.0.0.1:3000/ampy/upload", true);
+                                                request.send(JSON.stringify({
+                                                    sourceCode: this.props.editor.getModel().getValue(),
+                                                    com: terminal.com
+                                                }))
+                                                request.onreadystatechange = function (e) {
+                                                    if (request.readyState == 4 && request.status == 200) {
+                                                        var response = request.responseText;
+                                                        console.log(response)
+                                                        terminal.print("上传代码成功");
+                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                    }
+                                                }
+
+                                            }}>
+                                                <FormattedMessage
+                                                    defaultMessage="上传代码"
+                                                    description="Menu bar item for turning off turbo mode"
+                                                    id="gui.menuBar.upload"
+                                                />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => {
+                                                var terminal = this.props.terminal
+
+                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
+                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+
+                                                    terminal.ws.onopen = (e) => {
+                                                        terminal.ws.send(`closecom:${terminal.com}`)
+                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                    }
+                                                    terminal.ws.onmessage = function (e) {
+                                                        terminal.print(e.data)
+                                                    }
+                                                }
+
+                                                terminal.ws.send(`closecom:${terminal.com}`)
+
+                                                this.props.onRequestCloseTool()
+                                                terminal.print("开始热加载");
+                                                var request = new XMLHttpRequest();
+                                                request.open("POST", "http://127.0.0.1:3000/ampy/run", true);
+                                                request.send(JSON.stringify({
+                                                    sourceCode: this.props.editor.getModel().getValue(),
+                                                    com: terminal.com
+                                                }))
+                                                request.onreadystatechange = function (e) {
+                                                    if (request.readyState == 4 && request.status == 200) {
+                                                        var response = request.responseText;
+                                                        console.log(response)
+                                                        terminal.print("运行代码成功");
+                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                    }
+                                                }
+
+                                            }}>
+                                                <FormattedMessage
+                                                    defaultMessage="热加载代码"
+                                                    description="Menu bar item for turning on turbo mode"
+                                                    id="gui.menuBar.hotrun"
+                                                />
+                                            </MenuItem>
+
+                                            <MenuItem onClick={() => {
+                                                this.props.onRequestCloseTool()
+                                                this.props.terminal.print("flash firmware");
+                                                let request = new XMLHttpRequest();
+                                                request.open("GET", "http://127.0.0.1:3000/ampy/firmware", true);
+                                                request.send();
+                                                let reponse = request.responseText;
+                                                console.log(reponse)
+                                            }}>
+                                                <FormattedMessage
+                                                    defaultMessage="固件更新"
+                                                    description="Menu bar item for turning on turbo mode"
+                                                    id="gui.menuBar.firmwareUpdate"
+                                                />
+                                            </MenuItem>
+
+                                        </MenuSection>
+                                    </MenuBarMenu>
+                                </div>
+                                <Divider className={classNames(styles.divider)} />
+                                <div style={{ marginRight: "10px" }}>
+                                    选择串口
                         </div>
+                                <div><select name="port" id="portSelect" style=
+                                    {{
+                                        outline: "none",
+                                        color: "#FFF",
+                                        marginRight: "10px",
+                                        backgroundColor: "hsla(215, 100%, 65%, 1)",
+                                        border: "1px solid #FFF",
+                                        height: "35px",
+                                        fontSize: "15px",
+                                        borderRadius: "2px",
+                                        fontWeight: "bold"
+                                    }}></select></div>
+                            </React.Fragment>
+                        ) : ([])}
+
+
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
@@ -975,6 +1095,7 @@ const mapStateToProps = (state, ownProps) => {
         vm: state.scratchGui.vm,
         terminal: state.terminal.o,
         toolboxXML: state.scratchGui.toolbox.toolboxXML,
+        editor: state.editorRef.o,
     };
 };
 

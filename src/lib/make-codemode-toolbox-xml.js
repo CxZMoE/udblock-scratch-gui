@@ -756,7 +756,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         //sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
-        //myBlocksXML
+        myBlocksXML
     ];
 
     for (const extensionCategory of categoriesXML) {
