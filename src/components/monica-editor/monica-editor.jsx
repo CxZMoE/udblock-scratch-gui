@@ -17,41 +17,62 @@ const FileSystemPlugin = pseudoFileSystemPlugin();
 
 // TerminalJS
 import Terminal from '../terminal/terminal.jsx'
+import AceEditor from "react-ace";
+
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/theme-github";
+
+import { updatePyCode } from '../../reducers/pycode'
+
 
 class MonicaEditor extends React.Component {
     constructor(props) {
         super(props)
-        
+
     }
     //
 
     loadMonaco() {
-        console.log("加载编辑器")
-        loader.init().then(monaco => {
-            console.log("加载Monaco编辑器")
-            const wrapper = document.getElementById("monaco-editor-dom");
-            const properties = {
-                value: "# UDRobot MicroPython Code",
-                language: "python",
-                minimap: {
-                    enabled: false
+        try {
+            console.log("加载编辑器")
+            loader.init().then(monaco => {
+                console.log("加载Monaco编辑器")
+                const wrapper = document.getElementById("monaco-editor-dom");
+                const properties = {
+                    value: "# UDRobot MicroPython Code",
+                    language: "python",
+                    minimap: {
+                        enabled: false
+                    }
                 }
-            }
-            var editor = monaco.editor.create(wrapper, properties);
-            this.props.onEditorCreate(editor);
-            window.onresize = function () {
-                if (editor) {
-                    editor.layout();
+                var editor = monaco.editor.create(wrapper, properties);
+                this.props.onEditorCreate(editor);
+                window.onresize = function () {
+                    if (editor) {
+                        editor.layout();
 
-                }
-            };
+                    }
+                };
 
-        })
+            })
+        } catch (ex) {
+            console.log(ex)
+
+            var monacoDom = document.getElementById("monaco-editor-dom");
+            var textArea = document.createElement("textarea")
+
+            textArea.setValue = (text) => { textArea.innerText = text };
+            monacoDom.appendChild(textArea)
+            this.props.onEditorCreate(textArea);
+        }
     }
 
+
+
+
     componentDidMount() {
-        this.loadMonaco();
-        
+        //this.loadMonaco();
+
     }
 
     render() {
@@ -91,7 +112,29 @@ class MonicaEditor extends React.Component {
                         style={{
                             height: "100%"
                         }}
-                    ></div>
+
+                    >
+
+                        <AceEditor
+                            mode="python"
+                            theme="github"
+                            onChange={(newText)=>{
+                                console.log("change", newText);
+                                this.props.updatePyCode(newText)
+
+                            }}
+                            name="ace_editor"
+                            editorProps={{ $blockScrolling: true }}
+                            value={this.props.pycode}
+                            height={'100%'}
+                            width={'100%'}
+                            setOptions={{
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true,
+                                enableSnippets: true
+                            }}
+                        />
+                    </div>
                 </Box>
 
 
@@ -163,8 +206,8 @@ class MonicaEditor extends React.Component {
                     }}
                 >
                     <input id="serialInput" className={classNames(styles.serialInput)} type="text" placeholder="输入要发送的消息"></input>
-                    <span id="serialOpenBtn" className={classNames(styles.serialBtn)}>打开串口</span>
-                    <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送消息</span>
+                    <span id="serialOpenBtn" className={classNames(styles.serialBtn)}>打开</span>
+                    <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送</span>
                 </Box>
 
             </Box>
@@ -177,11 +220,13 @@ MonicaEditor.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    pycode: state.pycode.value
 })
 
 const mapDispatchToProps = dispatch => ({
     onEditorCreate: (editor) => dispatch(editorCreate(editor)),
-    onEditorDelete: (editor) => dispatch(editorDelete(editor))
+    onEditorDelete: (editor) => dispatch(editorDelete(editor)),
+    updatePyCode: (code) => dispatch(updatePyCode(code))
 });
 
 const MonicaEditorWrapper = connect(

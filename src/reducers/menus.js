@@ -8,6 +8,7 @@ const MENU_EDIT = 'editMenu';
 const MENU_LANGUAGE = 'languageMenu';
 const MENU_LOGIN = 'loginMenu';
 const MENU_TOOL = 'toolMenu';
+const MENU_SYSTEM = 'systemMenu';
 
 const initialState = {
     [MENU_ABOUT]: false,
@@ -17,6 +18,7 @@ const initialState = {
     [MENU_LANGUAGE]: false,
     [MENU_LOGIN]: false,
     [MENU_TOOL]: false,
+    [MENU_SYSTEM]: false,
 };
 
 const reducer = function (state, action) {
@@ -63,6 +65,11 @@ const loginMenuOpen = state => state.scratchGui.menus[MENU_LOGIN];
 const openToolMenu = () => openMenu(MENU_TOOL);
 const closeToolMenu = () => closeMenu(MENU_TOOL);
 const toolMenuOpen = state => state.scratchGui.menus[MENU_TOOL];
+const openSystemMenu = () => openMenu(MENU_SYSTEM);
+const closeSystemMenu = () => closeMenu(MENU_SYSTEM);
+const systemMenuOpen = state => state.scratchGui.menus[MENU_SYSTEM];
+
+
 
 export {
     reducer as default,
@@ -88,4 +95,7 @@ export {
     openToolMenu,
     closeToolMenu,
     toolMenuOpen,
+    openSystemMenu,
+    closeSystemMenu,
+    systemMenuOpen,
 };

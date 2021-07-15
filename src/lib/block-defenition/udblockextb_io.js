@@ -23,6 +23,23 @@ export default (Blockly) => {
     Blockly.Python["udblockEXTBIO_menu_faceMenu"] = function (block) {
         return [block.getFieldValue("faceMenu"), Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python["udblockEXTBIO_menu_faceColorMenu"] = function (block) {
+        return [block.getFieldValue("faceColorMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python["udblockEXTBIO_menu_colorResult"] = function (block) {
+        return [block.getFieldValue("colorResult"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python["udblockEXTBIO_menu_faceModes"] = function (block) {
+        return [block.getFieldValue("faceModes"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python['udblockEXTBIO_menu_imageMethods'] = function (block) {
+        var imageMethod = block.getFieldValue("imageMethods");
+        return [`${imageMethod}`, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python['udblockEXTBIO_menu_color'] = function (block) {
+        var color = block.getFieldValue("color");
+        return [`${color}`, Blockly.Python.ORDER_ATOMIC]
+    }
 
     // 读取风速传感器
     Blockly.Python["udblockEXTBIO_readWindSensor"] = function (block) {
@@ -199,7 +216,7 @@ export default (Blockly) => {
     // 灯带
     Blockly.Python['udblockEXTBIO_openRGBStrip'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
         var rgb_count = Blockly.Python.valueToCode(block, "COUNT", Blockly.Python.ORDER_ATOMIC)
         if (!rgb_count) {
             return `rgb_light_${rgb_pin} = RGB(${rgb_pin}, 15)\n`;
@@ -208,13 +225,13 @@ export default (Blockly) => {
     }
     Blockly.Python['udblockEXTBIO_setRGBStripLuminance'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
         var rgb_intensity = Blockly.Python.valueToCode(block, "NUM", Blockly.Python.ORDER_ATOMIC)
         return `rgb_light_${rgb_pin}.intensity(${rgb_intensity})\n`;
     }
     Blockly.Python['udblockEXTBIO_setRGBStripIndexColor'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
         var rgb_index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
         var rgb_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         return `rgb_light_${rgb_pin}.value(${rgb_index}, ${rgb_color})\n`;
@@ -222,7 +239,7 @@ export default (Blockly) => {
 
     Blockly.Python['udblockEXTBIO_setRGBStripIndexOnlyColor'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
         var rgb_index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
         var rgb_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         return `rgb_light_${rgb_pin}.switch_singal(${rgb_index}, ${rgb_color})\n`;
@@ -230,28 +247,28 @@ export default (Blockly) => {
 
     Blockly.Python['udblockEXTBIO_setRGBStripClear'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var rgb_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
         var rgb_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         return `rgb_light_${rgb_pin}.clear((${rgb_color}))\n`;
     }
     // 继电器
     Blockly.Python['udblockEXTBIO_openReplay'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_${relay_pin} = Relay(${relay_pin})`;
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_${relay_pin} = Relay(${relay_pin})`
 
         return `relay_control_${relay_pin}.on()\n`;
     }
     Blockly.Python['udblockEXTBIO_closeReplay'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_${relay_pin} = Relay(${relay_pin})`;
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_${relay_pin} = Relay(${relay_pin})`
         return `relay_control_${relay_pin}.off()\n`;
     }
     Blockly.Python['udblockEXTBIO_switchReplay'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_${relay_pin} = Relay(${relay_pin})`;
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[1];
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_${relay_pin} = Relay(${relay_pin})`
         return `relay_control_${relay_pin}.toggle()\n`;
     }
 
@@ -338,4 +355,170 @@ export default (Blockly) => {
         //                          R                                  B                                   G
         //bytearray([0x02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0//,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0//,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
     }
+    /* 摄像头 */
+    // 菜单
+    Blockly.Python['udblockEXTBIO_menu_actions'] = function (block) {
+        var action = block.getFieldValue("actions");
+        return [`${action}`, Blockly.Python.ORDER_ATOMIC]
+    }
+
+
+    Blockly.Python['udblockEXTBIO_initCamera'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
+        var code = `myCamara = Camera(${port})\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_doFaceDectection'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_face()\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_face()\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_doObjectDectection'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_object()\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_object()\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_doModeObjectDectection'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_selfobject()\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_selfobject()\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_doImageDectection'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var method = Blockly.Python.valueToCode(block, "IMGMETHOD", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_image('${method}')\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_image('${method}')\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_doQrcodeDectection'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_qrcode()\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_qrcode()\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_doColorDectection'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_color('${color}')\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_color('${color}')\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_getColorDectectionResult'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var result = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        code = `myCamara.GetColorPosition()[${result}]`;
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIO_getFaceDectectionResult'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        var code = ''
+        code = `myCamara.GetIsFace()`;
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIO_getQrcodeString'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        var code = ''
+        code = `myCamara.GetQrcodeStr()`;
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIO_getObjectDectectionResult'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        var code = ''
+        code = `myCamara.GetObjectResult()`;
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIO_getModeObjectDectectionResult'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        var code = ''
+        code = `myCamara.GetSelfLearningResult()`;
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIO_addFace'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        code = `myCamara.AddFace(${name})\n`;
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_delFace'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        
+        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        code = `myCamara.DelFace(${name})\n`;
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_delAllFace'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+    
+        var code = ''
+        code = `myCamara.DelAllFace()\n`;
+
+        return code;
+    };
+    Blockly.Python['udblockEXTBIO_switchMode'] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
+        var mode = Blockly.Python.valueToCode(block, "MODE", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        code = `myCamara.ChangeMode("${mode}")\n`;
+
+        return code;
+    };
 }

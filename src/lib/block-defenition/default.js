@@ -725,7 +725,9 @@ export default function (Blockly) {
     };
     Blockly.Python['data_showvariable'] = function (block) {
         // Variable setter.
-        return 'pass\n';
+        var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
+            Blockly.VARIABLE_CATEGORY_NAME);
+        return `global ${varName}\n`;
     };
 
     Blockly.Python['data_listcontents'] = function(block){
@@ -979,7 +981,7 @@ export default function (Blockly) {
         if (until) {
             argument0 = 'not ' + argument0;
         }
-        return 'while ' + argument0 + ':\n' + branch;
+        return 'while not ' + argument0 + ':\n' + branch;
     };
 
     Blockly.Python['control_for'] = function (block) {

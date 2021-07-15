@@ -27,7 +27,7 @@ import { closeExtensionLibrary, openSoundRecorder, openConnectionModal } from '.
 import { activateCustomProcedures, deactivateCustomProcedures } from '../reducers/custom-procedures';
 import { setConnectionModalExtensionId } from '../reducers/connection-modal';
 import { updateMetrics } from '../reducers/workspace-metrics';
-
+import { updatePyCode } from '../reducers/pycode';
 
 import {
     activateTab,
@@ -45,6 +45,9 @@ import initUDPiPlusBlocks from '../lib/block-defenition/udpi_plus'
 import initUDBlockEXTBMFBlocks from '../lib/block-defenition/udblockextb_mf'
 import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
 import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
+import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
+import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
+import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 
 import ModifyUDPi from '../lib/udrobot-modify/udpi'
 import ModifyUDPiPlus from '../lib/udrobot-modify/udpi_plus'
@@ -98,7 +101,7 @@ class Blocks extends React.Component {
             "CONTROL_ALLATONCE": "所有脚本",
             "DATA_SETVARIABLETO": "将 %1 设为 %2",
             "DATA_CHANGEVARIABLEBY": "将 %1 增加 %2",
-            "DATA_SHOWVARIABLE": "显示变量 %1",
+            "DATA_SHOWVARIABLE": "调用全局变量 %1",
             "DATA_HIDEVARIABLE": "隐藏变量 %1",
             "DATA_ADDTOLIST": "将 %1 加入 %2",
             "DATA_DELETEOFLIST": "删除 %2 的第 %1 项",
@@ -449,8 +452,10 @@ class Blocks extends React.Component {
         initUDBlockEXTBMFBlocks(Blockly);
         initUDBlockEXTBSMBlocks(Blockly);
         initUDBlockEXTBIOBlocks(Blockly);
-
-
+        initUDBlockCarBlocks(Blockly);
+        initUDBlockCamerabBlocks(Blockly);
+        initUDBlockIOTBlocks(Blockly);
+        
         this.state = {
             prompt: null
         };
@@ -466,8 +471,12 @@ class Blocks extends React.Component {
         let codeSplit = codeText.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
         codeText = codeSplit.join("")
         //console.log(codeText)
+        this.props.updatePyCode('# UDRobot MicroPython Code\n' + codeText)
+        console.log(this.props.pycode)
+
         if (this.props.editor != undefined) {
-            this.props.editor.setValue('# UDRobot MicroPython Code\n' + codeText);
+            console.log("editor undifined")
+            this.props.editor.setValue(this.props.pycode);
         }
 
 
@@ -900,7 +909,7 @@ class Blocks extends React.Component {
                 // 修改工具箱的方块央样式
                 ModifyUDPi(Blockly)
                 ModifyUDPiPlus(Blockly)
-                this.updateToolbox()
+                //this.updateToolbox()
 
                 //this.handleBlocksInfoUpdate(categoryInfo);
             }
@@ -1167,6 +1176,7 @@ Blocks.propTypes = {
     }),
     editorMode: PropTypes.string,
     editor: PropTypes.any,
+    updatePyCode: PropTypes.func
 };
 
 Blocks.defaultOptions = {
@@ -1215,7 +1225,8 @@ const mapStateToProps = state => ({
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     editor: state.editorRef.o,
-    editorMode: state.editorMode.editorMode
+    editorMode: state.editorMode.editorMode,
+    pycode: state.pycode.value
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -1241,6 +1252,10 @@ const mapDispatchToProps = dispatch => ({
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
     },
+    updatePyCode : code => {
+        dispatch(updatePyCode(code));
+    }
+
 });
 
 export default errorBoundaryHOC('Blocks')(

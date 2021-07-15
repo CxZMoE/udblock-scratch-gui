@@ -199,19 +199,25 @@ export default (Blockly) => {
     }
     Blockly.Python['udblockUDPiPlus_udpClientReceiveEvent'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var msg = Blockly.Python.valueToCode(block, 'MSG', Blockly.Python.ORDER_ATOMIC);
+        //var msg = Blockly.Python.valueToCode(block, 'MSG', Blockly.Python.ORDER_ATOMIC);
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
         statements = "  " + statements.replaceAll("\n", "\n  ")
 
         var functionName = Blockly.Python.provideFunction_(
             'udpRecvFunc',
             ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(udp_socket, udp_msg, udp_remote):',
-            `  if (udp_msg == ${msg}):`,
                 statements,
             ]);
         var code = `UDPServerBind(${functionName})\n`;
         return code;
     }
+    
+    Blockly.Python['udblockUDPiPlus_udpClientReceivedText'] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        var code = `udp_msg`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    }
+    
 
     // 控制主板蜂鸣器播放
     Blockly.Python['udblockUDPiPlus_setBuzzerPlay'] = function (block) {
@@ -248,7 +254,7 @@ export default (Blockly) => {
 
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 
-        var code = `oled.text(${text}, ${line}, 0)\n`;
+        var code = `oled.text(str(${text}), ${line}, 0)\n`;
         return code
     }
     Blockly.Python['udblockUDPiPlus_menu_displayLine'] = function(block){

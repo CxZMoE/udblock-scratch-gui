@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { defineMessages, FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import PropTypes from 'prop-types';
+import PropTypes, { resetWarningCache } from 'prop-types';
 import bindAll from 'lodash.bindall';
 import bowser from 'bowser';
 import React from 'react';
@@ -38,7 +38,8 @@ import {
     manualUpdateProject,
     requestNewProject,
     remixProject,
-    saveProjectAsCopy
+    saveProjectAsCopy,
+    requestProjectUpload
 } from '../../reducers/project-state';
 import {
     openAboutMenu,
@@ -61,7 +62,10 @@ import {
     loginMenuOpen,
     openToolMenu,
     closeToolMenu,
-    toolMenuOpen
+    openSystemMenu,
+    closeSystemMenu,
+    toolMenuOpen,
+    systemMenuOpen,
 } from '../../reducers/menus';
 
 import collectMetadata from '../../lib/collect-metadata';
@@ -201,7 +205,7 @@ class MenuBar extends React.Component {
             case "code":
                 this.props.editorToggleDefault();
                 this.handleClickNew();
-                
+
                 break;
             case "default":
                 this.props.editorToggleCode();
@@ -225,6 +229,52 @@ class MenuBar extends React.Component {
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
         document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
+
+        this.props.editorToggleCode();
+
+        // 检测版本
+        // fetch("https://update.udrobot.net/version_control/version.json", {
+        //     method: "GET"
+        // })
+        //     .then(res => res.json())
+        //     .then(
+
+        //         (versionInfo) => {
+        //             var versionCurrent = "0.6.5"
+        //             if (versionCurrent != versionInfo.version) {
+        //                 var updateConfirm = confirm(`发现新版本${versionInfo.version}是否更新？`)
+        //                 if (updateConfirm) {
+        //                     var ok = -1
+        //                     fetch("http://127.0.0.1:3000/doUpdate?update=" + versionInfo.filename)
+        //                         .then(res => res.body())
+        //                         .then((status) => {
+        //                             if (status == "ok") {
+        //                                 terminal.print("下载更新成功")
+        //                             } else {
+        //                                 terminal.print("下载更新失败")
+        //                             }
+        //                         })
+        //                     alert("正在下载更新，请耐心等待。")
+        //                     var terminal = this.props.terminal
+        //                     var downloading = "正在下载更新..."
+        //                     terminal.print(downloading)
+
+        //                 }
+        //             }
+        //         }
+        //     )
+        // var request = new XMLHttpRequest();
+        // request.open("GET", "https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version.json", true);
+        // request.send()
+        // request.onreadystatechange = function (e) {
+        //     if (request.readyState == 4 && request.status == 200) {
+        //         var response = request.responseText;
+        //         var versionInfo = JSON.parse(response)
+        //         console.log(response)
+        //         confirm(`发现新版本${versionInfo.version}是否更新？`)
+        //     }
+        // }
+
 
     }
     componentWillUnmount() {
@@ -646,6 +696,7 @@ class MenuBar extends React.Component {
                                     >
                                         <MenuSection>
                                             <MenuItem onClick={() => {
+                                                console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 if (terminal.ws.readyState == terminal.ws.CLOSED) {
                                                     terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
@@ -656,6 +707,7 @@ class MenuBar extends React.Component {
                                                     }
                                                     terminal.ws.onmessage = function (e) {
                                                         terminal.print(e.data)
+
                                                     }
                                                 }
 
@@ -666,7 +718,7 @@ class MenuBar extends React.Component {
                                                 var request = new XMLHttpRequest();
                                                 request.open("POST", "http://127.0.0.1:3000/ampy/upload", true);
                                                 request.send(JSON.stringify({
-                                                    sourceCode: this.props.editor.getModel().getValue(),
+                                                    sourceCode: this.props.pycode,
                                                     com: terminal.com
                                                 }))
                                                 request.onreadystatechange = function (e) {
@@ -707,7 +759,7 @@ class MenuBar extends React.Component {
                                                 var request = new XMLHttpRequest();
                                                 request.open("POST", "http://127.0.0.1:3000/ampy/run", true);
                                                 request.send(JSON.stringify({
-                                                    sourceCode: this.props.editor.getModel().getValue(),
+                                                    sourceCode: this.props.pycode,
                                                     com: terminal.com
                                                 }))
                                                 request.onreadystatechange = function (e) {
@@ -728,28 +780,150 @@ class MenuBar extends React.Component {
                                             </MenuItem>
 
                                             <MenuItem onClick={() => {
+                                                console.log(this.props.pycode)
+                                                var terminal = this.props.terminal
+
+                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
+                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+
+                                                    terminal.ws.onopen = (e) => {
+                                                        terminal.ws.send(`closecom:${terminal.com}`)
+                                                    }
+                                                    terminal.ws.onmessage = function (e) {
+                                                        if(e.data == "OK"){
+                                                            terminal.print("更新程序退出")
+                                                        }else{
+                                                            terminal.print("更新程序异常")
+                                                        }
+                                                    }
+                                                }
+
+
+                                                terminal.ws.send(`closecom:${terminal.com}`)
+                                                confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")
+                                                terminal.ws.send(`firmware:${terminal.com}`)
                                                 this.props.onRequestCloseTool()
-                                                this.props.terminal.print("flash firmware");
-                                                let request = new XMLHttpRequest();
-                                                request.open("GET", "http://127.0.0.1:3000/ampy/firmware", true);
-                                                request.send();
-                                                let reponse = request.responseText;
-                                                console.log(reponse)
+                                                this.props.terminal.print("开始更新主板固件");
                                             }}>
                                                 <FormattedMessage
-                                                    defaultMessage="固件更新"
+                                                    defaultMessage="主板固件更新"
                                                     description="Menu bar item for turning on turbo mode"
                                                     id="gui.menuBar.firmwareUpdate"
                                                 />
                                             </MenuItem>
+                                            <MenuItem onClick={() => {
+                                                console.log(this.props.pycode)
+                                                var terminal = this.props.terminal
 
+                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
+                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+                                                    
+                                                    terminal.ws.onopen = (e) => {
+                                                        terminal.ws.send(`closecom:${terminal.com}`)
+                                                    }
+                                                    terminal.ws.onmessage = function (e) {
+                                                        terminal.print("更新程序退出")
+                                                    }
+                                                }
+
+
+                                                terminal.ws.send(`closecom:${terminal.com}`)
+
+                                                
+                                                terminal.ws.send(`carfirmware:${terminal.com}`)
+                                                this.props.onRequestCloseTool()
+                                                this.props.terminal.print("开始更新小车固件");
+                                            }}>
+                                                <FormattedMessage
+                                                    defaultMessage="小车固件更新"
+                                                    description="Menu bar item for turning on turbo mode"
+                                                    id="gui.menuBar.carfirmwareUpdate"
+                                                />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => {
+                                                console.log(this.props.pycode)
+                                                var terminal = this.props.terminal
+
+                                                var request = new XMLHttpRequest();
+                                                request.open("GET", "http://127.0.0.1:3000/installDriver", true);
+                                                request.send()
+                                                request.onreadystatechange = function (e) {
+                                                    if (request.readyState == 4 && request.status == 200) {
+                                                        var response = request.responseText;
+                                                        console.log(response)
+                                                        if (response == "ok") {
+                                                            terminal.print("开始安装驱动");
+                                                        } else {
+                                                            terminal.print("安装驱动失败");
+                                                        }
+
+                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                    }
+                                                }
+
+                                                this.props.onRequestCloseTool()
+                                                this.props.terminal.print("开始安装驱动");
+                                            }}>
+                                                <FormattedMessage
+                                                    defaultMessage="安装驱动"
+                                                    description="Menu bar item for turning on turbo mode"
+                                                    id="gui.menuBar.driverInstallation"
+                                                />
+                                            </MenuItem>
                                         </MenuSection>
                                     </MenuBarMenu>
                                 </div>
+                                <React.Fragment>
+                                    <div
+                                        className={classNames(styles.menuBarItem, styles.hoverable, {
+                                            [styles.active]: this.props.systemMenuOpen
+                                        })}
+                                        onMouseUp={this.props.onClickSystem}
+                                    >
+                                        <div className={classNames(styles.editMenu)}>
+                                            <FormattedMessage
+                                                defaultMessage="系统"
+                                                description=""
+                                                id="gui.menuBar.system"
+                                            />
+                                        </div>
+                                        <MenuBarMenu
+                                            className={classNames(styles.menuBarMenu)}
+                                            open={this.props.systemMenuOpen}
+                                            place={this.props.isRtl ? 'left' : 'right'}
+                                            onRequestClose={this.props.onRequestCloseSystem}
+                                        >
+                                            <MenuSection>
+                                                <MenuItem onClick={() => {
+                                                    console.log(this.props.pycode)
+                                                    var terminal = this.props.terminal
+                                                    this.props.onRequestCloseSystem()
+                                                    var request = new XMLHttpRequest();
+                                                    request.open("GET", "http://127.0.0.1:3000/checkVersion", true);
+                                                    request.send()
+                                                    request.onreadystatechange = function (e) {
+                                                        if (request.readyState == 4 && request.status == 200) {
+                                                            var response = request.responseText;
+                                                            console.log(response)
+                                                            terminal.print(response)
+                                                        }
+                                                    }
+
+                                                }}>
+                                                    <FormattedMessage
+                                                        defaultMessage="检查更新"
+                                                        description="Menu bar item for turning off turbo mode"
+                                                        id="gui.menuBar.checkUpdate"
+                                                    />
+                                                </MenuItem>
+                                            </MenuSection>
+                                        </MenuBarMenu>
+                                    </div>
+                                </React.Fragment>
                                 <Divider className={classNames(styles.divider)} />
                                 <div style={{ marginRight: "10px" }}>
                                     选择串口
-                        </div>
+                                </div>
                                 <div><select name="port" id="portSelect" style=
                                     {{
                                         outline: "none",
@@ -767,6 +941,7 @@ class MenuBar extends React.Component {
 
 
                     </div>
+
                     <Divider className={classNames(styles.divider)} />
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
@@ -854,7 +1029,7 @@ class MenuBar extends React.Component {
                     </div>
                     {/* 在这里添加菜单项目 */}
                 </div>
-                { modeButton}
+                {modeButton}
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
                 <div className={styles.accountInfoGroup}>
@@ -985,7 +1160,7 @@ class MenuBar extends React.Component {
                     )}
                 </div>
 
-                { aboutButton}
+                {aboutButton}
             </Box >
         );
     }
@@ -1081,6 +1256,7 @@ const mapStateToProps = (state, ownProps) => {
         fileMenuOpen: fileMenuOpen(state),
         editMenuOpen: editMenuOpen(state),
         toolMenuOpen: toolMenuOpen(state),
+        systemMenuOpen: systemMenuOpen(state),
         isRtl: state.locales.isRtl,
         isUpdating: getIsUpdating(loadingState),
         isShowingProject: getIsShowingProject(loadingState),
@@ -1096,6 +1272,7 @@ const mapStateToProps = (state, ownProps) => {
         terminal: state.terminal.o,
         toolboxXML: state.scratchGui.toolbox.toolboxXML,
         editor: state.editorRef.o,
+        pycode: state.pycode.value
     };
 };
 
@@ -1112,6 +1289,8 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseEdit: () => dispatch(closeEditMenu()),
     onClickTool: () => dispatch(openToolMenu()),
     onRequestCloseTool: () => dispatch(closeToolMenu()),
+    onClickSystem: () => dispatch(openSystemMenu()),
+    onRequestCloseSystem: () => dispatch(closeSystemMenu()),
     onClickLanguage: () => dispatch(openLanguageMenu()),
     onRequestCloseLanguage: () => dispatch(closeLanguageMenu()),
     onClickLogin: () => dispatch(openLoginMenu()),
