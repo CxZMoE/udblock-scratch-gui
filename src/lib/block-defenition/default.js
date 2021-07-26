@@ -981,7 +981,7 @@ export default function (Blockly) {
         if (until) {
             argument0 = 'not ' + argument0;
         }
-        return 'while not ' + argument0 + ':\n' + branch;
+        return 'while not (' + argument0 + '):\n' + branch;
     };
 
     Blockly.Python['control_for'] = function (block) {
@@ -1204,14 +1204,14 @@ export default function (Blockly) {
         var order = Blockly.Python.ORDER_ATOMIC;
         var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order);
         var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order);
-        var code = `${argument0} > ${argument1}`.replaceAll("'", "");;
+        var code = `(${argument0} > ${argument1})`.replaceAll("'", "");;
         return [code, order];
     }
     Blockly.Python['operator_lt'] = function (block) {
         var order = Blockly.Python.ORDER_ATOMIC;
         var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order);
         var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order);
-        var code = `${argument0} < ${argument1}`.replaceAll("'", "");
+        var code = `(${argument0} < ${argument1})`.replaceAll("'", "");
         return [code, order];
     }
 
@@ -1219,27 +1219,27 @@ export default function (Blockly) {
         var order = Blockly.Python.ORDER_ATOMIC;
         var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
         var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
-        var code = `${argument0} == ${argument1}`.replaceAll("'", "");;
+        var code = `(${argument0} == ${argument1})`.replaceAll("'", "");
         return [code, order];
     }
     Blockly.Python['operator_and'] = function (block) {
         var order = Blockly.Python.ORDER_ATOMIC;
         var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
         var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
-        var code = `${argument0} and ${argument1}`.replaceAll("'", "");;
+        var code = `(${argument0} and ${argument1})`.replaceAll("'", "");
         return [code, order];
     }
     Blockly.Python['operator_or'] = function (block) {
         var order = Blockly.Python.ORDER_ATOMIC;
         var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
         var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
-        var code = `${argument0} or ${argument1}`.replaceAll("'", "");;
+        var code = `(${argument0} or ${argument1})`.replaceAll("'", "");;
         return [code, order];
     }
     Blockly.Python['operator_not'] = function (block) {
         var order = Blockly.Python.ORDER_ATOMIC;
         var argument0 = Blockly.Python.valueToCode(block, 'OPERAND', order) || '0';
-        var code = `not ${argument0}`.replaceAll("'", "");;
+        var code = `(not ${argument0})`.replaceAll("'", "");
         return [code, order];
     }
     Blockly.Python['operator_join'] = function (block) {
@@ -1391,7 +1391,7 @@ export default function (Blockly) {
             }
         }
         var code = argument0 + ' ' + operator + ' ' + argument1;
-        return [code, order];
+        return [`(${code})`, order];
     };
 
     Blockly.Python['logic_negate'] = function (block) {
@@ -1405,7 +1405,7 @@ export default function (Blockly) {
     Blockly.Python['logic_boolean'] = function (block) {
         // Boolean values true and false.
         var code = (block.getFieldValue('BOOL') == 'TRUE') ? 'True' : 'False';
-        return [code, Blockly.Python.ORDER_ATOMIC];
+        return [`(${code})`, Blockly.Python.ORDER_ATOMIC];
     };
 
     Blockly.Python['logic_null'] = function (block) {

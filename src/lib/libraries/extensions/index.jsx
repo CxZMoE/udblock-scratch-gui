@@ -237,7 +237,7 @@ export default [
         helpLink: 'https://forum.udrobot.net/'
     },
     {
-        name: 'UDBlock 智能家居拓展板',
+        name: 'UDBlock 智能语音拓展板',
         extensionId: 'udblockEXTBIOT',
         collaborator: 'UDRobot',
         iconURL: udpiExtbSMIconURL,
