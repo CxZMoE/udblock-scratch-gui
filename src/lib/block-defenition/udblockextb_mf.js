@@ -9,6 +9,10 @@ const id = extb_mf.id
 export default (Blockly) => {
     // 菜单
     loadMiscMenu(id)
+    Blockly.Python[`${id}_menu_touchMenu`] = function (block) {
+        var touchMenu = block.getFieldValue("touchMenu");
+        return [`${touchMenu}`, Blockly.Python.ORDER_ATOMIC]
+    }
 
     // 传感器
     loadSensorDefinition(id)
@@ -21,7 +25,14 @@ export default (Blockly) => {
         var code = `(sensor.GetTouch(${pin}) < 280)`
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
+    Blockly.Python["udblockEXTBMF_readTouchValue"] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
+        var code = `sensor.GetTouch(${btn})`;
 
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    }
     // 执行器
     loadActionDefinition(id)
 }

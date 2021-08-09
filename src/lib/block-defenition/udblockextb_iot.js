@@ -33,7 +33,7 @@ export default (Blockly) => {
     };
     Blockly.Python['udblockEXTBIOT_startRecording'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
-        Blockly.Python.definitions_['import_aiplayer'] = 'aiplayer = AIPlayer()';
+        
         var duaration = Blockly.Python.valueToCode(block, "DUARATION", Blockly.Python.ORDER_ATOMIC)
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
 
@@ -42,7 +42,7 @@ export default (Blockly) => {
     };
     Blockly.Python['udblockEXTBIOT_startPlaying'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
-        Blockly.Python.definitions_['import_aiplayer'] = 'aiplayer = AIPlayer()';
+        
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
 
         var code = `aiplayer.Play(${fname})\n`;
@@ -50,26 +50,41 @@ export default (Blockly) => {
     };
     Blockly.Python['udblockEXTBIOT_getSTTResult'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
-        Blockly.Python.definitions_['import_aiplayer'] = 'aiplayer = AIPlayer()';
+        
 
         var code = `aiplayer._stt`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python['udblockEXTBIOT_startSTT'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
-        Blockly.Python.definitions_['import_aiplayer'] = 'aiplayer = AIPlayer()';
+        
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
 
-        var code = `aiplayer.SST(${fname})\n`;
+        var code = `aiplayer.STT(${fname})\n`;
         return code;
     };
     Blockly.Python['udblockEXTBIOT_startTTS'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
-        Blockly.Python.definitions_['import_aiplayer'] = 'aiplayer = AIPlayer()';
+        
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
 
         var code = `aiplayer.TTS(${text})\n`;
         return code;
     };
+    Blockly.Python['udblockEXTBIOT_getSTTResultContains'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
 
+        var code = `(aiplayer.contains(${text}))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIOT_getSTTResultEquals'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `(aiplayer.equals(${text}))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
 }
