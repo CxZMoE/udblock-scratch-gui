@@ -181,7 +181,7 @@ class TerminalComponent extends React.Component {
             // })
 
             if (e.target.innerText == "打开") {
-                var FVERSION = "0.5.5"
+                var FVERSION = "0.5.6"
                 console.log("打开串口:", terminalJS.com)
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")

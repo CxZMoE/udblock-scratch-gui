@@ -48,6 +48,14 @@ export default (Blockly) => {
         var code = `aiplayer.Play(${fname})\n`;
         return code;
     };
+    Blockly.Python['udblockEXTBIOT_startPlayingAsync'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `aiplayer.Play_BG(${fname})\n`;
+        return code;
+    };
     Blockly.Python['udblockEXTBIOT_getSTTResult'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
         
@@ -87,4 +95,42 @@ export default (Blockly) => {
         var code = `(aiplayer.equals(${text}))`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python['udblockEXTBIOT_setVolume'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        var volume = Blockly.Python.valueToCode(block, "VOL", Blockly.Python.ORDER_ATOMIC)
+        if (parseInt(volume) > 100){
+            volume = 100;
+        }
+        if (parseInt(volume) < 0){
+            volume = 0;
+        }
+        //var code = `aiplayer.Volume(${Math.round(((volume)/100)*63)})`;
+        var code = `aiplayer.Volume(${volume})\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_removeRecord'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        var filename = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
+        //var code = `aiplayer.Volume(${Math.round(((volume)/100)*63)})`;
+        var code = `aiplayer.RemoveRecord(${filename})\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_removeRecordAll'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        //var code = `aiplayer.Volume(${Math.round(((volume)/100)*63)})`;
+        var code = `aiplayer.RemoveAll()\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_startTTSSave'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
+        var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
+        var code = `aiplayer.TTS(${text},dst=${fname})\n`;
+        return code;
+    };
+    
 }

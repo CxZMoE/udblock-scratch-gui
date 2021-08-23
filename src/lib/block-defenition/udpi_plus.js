@@ -257,6 +257,16 @@ export default (Blockly) => {
         var code = `oled.text(str(${text}), ${line}, 0)\n`;
         return code
     }
+    Blockly.Python["udblockUDPiPlus_displayWriteShow"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['oled_enable'] = 'oled = OLED(i2c)';
+        var line = parseInt(Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)) * 16 || 0
+
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
+
+        var code = `oled.text_show(str(${text}), ${line}, 0)\n`;
+        return code
+    }
     Blockly.Python['udblockUDPiPlus_menu_displayLine'] = function(block){
         var text = block.getFieldValue("displayLine");
         return [text, Blockly.Python.ORDER_ATOMIC]

@@ -22,7 +22,7 @@ export default (Blockly) => {
     Blockly.Python["udblockEXTBMF_readTouchPressed"] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         var pin = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
-        var code = `(sensor.GetTouch(${pin}) < 280)`
+        var code = `(sensor.GetTouch(${pin}) < 120)`
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
     Blockly.Python["udblockEXTBMF_readTouchValue"] = function (block) {

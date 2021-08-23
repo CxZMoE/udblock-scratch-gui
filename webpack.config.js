@@ -138,7 +138,7 @@ module.exports = [
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
-                title: 'UDBlock 智慧儿童编程 v0.8.2',
+                title: 'UDBlock 智慧儿童编程 v0.8.3',
                 sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
             }),
             // new HtmlWebpackPlugin({

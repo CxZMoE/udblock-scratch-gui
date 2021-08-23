@@ -131,6 +131,30 @@ function loadSensorDefinition(board = "") {
         var code = `sensor.GetDirtHuminity(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_initNFC`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        var code = `nfcSensor = NFC()\n`;
+        return code;
+    };
+    Blockly.Python[`${board}_startPolling`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        var code = `nfcSensor.Start()\n`;
+        return code;
+    };
+    Blockly.Python[`${board}_stopPolling`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        var code = `nfcSensor.Stop()\n`;
+        return code;
+    };
+    Blockly.Python[`${board}_getUID`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        var code = `nfcSensor.GetUID()\n`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
     /* 读传感器结束 */
 }
 
