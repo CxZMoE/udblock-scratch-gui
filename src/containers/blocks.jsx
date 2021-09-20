@@ -37,6 +37,7 @@ import {
 
 // 生成器源文件
 import initPythonGenerator from '../lib/block-generators/python'
+import initArduinoGenerator from '../lib/block-generators/arduino'
 
 // 方块定义文件
 import initDefaultBlocks from '../lib/block-defenition/default'
@@ -444,7 +445,8 @@ class Blocks extends React.Component {
 
         // 初始化Python生成器
         initPythonGenerator();
-
+        // 初始化Arduino生成器
+        initArduinoGenerator();
         // 初始化默认方块
         initDefaultBlocks(Blockly);
         initUDPiBlocks(Blockly);

@@ -181,7 +181,7 @@ class TerminalComponent extends React.Component {
             // })
 
             if (e.target.innerText == "打开") {
-                var FVERSION = "0.5.6"
+                var FVERSION = "0.5.8"
                 console.log("打开串口:", terminalJS.com)
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
@@ -193,17 +193,17 @@ class TerminalComponent extends React.Component {
                         
                         var data = window.atob(e.data)
                         terminalJS.print(`${getDateTimeString()} ${data}`)
-                        if (String(data).indexOf("FVERSION") > -1) {
-                            if (String(data).substring(FVERSION.length, String(data).length).indexOf(FVERSION) > -1) {
-                                console.log("当前版本为最新")
-                            } else {
-                                console.log(`主板固件需要更新版本：${FVERSION}`)
-                                console.log(`当前版本：${data}`)
-                                terminalJS.print(`主板固件需要更新版本：${FVERSION}`)
-                                alert(` 主板固件需要更新版本：${FVERSION}\n 当前版本：${data}`)
-                                terminalJS.print(`当前版本：${data}`)
-                            }
-                        }
+                        // if (String(data).indexOf("FVERSION") > -1) {
+                        //     if (String(data).substring(FVERSION.length, String(data).length).indexOf(FVERSION) > -1) {
+                        //         console.log("当前版本为最新")
+                        //     } else {
+                        //         console.log(`主板固件需要更新版本：${FVERSION}`)
+                        //         console.log(`当前版本：${data}`)
+                        //         terminalJS.print(`主板固件需要更新版本：${FVERSION}`)
+                        //         alert(` 主板固件需要更新版本：${FVERSION}\n 当前版本：${data}`)
+                        //         terminalJS.print(`当前版本：${data}`)
+                        //     }
+                        // }
                     }
                 }
                 terminalJS.ws.send(`closecom:${terminalJS.com}`)
@@ -212,17 +212,17 @@ class TerminalComponent extends React.Component {
                     
                     var data = window.atob(e.data)
                     terminalJS.print(`${getDateTimeString()} ${data}`)
-                    if (String(data).indexOf("FVERSION") > -1) {
-                        if (String(data).substring(FVERSION.length, String(data).length).indexOf(FVERSION) > -1) {
-                            console.log("当前版本为最新")
-                        } else {
-                            console.log(`主板固件需要更新版本：${FVERSION}`)
-                            console.log(`当前版本：${data}`)
-                            terminalJS.print(`主板固件需要更新版本：${FVERSION}`)
-                            alert(` 主板固件需要更新版本：${FVERSION}\n 当前版本：${data}`)
-                            terminalJS.print(`当前版本：${data}`)
-                        }
-                    }
+                    // if (String(data).indexOf("FVERSION") > -1) {
+                    //     if (String(data).substring(FVERSION.length, String(data).length).indexOf(FVERSION) > -1) {
+                    //         console.log("当前版本为最新")
+                    //     } else {
+                    //         console.log(`主板固件需要更新版本：${FVERSION}`)
+                    //         console.log(`当前版本：${data}`)
+                    //         terminalJS.print(`主板固件需要更新版本：${FVERSION}`)
+                    //         alert(` 主板固件需要更新版本：${FVERSION}\n 当前版本：${data}`)
+                    //         terminalJS.print(`当前版本：${data}`)
+                    //     }
+                    // }
                 }
                 terminalJS.ws.onclose = function (e) {
                     console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)

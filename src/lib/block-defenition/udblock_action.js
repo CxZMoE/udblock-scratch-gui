@@ -9,6 +9,7 @@ function loadActionDefinition(board = "") {
     Blockly.Python[`${board}_digitalDisplayShow`] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         Blockly.Python.definitions_['use_tm1650'] = 'fdd = FourDigitDisplay(i2c)';
+        console.log("arduino:"+Blockly.Arduino.valueToCode(block, 'NUM', Blockly.Python.ORDER_ATOMIC))
         var num = Blockly.Python.valueToCode(block, 'NUM', Blockly.Python.ORDER_ATOMIC)
         return `fdd.shownum(${num})\n`;
     }

@@ -3,7 +3,9 @@
  * @向前移动X步
  */
 
+
 export default function (Blockly) {
+    /** For Python Generator */
     Blockly.Python['motion_movesteps'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         var steps = Blockly.Python.valueToCode(block, "STEPS", Blockly.Python.ORDER_NONE);
@@ -1496,4 +1498,23 @@ export default function (Blockly) {
         var code = Blockly.Python.quote_(block.getFieldValue('MATRIX'));
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+
+    /** For Arduino Generator */
+    Blockly.Arduino['math_number'] = function(block) {
+         // Numeric value.
+         var code = Number(block.getFieldValue('NUM'));
+         var order;
+         if (code == Infinity) {
+             code = 'arfloat("inf")';
+             order = Blockly.Arduino.ORDER_FUNCTION_CALL;
+         } else if (code == -Infinity) {
+             code = '-arfloat("inf")';
+             order = Blockly.Python.ORDER_ATOMIC;
+         } else {
+             order = code < 0 ? Blockly.Python.ORDER_ATOMIC :
+                 Blockly.Python.ORDER_ATOMIC;
+         }
+         console.log(code)
+         return [code, order];
+    }
 }

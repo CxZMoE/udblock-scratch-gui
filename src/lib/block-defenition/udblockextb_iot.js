@@ -132,5 +132,56 @@ export default (Blockly) => {
         var code = `aiplayer.TTS(${text},dst=${fname})\n`;
         return code;
     };
+
+    // 指纹模块
+    Blockly.Python['udblockEXTBIOT_initFingerprint'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule = Fingerprint()\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_enableFingerprint'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.EnableModule()\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_disableFingerprint'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.DisableModule()\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_disableFingerprint'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.DisableModule()\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_recordFinger'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.Record()\n`;
+        return code;
+    };
     
+    Blockly.Python['udblockEXTBIOT_renameFingerprint'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var FID = Blockly.Python.valueToCode(block, "FID", Blockly.Python.ORDER_ATOMIC)
+        var NFID = Blockly.Python.valueToCode(block, "NFID", Blockly.Python.ORDER_ATOMIC)
+        var code = `fingerprintModule.RenameFinger(${FID},${NFID})\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_getFingerprintName'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.GetCurrentIdName()\n`;
+        return [code,Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIOT_getFingerprintId'] = function (block) {
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.GetCurrentId()\n`;
+        return [code,Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIOT_removeFingerprints'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
+        var code = `fingerprintModule.RemoveRecords()\n`;
+        return code;
+    };
 }

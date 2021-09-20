@@ -164,4 +164,38 @@ export default (Blockly) => {
         var code = `myCar.GetCarRightTurnSpeed()`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
+    // PS2 遥控
+    Blockly.Python[`${id}_ps2ControlEnable`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var code = `myCar.Start_PS2_Car_Controller()\n`;
+        return code
+    };
+    Blockly.Python[`${id}_ps2ControlDisable`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var code = `myCar.Stop_PS2_Car_Controller()\n`;
+        return code
+    };
+    Blockly.Python[`${id}_ps2SetForwardSpd`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var speed = Blockly.Python.valueToCode(block, "SPD", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar.forwardSpd = ${speed}\n`;
+        return code
+    };
+    Blockly.Python[`${id}_ps2SetTurnSpd`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var speed = Blockly.Python.valueToCode(block, "SPD", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar.turnSpd = ${speed}\n`;
+        return code
+    };
+    Blockly.Python[`${id}_ps2SetServoSpd`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var speed = Blockly.Python.valueToCode(block, "SPD", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar.servoSpd = ${speed}\n`;
+        return code
+    };
 }

@@ -113,6 +113,18 @@ function loadSensorDefinition(board = "") {
         var code = `sensor.GetRouteFinder(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_readFlameSensor`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `sensor.GetFlameSensor(${pin})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readFlameSensoADC`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `sensor.GetFlameSensorADC(${pin})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
     Blockly.Python[`${board}_readGrayScaleSensor`] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
@@ -129,6 +141,12 @@ function loadSensorDefinition(board = "") {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
         var code = `sensor.GetDirtHuminity(${pin})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readDSTempSensor`] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `sensor.GetDSTempSensor(${String(pin).split(',')[1]})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_initNFC`] = function (block) {
