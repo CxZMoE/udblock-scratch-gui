@@ -77,6 +77,22 @@
     height: $menu-bar-height;
 }
 
+.menu-bar-item-small {
+    display: flex;
+    padding: 0;
+    text-decoration: none;
+    color: $ui-white;
+    user-select: none;
+    align-self: center;
+    position: relative;
+    align-items: center;
+    height: $menu-bar-height;
+}
+.menu-bg-dark{
+    background-color: rgba(0,0,0,0.3);
+}
+
+
 .menu-bar-item.hoverable {
     cursor: pointer;
 }

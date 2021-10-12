@@ -125,6 +125,7 @@ const GUIComponent = props => {
         tipsLibraryVisible,
         vm,
         editorMode,
+        editorHide,
         editor,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -246,11 +247,13 @@ const GUIComponent = props => {
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
                     editorMode={editorMode}
+                    editorHide={editorHide}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
+                        {/* 正文 */}
                         { editorMode=="code"?
-                        <Box className={styles.editorWrapperCode}>
+                        <Box className={(editorHide?styles.editorWrapperCodeHide:styles.editorWrapperCode)}>
                             <Tabs
                                 forceRenderTabPanel
                                 className={tabClassNames.tabs}
@@ -339,9 +342,10 @@ const GUIComponent = props => {
                                             />
                                         </button>
                                     </Box>
-                                    <Box className={styles.watermark}>
+                                    {/* 工作区水印在这里 */}
+                                    {/* <Box className={styles.watermark}>
                                         <Watermark />
-                                    </Box>
+                                    </Box> */}
                                 </TabPanel>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
@@ -464,7 +468,11 @@ const GUIComponent = props => {
 
                         {/* 舞台 */}
                         {(editorMode == "code") ? (
-                            <Box className={classNames(styles.stageAndTargetWrapperCode, styles[stageSize])}
+                            <Box 
+                                className={
+                                    classNames((editorHide)?styles.stageAndTargetWrapperCodeHide:styles.stageAndTargetWrapperCode, styles[stageSize])
+                                }
+                                
                             >
                                 <MonicaEditor
                                     stageSize={stageSize}
@@ -561,6 +569,7 @@ GUIComponent.propTypes = {
     tipsLibraryVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
     editorMode: PropTypes.string,
+    editorHide: PropTypes.bool,
     editor: PropTypes.any
 };
 GUIComponent.defaultProps = {
@@ -583,12 +592,13 @@ GUIComponent.defaultProps = {
     showComingSoon: false,
     stageSizeMode: STAGE_SIZE_MODES.large,
     editorMode: "default",
+    editorHide: false
 };
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
     stageSizeMode: state.scratchGui.stageSize.stageSize,
-    editorMode: state.editorMode.editorMode
+    editorHide: state.editorHide.editorHide
 });
 
 export default injectIntl(connect(

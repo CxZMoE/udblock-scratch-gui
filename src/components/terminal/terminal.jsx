@@ -11,11 +11,19 @@ import { bindAll } from 'lodash'
 import { timeoutInitialState } from '../../reducers/timeout'
 
 // 终端Terminal打印方法
+var terminalJS = undefined
 var getDateTimeString = function () {
     var date = new Date();
     return `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
 }
-
+function wsOnMsg (e){
+    var data = decodeURIComponent(escape(window.atob(e.data)));
+    terminalJS.print(`${getDateTimeString()} ${data}`)
+    if (data.indexOf("OK") > -1){
+        console.log(`opencom:${terminalJS.com}`)
+        terminalJS.ws.send(`opencom:${terminalJS.com}`)
+    }
+}
 class TerminalComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -29,6 +37,8 @@ class TerminalComponent extends React.Component {
             com: null
         }
     }
+
+    
 
     onPortSelect(comName) {
         this.setState({
@@ -49,10 +59,6 @@ class TerminalComponent extends React.Component {
                     console.log("Websocket尝试使用串口:", com)
                     ws.send(`closecom:${com}`)
                     ws.send(`opencom:${com}`)
-                }
-                ws.onmessage = function (e) {
-                    var data = window.atob(e.data)
-                    terminalJS.print(data)
                 }
 
                 ws.onerror = function (ws, e) {
@@ -76,16 +82,18 @@ class TerminalComponent extends React.Component {
     componentDidMount() {
         this.terminalJS = new TerminalJS("UDTerminal-machine")
 
-        var terminalJS = this.terminalJS
+        terminalJS = this.terminalJS
 
         this.onConnectWS(terminalJS);
 
         document.getElementById(this.state.target).appendChild(terminalJS.html);
-        terminalJS.print("欢迎使用UDBlock+！");
+        terminalJS.print("欢迎使用UDBlock智慧儿童编程！");
+        terminalJS.print("请在顶部菜单栏选择要连接的设备串口并点击“打开”");
+        terminalJS.print("如果插上主板后没有听见滴的一声，请按下重启主板按钮后再试。");
+        terminalJS.print("如果遇到上传代码卡住的情况，请按下重启主板按钮后再试。");
         terminalJS.setTextColor('lightgreen');
 
         this.props.onCreateTerminal(terminalJS);
-
         var selectPort = this.onPortSelect;
         var portSelect = document.getElementById("portSelect")
 
@@ -108,7 +116,6 @@ class TerminalComponent extends React.Component {
 
             request.open("GET", "http://127.0.0.1:3000/serialport", true);
             request.send();
-
 
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
@@ -133,7 +140,7 @@ class TerminalComponent extends React.Component {
                         // console.log(portSelect.children.item(i).innerText)
                         console.log("state: " + comState + " value: " + portSelect.children.item(i).value)
                         if (portSelect.children.item(i).value == comState) {
-                            console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
+                            //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
                             portSelect.children.item(i).selected = true;
                             selectPort(portSelect.children.item(i).value);
                             return;
@@ -142,7 +149,7 @@ class TerminalComponent extends React.Component {
                     }
 
                     if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
-                        console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
+                        //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
                         portSelect.children.item(0).selected = true;
                         selectPort(portSelect.children.item(0).value);
                     }
@@ -151,6 +158,19 @@ class TerminalComponent extends React.Component {
             }
 
         }, 1000);
+
+        // 获取软件版本
+        var request = new XMLHttpRequest();
+
+        request.open("GET", "http://127.0.0.1:3000/version", true);
+        request.send();
+
+        request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200) {
+                terminalJS.print("软件版本: " + request.responseText)
+                terminalJS.print("---------------------------")
+            }
+        }
 
         document.addEventListener("keydown", function (e) {
             var keyCode = e.keyCode || e.charCode;
@@ -161,7 +181,8 @@ class TerminalComponent extends React.Component {
             return false;
         })
 
-
+        terminalJS.print("---------------------------")
+        
         document.getElementById("serialOpenBtn").onclick = function (e) {
             // 检查固件版本
             // var http = require('http')
@@ -185,45 +206,10 @@ class TerminalComponent extends React.Component {
                 console.log("打开串口:", terminalJS.com)
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-                    terminalJS.ws.onopen = (e) => {
-                        terminalJS.ws.send(`closecom:${terminalJS.com}`)
-                        terminalJS.ws.send(`opencom:${terminalJS.com}`)
-                    }
-                    terminalJS.ws.onmessage = function (e) {
-                        
-                        var data = window.atob(e.data)
-                        terminalJS.print(`${getDateTimeString()} ${data}`)
-                        // if (String(data).indexOf("FVERSION") > -1) {
-                        //     if (String(data).substring(FVERSION.length, String(data).length).indexOf(FVERSION) > -1) {
-                        //         console.log("当前版本为最新")
-                        //     } else {
-                        //         console.log(`主板固件需要更新版本：${FVERSION}`)
-                        //         console.log(`当前版本：${data}`)
-                        //         terminalJS.print(`主板固件需要更新版本：${FVERSION}`)
-                        //         alert(` 主板固件需要更新版本：${FVERSION}\n 当前版本：${data}`)
-                        //         terminalJS.print(`当前版本：${data}`)
-                        //     }
-                        // }
-                    }
                 }
-                terminalJS.ws.send(`closecom:${terminalJS.com}`)
                 terminalJS.ws.send(`opencom:${terminalJS.com}`)
-                terminalJS.ws.onmessage = function (e) {
-                    
-                    var data = window.atob(e.data)
-                    terminalJS.print(`${getDateTimeString()} ${data}`)
-                    // if (String(data).indexOf("FVERSION") > -1) {
-                    //     if (String(data).substring(FVERSION.length, String(data).length).indexOf(FVERSION) > -1) {
-                    //         console.log("当前版本为最新")
-                    //     } else {
-                    //         console.log(`主板固件需要更新版本：${FVERSION}`)
-                    //         console.log(`当前版本：${data}`)
-                    //         terminalJS.print(`主板固件需要更新版本：${FVERSION}`)
-                    //         alert(` 主板固件需要更新版本：${FVERSION}\n 当前版本：${data}`)
-                    //         terminalJS.print(`当前版本：${data}`)
-                    //     }
-                    // }
-                }
+                terminalJS.ws.onmessage = wsOnMsg
+
                 terminalJS.ws.onclose = function (e) {
                     console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
                     console.log(e)
@@ -231,54 +217,55 @@ class TerminalComponent extends React.Component {
 
                 e.target.innerText = "关闭"
             } else {
-                console.log("关闭串口:", terminalJS.com)
-                if (terminalJS.ws != undefined && terminalJS.ws.readyState == terminalJS.ws.OPEN) {
-                    terminalJS.ws.send(`closecom:${terminalJS.com}`)
-                    e.target.innerText = "打开"
-                }
-            }
-
-
-
-        }
-        document.getElementById("serialInput").onkeydown = function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault()
-                var text = document.getElementById("serialInput").value;
-                if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
+                if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-
-                    terminalJS.ws.onopen = (e) => {
-                        // terminalJS.ws.send("closecom:COM3")
-                        // terminalJS.ws.send("opencom:COM3")
-                    }
-                    terminalJS.ws.onmessage = function (e) {
-                        //terminalJS.print(e.data)
-                    }
                 }
-
-                terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
-                document.getElementById("serialInput").value = ""
-            }
-        }
-        document.getElementById("serialControlBtn").onclick = function (e) {
-            e.preventDefault()
-            var text = document.getElementById("serialInput").value;
-            if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-
-                terminalJS.ws.onopen = (e) => {
-                    // terminalJS.ws.send("closecom:COM3")
-                    // terminalJS.ws.send("opencom:COM3")
-                }
-                terminalJS.ws.onmessage = function (e) {
-                    //terminalJS.print(e.data)
+                console.log("关闭串口:", terminalJS.com)
+                terminalJS.ws.send(`closecom:${terminalJS.com}`)
+                e.target.innerText = "打开"
+                terminalJS.ws.onclose = function (e) {
+                    console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+                    console.log(e)
                 }
             }
 
-            terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
-            document.getElementById("serialInput").value = ""
+
+
         }
+        // document.getElementById("serialInput").onkeydown = function (e) {
+        //     if (e.keyCode == 13) {
+        //         e.preventDefault()
+        //         var text = document.getElementById("serialInput").value;
+        //         if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
+        //             terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+
+        //             terminalJS.ws.onopen = (e) => {
+        //                 // terminalJS.ws.send("closecom:COM3")
+        //                 // terminalJS.ws.send("opencom:COM3")
+        //             }
+        //             terminalJS.ws.onmessage = wsOnMsg
+        //         }
+
+        //         terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
+        //         document.getElementById("serialInput").value = ""
+        //     }
+        // }
+        // document.getElementById("serialControlBtn").onclick = function (e) {
+        //     e.preventDefault()
+        //     var text = document.getElementById("serialInput").value;
+        //     if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
+        //         terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+
+        //         terminalJS.ws.onopen = (e) => {
+        //             // terminalJS.ws.send("closecom:COM3")
+        //             // terminalJS.ws.send("opencom:COM3")
+        //         }
+        //         terminalJS.ws.onmessage = wsOnMsg
+        //     }
+
+        //     terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
+        //     document.getElementById("serialInput").value = ""
+        // }
     }
 
 

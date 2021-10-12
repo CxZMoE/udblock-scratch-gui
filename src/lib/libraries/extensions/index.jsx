@@ -62,13 +62,7 @@ export default [
         collaborator: 'UDRobot',
         iconURL: udpiIconURL,
         insetIconURL: udpiInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
-        ),
+        description: "板载5x5 RGB 矩阵，可以连接多种外设。",
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -92,13 +86,7 @@ export default [
         collaborator: 'UDRobot',
         iconURL: udpiplusIconURL,
         insetIconURL: udpiInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
-        ),
+        description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -295,6 +283,36 @@ export default [
             />
         ),
         helpLink: 'https://forum.udrobot.net/'
+    },
+    {
+        name: 'micro:bit主板',
+        extensionId: 'udblockMicrobit',
+        collaborator: 'micro:bit UDRobot',
+        iconURL: microbitIconURL,
+        insetIconURL: microbitInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Connect your projects with the world."
+                description="Description for the 'micro:bit' extension"
+                id="gui.extension.microbit.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: microbitConnectionIconURL,
+        connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their micro:bit."
+                id="gui.extension.microbit.connectingMessage"
+            />
+        ),
+        helpLink: 'https://scratch.mit.edu/microbit'
     },
     {
         name: (

@@ -50,6 +50,8 @@ class GUI extends React.Component {
 
 
     componentDidMount() {
+        document.body.style.overflowY = "hidden"
+        document.body.style.overflowX = "hidden"
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);

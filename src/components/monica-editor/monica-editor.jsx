@@ -19,11 +19,12 @@ const FileSystemPlugin = pseudoFileSystemPlugin();
 import Terminal from '../terminal/terminal.jsx'
 import AceEditor from "react-ace";
 
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/theme-xcode";
 
 import { updatePyCode } from '../../reducers/pycode'
 
+import VMScratchBlocks from '../../lib/blocks';
 
 class MonicaEditor extends React.Component {
     constructor(props) {
@@ -79,8 +80,6 @@ class MonicaEditor extends React.Component {
         const stageSize = this.props.stageSize;
         const stageDimensions = getStageDimensions(stageSize, false);
 
-
-
         return (
             <Box
                 style={{
@@ -91,7 +90,7 @@ class MonicaEditor extends React.Component {
                     borderRadius: "5px",
                     border: "1px solid hsla(0, 0%, 0%, 0.15)",
                     marginTop: "45px",
-                    backgroundColor: "#FFF",
+                    backgroundColor: "#fff",
                     padding: "10px",
                     overflow: "hidden",
                     flexGrow: "1",
@@ -117,9 +116,12 @@ class MonicaEditor extends React.Component {
 
                         <AceEditor
                             mode="python"
-                            theme="github"
+                            theme="xcode"
                             onChange={(newText)=>{
                                 console.log("change", newText);
+                                if (Blockly != undefined){
+                                    Blockly.Python._content = newText;
+                                }
                                 this.props.updatePyCode(newText)
 
                             }}
@@ -128,11 +130,11 @@ class MonicaEditor extends React.Component {
                             value={this.props.pycode}
                             height={'100%'}
                             width={'100%'}
-                            setOptions={{
-                                enableBasicAutocompletion: true,
-                                enableLiveAutocompletion: true,
-                                enableSnippets: true
-                            }}
+                            // setOptions={{
+                            //     enableBasicAutocompletion: true,
+                            //     enableLiveAutocompletion: true,
+                            //     enableSnippets: true
+                            // }}
                         />
                     </div>
                 </Box>
@@ -143,8 +145,8 @@ class MonicaEditor extends React.Component {
                         position: "relative",
                         fontWeight: "bold",
                         alignSelf: "center",
-                        height: "45%",
-                        maxHeight: "45%",
+                        height: "50%",
+                        maxHeight: "50%",
                         width: "100%",
                         marginTop: "10px",
                         // marginBottom: "20px",
@@ -205,9 +207,9 @@ class MonicaEditor extends React.Component {
                         height: "35px"
                     }}
                 >
-                    <input id="serialInput" className={classNames(styles.serialInput)} type="text" placeholder="输入要发送的消息"></input>
-                    <span id="serialOpenBtn" className={classNames(styles.serialBtn)}>打开</span>
-                    <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送</span>
+                    {/* <input id="serialInput" className={classNames(styles.serialInput)} type="text" placeholder="输入要发送的消息"></input> */}
+                    
+                    {/* <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送</span> */}
                 </Box>
 
             </Box>

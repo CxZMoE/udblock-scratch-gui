@@ -89,12 +89,18 @@ import IconButton from '../icon-button/icon-button.jsx';
 import ModeButton from './mode-select-button.jsx';
 import arduinoIcon from './arduino-uno-board.svg'
 import pythonIcon from './python-icon.svg'
-
+import hideIcon from './bx-hide.svg'
+import showIcon from './bx-show.svg'
 
 import {
     editorToggleCode,
-    editorToggleDefault
+    editorToggleDefault,
 } from '../../reducers/editor'
+
+import {
+    editorToggleShow,
+    editorToggleHide,
+} from '../../reducers/editorhide'
 
 const ariaMessages = defineMessages({
     language: {
@@ -194,6 +200,7 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage',
             'handleEditorModeSelect',
+            'handleEditorHide',
             'onPortSelect'
         ]);
         this.state = {
@@ -219,6 +226,17 @@ class MenuBar extends React.Component {
         console.log("blocks.jsx:", this.props.editorMode)
         //this.props.vm.emitWorkspaceUpdate();
     }
+    handleEditorHide() {
+        if (this.props.editorHide) {
+            this.props.editorToggleShow();
+            this.props.vm.refreshWorkspace();
+        } else {
+            this.props.editorToggleHide();
+            this.props.vm.refreshWorkspace();
+        }
+        window.dispatchEvent(new Event('resize'));
+        console.log("blocks.jsx:", this.props.editorHide)
+    }
 
 
     onPortSelect(comName) {
@@ -229,7 +247,7 @@ class MenuBar extends React.Component {
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
         document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
-
+        document.getElementById("editorShow-btn").addEventListener("click", this.handleEditorHide)
         this.props.editorToggleCode();
 
         // 检测版本
@@ -436,6 +454,8 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
+
+
     render() {
 
         const saveNowMessage = (
@@ -517,6 +537,25 @@ class MenuBar extends React.Component {
 
                     />
                 </MenuItem> */}
+            </MenuSection>
+
+        )
+
+        const showHideButton = (
+            <MenuSection>
+                <MenuItem>
+                    <ModeButton
+                        id={"editorShow-btn"}
+                        title={(this.props.editorHide == true) ? "隐藏右侧" : "显示右侧"}
+                        img={this.props.editorHide ? hideIcon : showIcon}
+
+                        className={classNames(
+                            styles.menuBarItem
+                        )}
+
+
+                    />
+                </MenuItem>
             </MenuSection>
 
         )
@@ -698,29 +737,17 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
-                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-
-                                                    terminal.ws.onopen = (e) => {
-                                                        terminal.ws.send(`closecom:${terminal.com}`)
-                                                        terminal.ws.send(`opencom:${terminal.com}`)
-                                                    }
-                                                    terminal.ws.onmessage = function (e) {
-                                                        terminal.print(e.data)
-
-                                                    }
-                                                }
-
-                                                terminal.ws.send(`closecom:${terminal.com}`)
 
                                                 terminal.print("开始上传代码");
                                                 this.props.onRequestCloseTool()
+                                                terminal.ws.send(`closecom:${terminal.com}`)
                                                 var request = new XMLHttpRequest();
                                                 request.open("POST", "http://127.0.0.1:3000/ampy/upload", true);
                                                 request.send(JSON.stringify({
                                                     sourceCode: this.props.pycode,
                                                     com: terminal.com
                                                 }))
+
                                                 request.onreadystatechange = function (e) {
                                                     if (request.readyState == 4 && request.status == 200) {
                                                         var response = request.responseText;
@@ -737,22 +764,9 @@ class MenuBar extends React.Component {
                                                     id="gui.menuBar.upload"
                                                 />
                                             </MenuItem>
-                                            <MenuItem onClick={() => {
+                                            {/* <MenuItem onClick={() => {
                                                 var terminal = this.props.terminal
 
-                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
-                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-
-                                                    terminal.ws.onopen = (e) => {
-                                                        terminal.ws.send(`closecom:${terminal.com}`)
-                                                        terminal.ws.send(`opencom:${terminal.com}`)
-                                                    }
-                                                    terminal.ws.onmessage = function (e) {
-                                                        terminal.print(e.data)
-                                                    }
-                                                }
-
-                                                terminal.ws.send(`closecom:${terminal.com}`)
 
                                                 this.props.onRequestCloseTool()
                                                 terminal.print("开始热加载");
@@ -777,33 +791,23 @@ class MenuBar extends React.Component {
                                                     description="Menu bar item for turning on turbo mode"
                                                     id="gui.menuBar.hotrun"
                                                 />
-                                            </MenuItem>
+                                            </MenuItem> */}
 
                                             <MenuItem onClick={() => {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
-                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
-                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-
-                                                    terminal.ws.onopen = (e) => {
-                                                        terminal.ws.send(`closecom:${terminal.com}`)
-                                                    }
-                                                    terminal.ws.onmessage = function (e) {
-                                                        if(e.data == "OK"){
-                                                            terminal.print("更新程序退出")
-                                                        }else{
-                                                            terminal.print("更新程序异常")
-                                                        }
-                                                    }
-                                                }
-
 
                                                 terminal.ws.send(`closecom:${terminal.com}`)
-                                                confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")
-                                                terminal.ws.send(`firmware:${terminal.com}`)
-                                                this.props.onRequestCloseTool()
-                                                this.props.terminal.print("开始更新主板固件");
+                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")){
+                                                    terminal.ws.send(`firmware:${terminal.com}`)
+                                                    this.props.onRequestCloseTool()
+                                                    this.props.terminal.print("开始更新主板固件");
+                                                }else{
+                                                    this.props.onRequestCloseTool()
+                                                    this.props.terminal.print("取消更新主板固件");
+                                                }
+                                                
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="主板固件更新"
@@ -815,21 +819,9 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
-                                                if (terminal.ws.readyState == terminal.ws.CLOSED) {
-                                                    terminal.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-                                                    
-                                                    terminal.ws.onopen = (e) => {
-                                                        terminal.ws.send(`closecom:${terminal.com}`)
-                                                    }
-                                                    terminal.ws.onmessage = function (e) {
-                                                        terminal.print("更新程序退出")
-                                                    }
-                                                }
-
-
                                                 terminal.ws.send(`closecom:${terminal.com}`)
 
-                                                
+
                                                 terminal.ws.send(`carfirmware:${terminal.com}`)
                                                 this.props.onRequestCloseTool()
                                                 this.props.terminal.print("开始更新小车固件");
@@ -921,9 +913,6 @@ class MenuBar extends React.Component {
                                     </div>
                                 </React.Fragment>
                                 <Divider className={classNames(styles.divider)} />
-                                <div style={{ marginRight: "10px" }}>
-                                    选择串口
-                                </div>
                                 <div><select name="port" id="portSelect" style=
                                     {{
                                         outline: "none",
@@ -935,7 +924,23 @@ class MenuBar extends React.Component {
                                         fontSize: "15px",
                                         borderRadius: "2px",
                                         fontWeight: "bold"
-                                    }}></select></div>
+                                    }}></select>
+                                </div>
+                                <MenuSection>
+                                    <MenuItem
+                                        className={classNames(
+                                            styles.menuBgDark
+                                        )}
+                                    >
+                                        <ModeButton
+                                            id={"serialOpenBtn"}
+                                            title={"打开"}
+                                            className={classNames(
+                                                styles.menuBarItemSmall
+                                            )}
+                                        />
+                                    </MenuItem>
+                                </MenuSection>
                             </React.Fragment>
                         ) : ([])}
 
@@ -1030,6 +1035,7 @@ class MenuBar extends React.Component {
                     {/* 在这里添加菜单项目 */}
                 </div>
                 {modeButton}
+                {showHideButton}
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
                 <div className={styles.accountInfoGroup}>
@@ -1146,7 +1152,7 @@ class MenuBar extends React.Component {
                                                 src={profileIcon}
                                             />
                                             <span>
-                                                {'scratch-cat'}
+                                            {'scratch-cat'}
                                             </span>
                                             <img
                                                 className={styles.dropdownCaretIcon}
@@ -1272,7 +1278,8 @@ const mapStateToProps = (state, ownProps) => {
         terminal: state.terminal.o,
         toolboxXML: state.scratchGui.toolbox.toolboxXML,
         editor: state.editorRef.o,
-        pycode: state.pycode.value
+        pycode: state.pycode.value,
+        editorHide: state.editorHide.editorHide
     };
 };
 
@@ -1304,6 +1311,8 @@ const mapDispatchToProps = dispatch => ({
     onSeeCommunity: () => dispatch(setPlayer(true)),
     editorToggleCode: () => dispatch(editorToggleCode()),
     editorToggleDefault: () => dispatch(editorToggleDefault()),
+    editorToggleHide: () => dispatch(editorToggleHide()),
+    editorToggleShow: () => dispatch(editorToggleShow()),
 });
 
 

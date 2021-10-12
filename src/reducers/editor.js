@@ -1,5 +1,5 @@
 
-const reducer = (state={editorMode: "default"},action) =>{
+const reducer = (state={editorMode: "default",editorHide: false},action) =>{
     switch (action.type){
         case "TOGGLE_CODE":
             return {editorMode: "code"}
@@ -26,5 +26,5 @@ const editorToggleDefault = function(){
 export {
     reducer as default,
     editorToggleCode,
-    editorToggleDefault
+    editorToggleDefault,
 }

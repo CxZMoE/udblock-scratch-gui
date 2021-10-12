@@ -1,42 +1,42 @@
 function loadSensorDefinition(board = "") {
     // 读取风速传感器
     Blockly.Python[`${board}_readWindSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var adcPin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetWindSpeed(${adcPin})`;
+        var code = `udpi_sensor.GetWindSpeed(${adcPin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
     Blockly.Python[`${board}_readRainDropSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetRainDrop(${pin})`;
+        var code = `udpi_sensor.GetRainDrop(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readSoundSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetMicrophone(${pin})`;
+        var code = `udpi_sensor.GetMicrophone(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readSmartGrayscaleSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetSmartGrayscale(${pin})`;
+        var code = `udpi_sensor.GetSmartGrayscale(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readColorSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var select = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
         var code;
         if (select == "-1") {
-            code = `sensor.GetColorDetector()`
+            code = `udpi_sensor.GetColorDetector()`
         } else {
-            code = `sensor.GetColorDetector()[${select}]`
+            code = `udpi_sensor.GetColorDetector()[${select}]`
         }
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_detectColorSensorColor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
         var code = "";
         var functionName = Blockly.Python.provideFunction_(
@@ -85,18 +85,18 @@ function loadSensorDefinition(board = "") {
                 '  else:',
                 '    return False']);
 
-        code += `${functionName}(sensor.GetColorDetector(), ${color})`
+        code += `${functionName}(udpi_sensor.GetColorDetector(), ${color})`
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
 
     Blockly.Python[`${board}_readAmbientLightSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetAmbientLight(${pin})`;
+        var code = `udpi_sensor.GetAmbientLight(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readSonicSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
 
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
 
@@ -104,72 +104,69 @@ function loadSensorDefinition(board = "") {
         var echo_pin = ps[0]
         var trig_pin = ps[1]
 
-        var code = `sensor.GetSonicDistance(${trig_pin},${echo_pin})`;
+        var code = `udpi_sensor.GetSonicDistance(${trig_pin},${echo_pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readRouteFindingSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetRouteFinder(${pin})`;
+        var code = `udpi_sensor.GetRouteFinder(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readFlameSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetFlameSensor(${pin})`;
+        var code = `udpi_sensor.GetFlameSensor(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readFlameSensoADC`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetFlameSensorADC(${pin})`;
+        var code = `udpi_sensor.GetFlameSensorADC(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readGrayScaleSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetAnalogGrayScale(${pin})`;
+        var code = `udpi_sensor.GetAnalogGrayScale(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readSmokeSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetSmoke(${pin})`;
+        var code = `udpi_sensor.GetSmoke(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readDirtHumiditySensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetDirtHuminity(${pin})`;
+        var code = `udpi_sensor.GetDirtHuminity(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readDSTempSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `sensor.GetDSTempSensor(${String(pin).split(',')[1]})`;
+        var code = `udpi_sensor.GetDSTempSensor(${String(pin).split(',')[1]})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
-    Blockly.Python[`${board}_initNFC`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
-        var code = `nfcSensor = NFC()\n`;
-        return code;
-    };
+    // Blockly.Python[`${board}_initNFC`] = function (block) {
+    //     Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
+    //     var code = `nfcSensor = NFC()\n`;
+    //     return code;
+    // };
     Blockly.Python[`${board}_startPolling`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
+        Blockly.Python.definitions_['import_init_nfc'] = 'nfcSensor = NFC()';
         var code = `nfcSensor.Start()\n`;
         return code;
     };
     Blockly.Python[`${board}_stopPolling`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
         var code = `nfcSensor.Stop()\n`;
         return code;
     };
     Blockly.Python[`${board}_getUID`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['import_nfc'] = 'from nfc import NFC';
+        Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
         var code = `nfcSensor.GetUID()\n`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };

@@ -7,7 +7,7 @@
 export default function (Blockly) {
     /** For Python Generator */
     Blockly.Python['motion_movesteps'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        
         var steps = Blockly.Python.valueToCode(block, "STEPS", Blockly.Python.ORDER_NONE);
         return 'move ' + steps + ' steps\n';
     };
@@ -945,8 +945,7 @@ export default function (Blockly) {
     Blockly.Python['math_positive_number'] = Blockly.Python['math_number']
     Blockly.Python['math_whole_number'] = Blockly.Python['math_number']
     Blockly.Python['control_wait'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-
+        Blockly.Python.definitions_['import_time'] = 'import time';
         var duration = Blockly.Python.valueToCode(block, "DURATION", Blockly.Python.ORDER_NONE);
         return `time.sleep(${duration})\n`;
     };
@@ -966,11 +965,30 @@ export default function (Blockly) {
     };
 
     Blockly.Python['control_repeat'] = Blockly.Python['control_repeat_ext'];
+    Blockly.Python.ControlForeverStack = ["while True:"];
+    Blockly.Python.ControlCallbackStack = [];
     Blockly.Python['control_forever'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.ControlForeverStack = ['while True:']
+        // 检测程序是否有循环
+        console.log(block)
+        Blockly.Python.hasLoop = true
+        Blockly.Python.Callbacks['delete_' + block.id] = function(){
+            console.log("删除方块循环")
+            Blockly.Python.hasLoop = false
+        }
+
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
-        var code = "while True:\n"
-        code += statements
+        console.log(statements)
+        if (Blockly.Python.definitions_['btn_callbacks']){
+            Blockly.Python.ControlForeverStack.push('  for c in btn_callbacks:c()')
+        }
+        Blockly.Python.ControlForeverStack.push(statements)
+        
+        console.log('循环堆栈:')
+        console.log(Blockly.Python.ControlForeverStack)
+        console.log('连接堆栈')
+        var code = Blockly.Python.ControlForeverStack.join("\n")
+        console.log(code)
         return code
     }
     Blockly.Python['control_repeat_until'] = function (block) {
@@ -1494,6 +1512,11 @@ export default function (Blockly) {
 
     // Matrix UD
     Blockly.Python['matrixud'] = function (block) {
+        // Text value.
+        var code = Blockly.Python.quote_(block.getFieldValue('MATRIX'));
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['matrix'] = function (block) {
         // Text value.
         var code = Blockly.Python.quote_(block.getFieldValue('MATRIX'));
         return [code, Blockly.Python.ORDER_ATOMIC];

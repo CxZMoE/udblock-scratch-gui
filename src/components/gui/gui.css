@@ -31,7 +31,7 @@
         Stop scrollbar popping in and out from scratch-blocks border issue
         https://github.com/LLK/scratch-gui/issues/318
     */
-    overflow-y: hidden;
+    overflow: hidden;
     justify-content: space-between;
 }
 
@@ -54,6 +54,8 @@
     display: flex;
     flex-direction: column;
 }
+
+/* 代码模式左半边的样式 */
 .editor-wrapper-code {
     /*
         This is carefully balanced--  the minimum width at which the GUI will be displayed is 1024px.
@@ -75,6 +77,18 @@
     min-width: 65%;
     flex-direction: column;
 }
+.editor-wrapper-code-hide {
+    flex-basis: calc(1024px - 150px - (($space + $stage-standard-border-width) * 2));
+    flex-grow: 1;
+    flex-shrink: 1;
+    position: relative;
+
+    display: flex;
+    max-width: 100%;
+    min-width: 100%;
+    flex-direction: column;
+}
+
 
 .tab-list {
     height: $stage-menu-height;
@@ -255,6 +269,26 @@
     flex-base: 0;
     /* this will only ever be as wide as the stage */
 }
+.stage-and-target-wrapper-code-hide{
+    /*
+        Makes rows for children:
+          1) stage menu
+          2) stage
+          3) sprite/stage selectors
+        Only reason we need this, is so .targetWrapper, which holds the selectors,
+        goes to full vertical height of the window
+    */
+    display: none;
+    flex-direction: column;
+    /* pad entire wrapper to the left and right; allow children to fill width */
+    padding-left: $space;
+    padding-right: $space;
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 0%;
+    flex-base: 0;
+    /* this will only ever be as wide as the stage */
+}
 
 .target-wrapper {
     display: flex;
@@ -337,10 +371,11 @@ $fade-out-distance: 15px;
 }
 
 /* Menu */
-
+/* 样式修改 */
 .menu-bar-position {
     position: relative;
     z-index: $z-index-menu-bar;
+    background-color: #2a77ff;
 }
 /* Alerts */
 

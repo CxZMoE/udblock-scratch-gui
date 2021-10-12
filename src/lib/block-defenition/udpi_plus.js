@@ -1,23 +1,22 @@
 export default (Blockly) => {
     // 启动
     Blockly.Python['udblockUDPiPlus_espstart'] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot_basic'] = 'from udrobot.basic import *';
         return '';
     }
     // 打印
     Blockly.Python['udblockUDPiPlus_print'] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
         return 'print(' + text + ')\n';
     }
 
     // 系统资源
     Blockly.Python['udblockUDPiPlus_getStartTime'] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         return ["time.ticks_ms()", Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['udblockUDPiPlus_delay_ms'] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var time = Blockly.Python.valueToCode(block, "TIME", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(time) < 0){
             time = 0;
@@ -25,7 +24,7 @@ export default (Blockly) => {
         return `time.sleep_ms(${time})\n`
     }
     Blockly.Python['udblockUDPiPlus_delay_us'] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var time = Blockly.Python.valueToCode(block, "TIME", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(time) < 0){
             time = 0;
@@ -33,7 +32,7 @@ export default (Blockly) => {
         return `time.sleep_us(${time})\n`
     }
     Blockly.Python['udblockUDPiPlus_delay_s'] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var time = Blockly.Python.valueToCode(block, "TIME", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(time) < 0){
             time = 0;
@@ -47,7 +46,6 @@ export default (Blockly) => {
         console.log(block.toString())
         console.log(block.nextConnection)
 
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
         // var functionName = Blockly.Python.provideFunction_(
@@ -57,16 +55,17 @@ export default (Blockly) => {
         //         '  distance = hcsr04.distance_cm()',
         //         '  return distance']);
         var codeInit = `# 按钮${btn}点击事件\n`
-        codeInit += 'def ' + `OnBtn${btn}PressedFunc` + '(v):\n'
-        codeInit += `  time.sleep_ms(10)\n`
-        codeInit += `  if (v.value()) == 1:\n`
-        codeInit += `    pass\n`
-        codeInit += `  else:\n  `
-        statements = statements.replaceAll("\n", "\n  ")
-
+        codeInit += 'def ' + `OnBtn${btn}PressedFunc` + '():\n'
         codeInit += statements
         Blockly.Python.definitions_[`btn_binding_${btn}`] = codeInit;
-        var code = `\nBtnPressedEvent(${btn}, OnBtn${btn}PressedFunc)\n`
+
+        var code = ''
+        if (btn == 0){
+            code = `\nudpi_button.set_callback_no_irq(btn='A', callback=OnBtn${btn}PressedFunc)\n`
+        }
+        if (btn == 2){
+            code = `\nudpi_button.set_callback_no_irq(btn='B', callback=OnBtn${btn}PressedFunc)\n`
+        }
         return code
     }
     Blockly.Python['udblockUDPiPlus_menu_buttons'] = function (block) {
@@ -78,127 +77,128 @@ export default (Blockly) => {
 
     // 读取环境光传感器
     Blockly.Python["udblockUDPiPlus_readAmbientLightSensor"] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var code = `sensor.GetAmbientLight(${39})`;
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.GetAmbientLight(${39})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
     // 读取声音传感器
     Blockly.Python["udblockUDPiPlus_readSoundSensor"] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var code = `sensor.GetMicrophone(${36})`;
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.GetMicrophone(${36})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
     // 读取陀螺仪传感器
     Blockly.Python["udblockUDPiPlus_readGryoSensor"] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var code = `imu.ICM20602.ICM_Get_Gyroscope()`
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.ICM_Get_Gyroscope()`
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
     // 读取加速度传感器
     Blockly.Python["udblockUDPiPlus_readAccelSensor"] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var code = `imu.ICM20602.ICM_Get_Accelerometer()`
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.ICM_Get_Accelerometer()`
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
 
     // 控制启用主板RGB
     Blockly.Python['udblockUDPiPlus_openOnBoardRGB'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
        
-        return `rgb_board_light = RGB(${17}, ${3})\n`;
+        return `udpi_rgb = RGB(${17}, ${3})\n`;
     }
 
     // 控制启用禁用RGB
     Blockly.Python['udblockUDPiPlus_closeOnBoardRGB'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         //Blockly.getMainWorkspace().createVariable("rgb");
         // 修复WS2312B反转问题
         var rgb_board_reversed = "0, 0, 0"
-        return `rgb_board_light.clear((${rgb_board_reversed}))\n`;
+        return `udpi_rgb.clear((${rgb_board_reversed}))\n`;
     }
 
     // 控制主板RGB显示颜色
     Blockly.Python["udblockUDPiPlus_setRGBDraw"] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var rgb_board_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         if (rgb_board_color.length == 0){
             return '';
         }
+        
         // 修复WS2312B反转问题
         var rgb_board_reversed = rgb_board_color.split(",");
         rgb_board_reversed[0] = rgb_board_reversed[0].replace("(", "");
         rgb_board_reversed[2] = rgb_board_reversed[2].replace(")", "");
         rgb_board_reversed = `(${rgb_board_reversed[1]},${rgb_board_reversed[0]},${rgb_board_reversed[2]})`
-        return `rgb_board_light.clear((${rgb_board_reversed}))\n`
+        return `udpi_rgb.clear((${rgb_board_reversed}))\n`
     }
     Blockly.Python["udblockUDPiPlus_setRGBLineSingleDraw"] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         
         var rgb_board_index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
-        if (parseInt(rgb_board_index) <= 0 || parseInt(rgb_board_index) >=6){
-            rgb_board_index = 1
-        }
         var rgb_board_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         if (rgb_board_color.length == 0){
             return '';
         }
+        if (parseInt(rgb_board_index) <= 0 || parseInt(rgb_board_index) >=6){
+            rgb_board_index = 1
+        }
+        console.log(rgb_board_index)
         // 修复WS2312B反转问题
         var rgb_board_reversed = rgb_board_color.split(",");
         rgb_board_reversed[0] = rgb_board_reversed[0].replace("(", "");
         rgb_board_reversed[2] = rgb_board_reversed[2].replace(")", "");
         rgb_board_reversed = `(${rgb_board_reversed[1]},${rgb_board_reversed[0]},${rgb_board_reversed[2]})`
-        return `rgb_board_light.value(${rgb_board_index-1}, ${rgb_board_reversed})\n`;
+
+        return `udpi_rgb.value(${rgb_board_index}-1, ${rgb_board_reversed})\n`;
     }
     Blockly.Python['udblockUDPiPlus_setRGBLineSingleOnlyDraw'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         
         var rgb_board_index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
         var rgb_board_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         if (rgb_board_color.length == 0){
             return '';
         }
-
         if (parseInt(rgb_board_index) <= 0 || parseInt(rgb_board_index) >=6){
             rgb_board_index = 1
         }
-
         // 修复WS2312B反转问题
         var rgb_board_reversed = rgb_board_color.split(",");
         rgb_board_reversed[0] = rgb_board_reversed[0].replace("(","");
         rgb_board_reversed[2] = rgb_board_reversed[2].replace(")","");
         rgb_board_reversed = `(${rgb_board_reversed[1]},${rgb_board_reversed[0]},${rgb_board_reversed[2]})`
-        return `rgb_board_light.switch_singal(${rgb_board_index-1}, ${rgb_board_reversed})\n`;
+        return `udpi_rgb.switch_singal(${rgb_board_index}-1, ${rgb_board_reversed})\n`;
     }
     Blockly.Python['udblockUDPiPlus_getWiFiStatus'] = function () {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        return ['WIFIISConnected()', Blockly.Python.ORDER_ATOMIC]
+        
+        return ['udpi_wifi.is_connected()', Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['udblockUDPiPlus_closeConnectToWiFi'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        var code = `WIFIDisconnect()\n`;
+        
+        var code = `udpi_wifi.disconnect()\n`;
         return code;
     }
     Blockly.Python['udblockUDPiPlus_setConnectToWiFi'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        
         var ssid = Blockly.Python.valueToCode(block, 'SSID', Blockly.Python.ORDER_ATOMIC);
         var password = Blockly.Python.valueToCode(block, 'PSK', Blockly.Python.ORDER_ATOMIC);
-        var code = `WIFIConnect(${ssid}, ${password})\n`;
+        var code = `udpi_wifi.connect(${ssid}, ${password})\n`;
         return code;
     };
     Blockly.Python['udblockUDPiPlus_openWiFiAP'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        
         var ssid = Blockly.Python.valueToCode(block, 'SSID', Blockly.Python.ORDER_ATOMIC);
         var psk = Blockly.Python.valueToCode(block, 'PSK', Blockly.Python.ORDER_ATOMIC);
-        var code = `WIFISetModeAP(${ssid}, ${psk}, 13)\n`
+        var code = `udpi_wifi.set_mode_ap(${ssid}, ${psk}, 13)\n`
         return code;
     }
     Blockly.Python['udblockUDPiPlus_udpClientSent'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        
         var msg = Blockly.Python.valueToCode(block, 'MSG', Blockly.Python.ORDER_ATOMIC);
-        return `UDPClientSendMsg(${msg})\n`
+        return `udpi_wifi.broadcast(${msg})\n`
     }
     Blockly.Python['udblockUDPiPlus_udpClientReceiveEvent'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        
         //var msg = Blockly.Python.valueToCode(block, 'MSG', Blockly.Python.ORDER_ATOMIC);
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
         statements = "  " + statements.replaceAll("\n", "\n  ")
@@ -208,12 +208,17 @@ export default (Blockly) => {
             ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(udp_socket, udp_msg, udp_remote):',
                 statements,
             ]);
-        var code = `UDPServerBind(${functionName})\n`;
+        var code = `udpi_wifi.start_udp_server(${functionName})\n`;
         return code;
+    }
+    Blockly.Python['udblockUDPiPlus_udpClientReceivedText'] = function (block) {
+        
+        var code = `udp_msg`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
     }
     
     Blockly.Python['udblockUDPiPlus_udpClientReceivedText'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var code = `udp_msg`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
@@ -221,13 +226,22 @@ export default (Blockly) => {
 
     // 控制主板蜂鸣器播放
     Blockly.Python['udblockUDPiPlus_setBuzzerPlay'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
 
         var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC).replaceAll("'","")
         console.log(Blockly.Xml.blockToDom(block))
         var mode = Blockly.Python.valueToCode(block, 'PITCH', Blockly.Python.ORDER_ATOMIC);
-        var code = `buzzer.play(Buzzer.${sound},${mode})\n`;
+        var code = `udpi_buzzer.play(Buzzer.${sound},${mode})\n`;
         return code;
+    };
+    Blockly.Python['udblockUDPiPlus_setBuzzerPlayMidi'] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+
+        var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC)
+        if (String(sound).indexOf("demo") > -1){
+            return `udpi_buzzer.play_midi(udpi_buzzer.demoSong)\n`;
+        }
+        return `udpi_buzzer.play_midi(${sound})\n`;
     };
     Blockly.Python['udblockUDPiPlus_menu_buzzerSounds'] = function (block) {
         var code = Blockly.Python.quote_(block.getFieldValue("buzzerSounds"));
@@ -240,31 +254,121 @@ export default (Blockly) => {
 
 
     Blockly.Python['udblockUDPiPlus_setBuzzerStop'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
 
-        var code = `buzzer.stop()\n`;
+        var code = `udpi_buzzer.stop()\n`;
         return code;
     };
 
     // 主板显示屏
     Blockly.Python["udblockUDPiPlus_displayWrite"] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['oled_enable'] = 'oled = OLED(i2c)';
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var line = parseInt(Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)) * 16 || 0
 
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 
-        var code = `oled.text(str(${text}), ${line}, 0)\n`;
+        var code = `udpi_screen.text(str(${text}), ${line}, 0)\n`;
         return code
     }
-    Blockly.Python["udblockUDPiPlus_displayWriteShow"] = function(block){
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['oled_enable'] = 'oled = OLED(i2c)';
-        var line = parseInt(Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)) * 16 || 0
+    Blockly.Python["udblockUDPiPlus_displayDrawLabel"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var col = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
+        var row = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
+        var text = Blockly.Python.valueToCode(block, "STR", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 
-        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
+        var code = `udpi_screen.label( ${col}, ${row}, ${text})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawPoint"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
+        var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
 
-        var code = `oled.text_show(str(${text}), ${line}, 0)\n`;
+        var code = `udpi_screen.draw_point(${x}, ${y})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawLine"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var ex = Blockly.Python.valueToCode(block, "EX", Blockly.Python.ORDER_ATOMIC)
+        var ey = Blockly.Python.valueToCode(block, "EY", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `udpi_screen.draw_line(${sx}, ${sy}, ${ex}, ${ey})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawRect"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var length = Blockly.Python.valueToCode(block, "LENGTH", Blockly.Python.ORDER_ATOMIC)
+        var width = Blockly.Python.valueToCode(block, "WIDTH", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `udpi_screen.draw_rect(${sx}, ${sy}, ${length}, ${width})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawRectFill"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var length = Blockly.Python.valueToCode(block, "LENGTH", Blockly.Python.ORDER_ATOMIC)
+        var width = Blockly.Python.valueToCode(block, "WIDTH", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `udpi_screen.draw_rect_fill(${sx}, ${sy}, ${length}, ${width})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawCircle"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var radius = Blockly.Python.valueToCode(block, "R", Blockly.Python.ORDER_ATOMIC)
+        var code = `udpi_screen.draw_circle(${sx}, ${sy}, ${radius})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawCircleFill"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var radius = Blockly.Python.valueToCode(block, "R", Blockly.Python.ORDER_ATOMIC)
+        var code = `udpi_screen.draw_circle_fill(${sx}, ${sy}, ${radius})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawTriangle"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var x1 = Blockly.Python.valueToCode(block, "X1", Blockly.Python.ORDER_ATOMIC)
+        var y1 = Blockly.Python.valueToCode(block, "Y1", Blockly.Python.ORDER_ATOMIC)
+        var x2 = Blockly.Python.valueToCode(block, "X2", Blockly.Python.ORDER_ATOMIC)
+        var y2 = Blockly.Python.valueToCode(block, "Y2", Blockly.Python.ORDER_ATOMIC)
+        var x3 = Blockly.Python.valueToCode(block, "X3", Blockly.Python.ORDER_ATOMIC)
+        var y3 = Blockly.Python.valueToCode(block, "Y3", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `udpi_screen.draw_triangle(${x1}, ${y1}, ${x2}, ${y2}, ${x3}, ${y3})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayDrawTriangleFill"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var x1 = Blockly.Python.valueToCode(block, "X1", Blockly.Python.ORDER_ATOMIC)
+        var y1 = Blockly.Python.valueToCode(block, "Y1", Blockly.Python.ORDER_ATOMIC)
+        var x2 = Blockly.Python.valueToCode(block, "X2", Blockly.Python.ORDER_ATOMIC)
+        var y2 = Blockly.Python.valueToCode(block, "Y2", Blockly.Python.ORDER_ATOMIC)
+        var x3 = Blockly.Python.valueToCode(block, "X3", Blockly.Python.ORDER_ATOMIC)
+        var y3 = Blockly.Python.valueToCode(block, "Y3", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `udpi_screen.draw_triangle_fill(${x1}, ${y1}, ${x2}, ${y2}, ${x3}, ${y3})\n`;
+        return code
+    }
+    Blockly.Python["udblockUDPiPlus_displayScroll"] = function(block){
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
+        var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
+
+
+        var code = `udpi_screen.scroll(${x}, ${y})\n`;
         return code
     }
     Blockly.Python['udblockUDPiPlus_menu_displayLine'] = function(block){
@@ -273,14 +377,12 @@ export default (Blockly) => {
     }
 
     Blockly.Python['udblockUDPiPlus_displayShow'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['oled_enable'] = 'oled = OLED(i2c)';
-        return `oled.show()\n`;
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        return `udpi_screen.show()\n`;
     }
     Blockly.Python['udblockUDPiPlus_displayClean'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot import *';
-        Blockly.Python.definitions_['oled_enable'] = 'oled = OLED(i2c)';
-        return `oled.clear()\n`;
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        return `udpi_screen.clear()\n`;
     }
 
 

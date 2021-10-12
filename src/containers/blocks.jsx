@@ -49,6 +49,8 @@ import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
 import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
 import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
 import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
+import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
+
 
 import ModifyUDPi from '../lib/udrobot-modify/udpi'
 import ModifyUDPiPlus from '../lib/udrobot-modify/udpi_plus'
@@ -457,7 +459,12 @@ class Blocks extends React.Component {
         initUDBlockCarBlocks(Blockly);
         initUDBlockCamerabBlocks(Blockly);
         initUDBlockIOTBlocks(Blockly);
-        
+        initUDBlockMicrobitBlocks(Blockly);
+
+        // 回调函数
+        Blockly.Python.Callbacks = {}
+        Blockly.Python.hasLoop = false
+        Blockly.Python.hasBtnCallback = false
         this.state = {
             prompt: null
         };
@@ -470,11 +477,16 @@ class Blocks extends React.Component {
         //Blockly.Msg.console.println("hello")
         //console.log(Blockly)
         let codeText = Blockly.Python.workspaceToCode(this.workspace);
-        let codeSplit = codeText.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
-        codeText = codeSplit.join("")
+        Blockly.Python._content = codeText;
+        if (!Blockly.Python.hasLoop && Blockly.Python.hasBtnCallback){
+            Blockly.Python._content += '\nwhile True:\n' +
+            '  for c in btn_callbacks:c()\n'
+        }
+        let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
+        Blockly.Python._content = codeSplit.join("")
         //console.log(codeText)
-        this.props.updatePyCode('# UDRobot MicroPython Code\n' + codeText)
-        console.log(this.props.pycode)
+        this.props.updatePyCode('# UDRobot MicroPython Code\n' + Blockly.Python._content)
+        //console.log(this.props.pycode)
 
         if (this.props.editor != undefined) {
             console.log("editor undifined")
@@ -494,7 +506,7 @@ class Blocks extends React.Component {
         const workspaceConfig = defaultsDeep({},
             Blocks.defaultOptions,
             this.props.options,
-            { rtl: this.props.isRtl, toolbox: this.props.toolboxXML }
+            { rtl: this.props.isRtl, toolbox: this.props.toolboxXMLz}
         );
         this.workspace = Blockly.inject(this.blocks, workspaceConfig);
         this.workspace.addChangeListener(() => {

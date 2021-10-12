@@ -7,6 +7,7 @@ import ConnectedIntlProvider from './connected-intl-provider.jsx';
 import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
 import editorReducer from '../reducers/editor'
 import editorRefReducer from '../reducers/editor-ref'
+import editorHideReducer from '../reducers/editorhide'
 import pyCodeReducer from '../reducers/pycode.js';
 
 import terminalReducer from '../reducers/terminaljs'
@@ -80,6 +81,7 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                     scratchGui: guiReducer,
                     scratchPaint: ScratchPaintReducer,
                     editorMode: editorReducer,
+                    editorHide: editorHideReducer,
                     editorRef: editorRefReducer,
                     terminal: terminalReducer,
                     pycode: pyCodeReducer,

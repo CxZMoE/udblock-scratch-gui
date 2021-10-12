@@ -179,8 +179,8 @@ class TerminalJS {
 		this._innerWindow.appendChild(this._input)
 		this.html.appendChild(this._innerWindow)
 
-		// this.setBackgroundColor('black')
 		this.setBackgroundColor('black')
+		//this.setBackgroundColor('white')
 		this.setTextColor('white')
 		this.setTextSize('1em')
 		this.setWidth('100%')

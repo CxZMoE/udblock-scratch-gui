@@ -17,7 +17,7 @@ export default (Blockly) => {
 
     // 功能
     Blockly.Python['udblockEXTBIOT_initAiPlayer'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         var request = new XMLHttpRequest();
         var ip = "127.0.0.1"
         request.open("GET","http://127.0.0.1:3000/myIP",false)
@@ -32,7 +32,7 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_startRecording'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var duaration = Blockly.Python.valueToCode(block, "DUARATION", Blockly.Python.ORDER_ATOMIC)
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
@@ -41,7 +41,7 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_startPlaying'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
 
@@ -49,7 +49,7 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_startPlayingAsync'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
 
@@ -57,14 +57,14 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_getSTTResult'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
 
         var code = `aiplayer._stt`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python['udblockEXTBIOT_startSTT'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
 
@@ -72,7 +72,7 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_startTTS'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
 
@@ -80,7 +80,7 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_getSTTResultContains'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
 
@@ -88,7 +88,7 @@ export default (Blockly) => {
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python['udblockEXTBIOT_getSTTResultEquals'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
 
@@ -96,7 +96,7 @@ export default (Blockly) => {
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python['udblockEXTBIOT_setVolume'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var volume = Blockly.Python.valueToCode(block, "VOL", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(volume) > 100){
@@ -110,7 +110,7 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_removeRecord'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var filename = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
         //var code = `aiplayer.Volume(${Math.round(((volume)/100)*63)})`;
@@ -118,14 +118,14 @@ export default (Blockly) => {
         return code;
     };
     Blockly.Python['udblockEXTBIOT_removeRecordAll'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         //var code = `aiplayer.Volume(${Math.round(((volume)/100)*63)})`;
         var code = `aiplayer.RemoveAll()\n`;
         return code;
     };
     Blockly.Python['udblockEXTBIOT_startTTSSave'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
@@ -161,7 +161,7 @@ export default (Blockly) => {
     };
     
     Blockly.Python['udblockEXTBIOT_renameFingerprint'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
         var FID = Blockly.Python.valueToCode(block, "FID", Blockly.Python.ORDER_ATOMIC)
         var NFID = Blockly.Python.valueToCode(block, "NFID", Blockly.Python.ORDER_ATOMIC)
@@ -179,7 +179,7 @@ export default (Blockly) => {
         return [code,Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python['udblockEXTBIOT_removeFingerprints'] = function (block) {
-        Blockly.Python.definitions_['import_iot'] = 'from audio import AIPlayer';
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         Blockly.Python.definitions_['import_fingerprint'] = 'from fingerprint import Fingerprint';
         var code = `fingerprintModule.RemoveRecords()\n`;
         return code;
