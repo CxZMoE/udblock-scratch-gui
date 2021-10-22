@@ -127,10 +127,10 @@ const  initPythonGenerator = () =>{
 
         var defvars = [];
         var variables = workspace.getAllVariables();
-        for (var i = 0; i < variables.length; i++) {
-            defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
-                Blockly.Variables.NAME_TYPE) + ' = None';
-        }
+        // for (var i = 0; i < variables.length; i++) {
+        //     defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
+        //         Blockly.Variables.NAME_TYPE) + ' = None';
+        // }
 
         // Add developer variables (not created or named by the user).
         var devVarList = Blockly.Variables.allDeveloperVariables(workspace);

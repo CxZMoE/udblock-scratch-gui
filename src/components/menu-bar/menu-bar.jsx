@@ -819,6 +819,28 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
+
+                                                terminal.ws.send(`closecom:${terminal.com}`)
+                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")){
+                                                    terminal.ws.send(`factory:${terminal.com}`)
+                                                    this.props.onRequestCloseTool()
+                                                    this.props.terminal.print("开始恢复出厂设置");
+                                                }else{
+                                                    this.props.onRequestCloseTool()
+                                                    this.props.terminal.print("取消恢复出厂设置");
+                                                }
+                                                
+                                            }}>
+                                                <FormattedMessage
+                                                    defaultMessage="恢复主板出厂设置"
+                                                    description="Menu bar item for turning on turbo mode"
+                                                    id="gui.menuBar.factoryUpdate"
+                                                />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => {
+                                                console.log(this.props.pycode)
+                                                var terminal = this.props.terminal
+
                                                 terminal.ws.send(`closecom:${terminal.com}`)
 
 

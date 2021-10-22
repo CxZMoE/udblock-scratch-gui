@@ -50,6 +50,7 @@ import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
 import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
 import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
+import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 
 
 import ModifyUDPi from '../lib/udrobot-modify/udpi'
@@ -108,7 +109,7 @@ class Blocks extends React.Component {
             "DATA_HIDEVARIABLE": "隐藏变量 %1",
             "DATA_ADDTOLIST": "将 %1 加入 %2",
             "DATA_DELETEOFLIST": "删除 %2 的第 %1 项",
-            "DATA_DELETEALLOFLIST": "删除 %1 的全部项目",
+            "DATA_DELETEALLOFLIST": "初始化列表 %1",
             "DATA_INSERTATLIST": "在 %3 的第 %2 项前插入 %1",
             "DATA_REPLACEITEMOFLIST": "将 %2 的第 %1 项替换为 %3",
             "DATA_ITEMOFLIST": "%2 的第 %1 项",
@@ -460,6 +461,7 @@ class Blocks extends React.Component {
         initUDBlockCamerabBlocks(Blockly);
         initUDBlockIOTBlocks(Blockly);
         initUDBlockMicrobitBlocks(Blockly);
+        initUDBlockMQTTBlocks(Blockly)
 
         // 回调函数
         Blockly.Python.Callbacks = {}

@@ -116,7 +116,16 @@ class TerminalJS {
 				newLine.textContent = message
 				output.appendChild(newLine)
 				terminalLineLength += 1
-				if (terminalLineLength > 100) {
+
+				// var count = 0
+				if (terminalLineLength > 5000) {
+					// var temp = output.childNodes.forEach(function(v,k,p){
+					// 	if (count < 250){
+					// 		v.remove()
+					// 		count ++
+					// 	}
+						
+					// })
 					output.innerHTML = ""
 					terminalLineLength = 0;
 				}

@@ -149,6 +149,24 @@ function loadSensorDefinition(board = "") {
         var code = `udpi_sensor.GetDSTempSensor(${String(pin).split(',')[1]})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_readDHT11Temp`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_sensor.GetDHT11Temp(${String(pin).split(',')[1]})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readDHT11Humidity`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_sensor.GetDHT11Humidity(${String(pin).split(',')[1]})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readFourChannelInferredSensor`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var status = Blockly.Python.valueToCode(block, "STATUS", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_sensor.GetFourChannelInferredSensor(${status})\n`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
     // Blockly.Python[`${board}_initNFC`] = function (block) {
     //     Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
     //     var code = `nfcSensor = NFC()\n`;
@@ -170,6 +188,8 @@ function loadSensorDefinition(board = "") {
         var code = `nfcSensor.GetUID()\n`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    
+    
     /* 读传感器结束 */
 }
 

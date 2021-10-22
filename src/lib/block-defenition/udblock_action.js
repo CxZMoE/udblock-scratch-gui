@@ -147,7 +147,7 @@ function loadActionDefinition(board = "") {
         Blockly.Python.definitions_['import_face_panel'] = 'from udrobot.action_module.face_panel import *';
         var face = Blockly.Python.valueToCode(block, "FACE", Blockly.Python.ORDER_ATOMIC);
         var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
-        return `express_panel_do(i2c, ${face}, color=${color})\n`;
+        return `express_panel_do(udpi_i2c, ${face}, color=${color})\n`;
     }
     Blockly.Python[`${board}_setFacePanelCustomized`] = function (block) {
         var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
@@ -219,7 +219,7 @@ function loadActionDefinition(board = "") {
 
 
 
-        return `express_panel_do(i2c, ${getPixelArray(action)}, mode=FACE_MODE_DIY)\n`;
+        return `express_panel_do(udpi_i2c, ${getPixelArray(action)}, mode=FACE_MODE_DIY)\n`;
         // 每种颜色16行，每行8个， 行用16进制表示即： 0x00
         //                          R                                  B                                   G
         //bytearray([0x02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0//,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0//,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
