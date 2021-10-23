@@ -164,7 +164,7 @@ function loadSensorDefinition(board = "") {
     Blockly.Python[`${board}_readFourChannelInferredSensor`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var status = Blockly.Python.valueToCode(block, "STATUS", Blockly.Python.ORDER_ATOMIC);
-        var code = `udpi_sensor.GetFourChannelInferredSensor(${status})\n`;
+        var code = `udpi_sensor.GetFourChannelInferredSensor(${status})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     // Blockly.Python[`${board}_initNFC`] = function (block) {
