@@ -28,10 +28,11 @@ const ProjectTitleInput = ({
     <BufferedInput
         className={classNames(styles.titleField, className)}
         maxLength="100"
-        placeholder={intl.formatMessage(messages.projectTitlePlaceholder)}
+        // placeholder={intl.formatMessage(messages.projectTitlePlaceholder)}
+        placeholder="UDBlock作品"
         tabIndex="0"
         type="text"
-        value={"UDBlock作品"}
+        value={projectTitle}
         onSubmit={onSubmit}
     />
 );

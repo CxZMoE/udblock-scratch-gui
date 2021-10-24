@@ -46,8 +46,8 @@ const TitledHOC = function (WrappedComponent) {
         handleReceivedProjectTitle (requestedTitle) {
             let newTitle = requestedTitle;
             if (newTitle === null || typeof newTitle === 'undefined') {
-                // newTitle = this.props.intl.formatMessage(messages.defaultProjectTitle);
-                newTitle = 'UDBlock作品'
+                //newTitle = this.props.intl.formatMessage(messages.defaultProjectTitle);
+                newTitle = "新UDBlock工程"
             }
             this.props.onChangedProjectTitle(newTitle);
             return newTitle;
