@@ -39,7 +39,7 @@ class TerminalComponent extends React.Component {
     }
 
     
-
+    // 选择串口，并且更新串口的state
     onPortSelect(comName) {
         this.setState({
             com: comName
@@ -48,37 +48,47 @@ class TerminalComponent extends React.Component {
         this.props.onCreateTerminal(this.terminalJS);
     }
 
+    // 与服务端之间建立Websocket连接
     onConnectWS(terminalJS) {
         function connect(com) {
             try {
-
                 var ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-
+                
+                // 为终端绑定一个Websocket对象
                 terminalJS.ws = ws
+
+                // 在Websocket连接建立的时候执行
                 ws.onopen = (e) => {
                     console.log("Websocket尝试使用串口:", com)
                     ws.send(`closecom:${com}`)
                     ws.send(`opencom:${com}`)
                 }
 
+                // 在Websocket连接建立失败后执行
                 ws.onerror = function (ws, e) {
+                    ws.close()
+                }
+
+                // 在Websocket连接关闭后执行
+                ws.onclose = function (e) {
+                    console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+                    console.log(e)
+
+                    // Websocket连接必须保持在线，任何离线的情况都不应该发生
                     console.log("连接到WebSocket服务器失败，3秒后重新尝试连接。")
                     setTimeout(() => {
                         connect();
                     }, 3000);
                 }
-                ws.onclose = function (e) {
-                    console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    console.log(e)
-                }
             } catch (ex) {
                 console.log(ex)
-
             }
         }
 
         connect(terminalJS.com);
     }
+
+    // 终端组件成功挂载后发生
     componentDidMount() {
         this.terminalJS = new TerminalJS("UDTerminal-machine")
 
@@ -87,6 +97,8 @@ class TerminalComponent extends React.Component {
         this.onConnectWS(terminalJS);
 
         document.getElementById(this.state.target).appendChild(terminalJS.html);
+
+        // 打开软件后在终端里面显示的内容
         terminalJS.print("欢迎使用UDBlock智慧儿童编程！");
         terminalJS.print("请在顶部菜单栏选择要连接的设备串口并点击“打开”");
         terminalJS.print("如果插上主板后没有听见滴的一声，请按下重启主板按钮后再试。");
@@ -95,8 +107,12 @@ class TerminalComponent extends React.Component {
 
         this.props.onCreateTerminal(terminalJS);
         var selectPort = this.onPortSelect;
+
+
+        // 获取端口Option元素
         var portSelect = document.getElementById("portSelect")
 
+        // 端口更改Debug信息
         portSelect.onchange = function (e) {
             console.log("change to " + e.target.value)
             console.log(e.target)
@@ -105,13 +121,11 @@ class TerminalComponent extends React.Component {
 
         }
 
+        // 定期刷新串口Option元素的内容
         setInterval(() => {
-            var comState = this.state.com;
+            var comState = this.state.com;  // 串口状态（串口号）
 
-            // if (this.state.com != null) {
-            //     //console.log(this.state.com)
-            // }
-
+            // 请求获取当前设备的串口列表
             var request = new XMLHttpRequest();
 
             request.open("GET", "http://127.0.0.1:3000/serialport", true);
@@ -123,22 +137,32 @@ class TerminalComponent extends React.Component {
                     var portSelect = document.getElementById("portSelect")
                     portSelect.innerHTML = ""
 
-
-                    var serialportList = JSON.parse(request.responseText)
+                    // 解析返回的数据并且将可用串口添加到下拉选项中
+                    var serialportList = JSON.parse(request.responseText)   // 解析
                     for (var index in serialportList) {
+                        // 不是USB设备则过滤
                         if (serialportList[index].isUSB == false) {
                             continue
                         }
+
+                        // 创建新的下拉选项
                         var option = document.createElement("option");
+                        // 命名规范：${串口号} - [UDRobot ${序列号}]
                         var portName = `${serialportList[index].name} - [UDRobot ${serialportList[index].sn}]`;
-                        option.text = portName;
-                        option.value = serialportList[index].name;
+                        option.text = portName; // 串口号
+                        option.value = serialportList[index].name; // 串口名字（串口号）
 
                         portSelect.appendChild(option)
                     }
+
+                    // 每次扫描串口后
+                    // 如果上次已经选中的串口还在列表中
+                    // 则需要选中上次选择的串口
+                    // 否则串口选择会乱套
                     for (var i = 0; i < portSelect.children.length; i++) {
                         // console.log(portSelect.children.item(i).innerText)
                         console.log("state: " + comState + " value: " + portSelect.children.item(i).value)
+                        // 找到历史选中串口
                         if (portSelect.children.item(i).value == comState) {
                             //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
                             portSelect.children.item(i).selected = true;
@@ -148,12 +172,17 @@ class TerminalComponent extends React.Component {
 
                     }
 
+                    // 没有找到，或者只有一个串口设备
                     if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
                         //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
                         portSelect.children.item(0).selected = true;
                         selectPort(portSelect.children.item(0).value);
                     }
 
+                    // 没有串口设备，则清空选中的串口
+                    if (portSelect.children.length == 0){
+                        selectPort("")
+                    }
                 }
             }
 
@@ -169,17 +198,23 @@ class TerminalComponent extends React.Component {
             if (request.readyState == 4 && request.status == 200) {
                 terminalJS.print("软件版本: " + request.responseText)
                 terminalJS.print("---------------------------")
+                useEffect(() => {
+                    document.title = "new title"
+                 }, []);
+                
             }
         }
 
-        document.addEventListener("keydown", function (e) {
-            var keyCode = e.keyCode || e.charCode;
-            if (keyCode == 67 && e.ctrlKey) {
-                terminalJS.ws.send(`intcom:${terminalJS.com}`)
-            }
+        
+        // [热键绑定] Ctrl + C 停止代码执行
+        // document.addEventListener("keydown", function (e) {
+        //     var keyCode = e.keyCode || e.charCode;
+        //     if (keyCode == 67 && e.ctrlKey) {
+        //         terminalJS.ws.send(`intcom:${terminalJS.com}`)
+        //     }
 
-            return false;
-        })
+        //     return false;
+        // })
 
         terminalJS.print("---------------------------")
         

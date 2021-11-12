@@ -57,6 +57,9 @@ function loadMiscMenu(board=""){
     Blockly.Python[`${board}_menu_FourInferredMap`] = function (block) {
         return [block.getFieldValue("FourInferredMap"), Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_menu_channel`] = function (block) {
+        return [block.getFieldValue("channel"), Blockly.Python.ORDER_ATOMIC]
+    }
 }
 
 

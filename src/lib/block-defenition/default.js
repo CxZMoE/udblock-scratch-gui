@@ -787,9 +787,7 @@ export default function (Blockly) {
         return `${list}[${index}] = ${item}\n`
     }
     Blockly.Python['data_itemoflist'] = function(block){
-        var index = parseInt(Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)) || 1;
-        if (index >= 1) index -= 1;
-        else index = 0;
+        var index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
 
 
         var list = Blockly.Xml.blockToDom(block).firstChild.innerText;

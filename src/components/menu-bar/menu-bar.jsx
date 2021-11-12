@@ -510,6 +510,7 @@ class MenuBar extends React.Component {
 
         const modeButton = (
             <MenuSection>
+                {/* 模式切换 */}
                 <MenuItem>
                     <ModeButton
                         id={"MPython-btn"}
@@ -523,6 +524,7 @@ class MenuBar extends React.Component {
 
                     />
                 </MenuItem>
+                {/* 代码生成模式切换 */}
                 {/* <MenuItem>
                     <ModeButton
                         id={"Arduino-btn"}
@@ -752,7 +754,7 @@ class MenuBar extends React.Component {
                                                     if (request.readyState == 4 && request.status == 200) {
                                                         var response = request.responseText;
                                                         console.log(response)
-                                                        terminal.print("上传代码成功");
+                                                        // terminal.print("上传代码成功");
                                                         terminal.ws.send(`opencom:${terminal.com}`)
                                                     }
                                                 }

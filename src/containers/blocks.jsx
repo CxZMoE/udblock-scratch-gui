@@ -47,6 +47,7 @@ import initUDBlockEXTBMFBlocks from '../lib/block-defenition/udblockextb_mf'
 import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
 import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
 import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
+import initUDBlockCar2DBlocks from '../lib/block-defenition/udblockextb_car_2d'
 import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
 import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
@@ -446,6 +447,34 @@ class Blocks extends React.Component {
         Blockly.statusButtonCallback = this.handleConnectionModalStart;
         Blockly.recordSoundCallback = this.handleOpenSoundRecorder;
 
+
+        // 修改默认刚快
+        Blockly.Blocks['data_itemoflist'] = {
+  /**
+   * Block for reporting item of list.
+   * @this Blockly.Block
+   */
+        init: function() {
+            this.jsonInit({
+            "message0": Blockly.Msg.DATA_ITEMOFLIST,
+            "args0": [
+                {
+                "type": "input_value",
+                "name": "INDEX"
+                },
+                {
+                "type": "field_variable",
+                "name": "LIST",
+                "variableTypes": [Blockly.LIST_VARIABLE_TYPE, 'string']
+                }
+            ],
+            "output": null,
+            "category": Blockly.Categories.dataLists,
+            "extensions": ["colours_data_lists"],
+            "outputShape": Blockly.OUTPUT_SHAPE_ROUND
+            });
+        }
+};
         // 初始化Python生成器
         initPythonGenerator();
         // 初始化Arduino生成器
@@ -458,6 +487,7 @@ class Blocks extends React.Component {
         initUDBlockEXTBSMBlocks(Blockly);
         initUDBlockEXTBIOBlocks(Blockly);
         initUDBlockCarBlocks(Blockly);
+        initUDBlockCar2DBlocks(Blockly);
         initUDBlockCamerabBlocks(Blockly);
         initUDBlockIOTBlocks(Blockly);
         initUDBlockMicrobitBlocks(Blockly);

@@ -90,6 +90,37 @@ function loadActionDefinition(board = "") {
         return `relay_control_${relay_pin}.toggle()\n`;
     }
 
+    // 双路继电器
+    Blockly.Python[`${board}_openReplayDbl`] = function (block) {
+        Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
+        var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
+        if (channel == ''){channel = 0}
+        console.log("channel: " + String(channel))
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
+        
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
+
+        return `relay_control_dbl_${relay_pin}.on()\n`;
+    }
+    Blockly.Python[`${board}_closeReplayDbl`] = function (block) {
+        Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
+        var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
+        if (channel == ''){channel = 0}
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
+        
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
+        return `relay_control_dbl_${relay_pin}.off()\n`;
+    }
+    Blockly.Python[`${board}_switchReplayDbl`] = function (block) {
+        Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
+        var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
+        if (channel == ''){channel = 0}
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
+        
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
+        return `relay_control_dbl_${relay_pin}.toggle()\n`;
+    }
+
     // 电机
     Blockly.Python[`${board}_turnMotorClock`] = function (block) {
         Blockly.Python.definitions_['import_driver_motor'] = 'from drivers.motor import Motor';
@@ -223,6 +254,132 @@ function loadActionDefinition(board = "") {
         // 每种颜色16行，每行8个， 行用16进制表示即： 0x00
         //                          R                                  B                                   G
         //bytearray([0x02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0//,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0//,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    }
+
+    // OLED显示屏模组
+    // 主板显示屏
+    Blockly.Python[`${board}_displayWrite`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var line = parseInt(Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)) * 16 || 0
+
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
+
+        var code = `oled_module.text(str(${text}), ${line}, 0)\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawLabel`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var col = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
+        var row = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
+        var text = Blockly.Python.valueToCode(block, "STR", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
+
+        var code = `oled_module.label( ${col}, ${row}, ${text})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawPoint`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
+        var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `oled_module.draw_point(${x}, ${y})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawLine`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var ex = Blockly.Python.valueToCode(block, "EX", Blockly.Python.ORDER_ATOMIC)
+        var ey = Blockly.Python.valueToCode(block, "EY", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `oled_module.draw_line(${sx}, ${sy}, ${ex}, ${ey})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawRect`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var length = Blockly.Python.valueToCode(block, "LENGTH", Blockly.Python.ORDER_ATOMIC)
+        var width = Blockly.Python.valueToCode(block, "WIDTH", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `oled_module.draw_rect(${sx}, ${sy}, ${length}, ${width})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawRectFill`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var length = Blockly.Python.valueToCode(block, "LENGTH", Blockly.Python.ORDER_ATOMIC)
+        var width = Blockly.Python.valueToCode(block, "WIDTH", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `oled_module.draw_rect_fill(${sx}, ${sy}, ${length}, ${width})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawCircle`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var radius = Blockly.Python.valueToCode(block, "R", Blockly.Python.ORDER_ATOMIC)
+        var code = `oled_module.draw_circle(${sx}, ${sy}, ${radius})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawCircleFill`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
+        var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
+
+        var radius = Blockly.Python.valueToCode(block, "R", Blockly.Python.ORDER_ATOMIC)
+        var code = `oled_module.draw_circle_fill(${sx}, ${sy}, ${radius})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawTriangle`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var x1 = Blockly.Python.valueToCode(block, "X1", Blockly.Python.ORDER_ATOMIC)
+        var y1 = Blockly.Python.valueToCode(block, "Y1", Blockly.Python.ORDER_ATOMIC)
+        var x2 = Blockly.Python.valueToCode(block, "X2", Blockly.Python.ORDER_ATOMIC)
+        var y2 = Blockly.Python.valueToCode(block, "Y2", Blockly.Python.ORDER_ATOMIC)
+        var x3 = Blockly.Python.valueToCode(block, "X3", Blockly.Python.ORDER_ATOMIC)
+        var y3 = Blockly.Python.valueToCode(block, "Y3", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `oled_module.draw_triangle(${x1}, ${y1}, ${x2}, ${y2}, ${x3}, ${y3})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayDrawTriangleFill`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var x1 = Blockly.Python.valueToCode(block, "X1", Blockly.Python.ORDER_ATOMIC)
+        var y1 = Blockly.Python.valueToCode(block, "Y1", Blockly.Python.ORDER_ATOMIC)
+        var x2 = Blockly.Python.valueToCode(block, "X2", Blockly.Python.ORDER_ATOMIC)
+        var y2 = Blockly.Python.valueToCode(block, "Y2", Blockly.Python.ORDER_ATOMIC)
+        var x3 = Blockly.Python.valueToCode(block, "X3", Blockly.Python.ORDER_ATOMIC)
+        var y3 = Blockly.Python.valueToCode(block, "Y3", Blockly.Python.ORDER_ATOMIC)
+
+        var code = `oled_module.draw_triangle_fill(${x1}, ${y1}, ${x2}, ${y2}, ${x3}, ${y3})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_displayScroll`] = function(block){
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
+        var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
+
+
+        var code = `oled_module.scroll(${x}, ${y})\n`;
+        return code
+    }
+    Blockly.Python[`${board}_menu_displayLine`] = function(block){
+        var text = block.getFieldValue("displayLine");
+        return [text, Blockly.Python.ORDER_ATOMIC]
+    }
+
+    Blockly.Python[`${board}_displayShow`] = function (block) {
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        return `oled_module.show()\n`;
+    }
+    Blockly.Python[`${board}_displayClean`] = function (block) {
+        Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
+        return `oled_module.clear()\n`;
     }
 }
 

@@ -185,7 +185,7 @@ function loadSensorDefinition(board = "") {
     };
     Blockly.Python[`${board}_getUID`] = function (block) {
         Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
-        var code = `nfcSensor.GetUID()\n`;
+        var code = `nfcSensor.GetUID()`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     

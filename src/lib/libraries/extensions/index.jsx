@@ -225,6 +225,36 @@ export default [
         helpLink: 'https://forum.udrobot.net/'
     },
     {
+        name: 'UDBlock 双驱小车拓展板',
+        extensionId: 'udblockEXTBCar2D',
+        collaborator: 'UDRobot',
+        iconURL: udpiExtbSMIconURL,
+        insetIconURL: udpiInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Sense push, pull, motion, and spin."
+                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
+                id="gui.extension.gdxfor.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: 'https://forum.udrobot.net/'
+    },
+    {
         name: 'UDBlock 智能语音拓展板',
         extensionId: 'udblockEXTBIOT',
         collaborator: 'UDRobot',
