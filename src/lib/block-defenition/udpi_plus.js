@@ -104,7 +104,7 @@ export default (Blockly) => {
     Blockly.Python['udblockUDPiPlus_openOnBoardRGB'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
        
-        return `udpi_rgb = RGB(${17}, ${3})\n`;
+        return `udpi_rgb = RGB(${17}, ${6})\n`;
     }
 
     // 控制启用禁用RGB
