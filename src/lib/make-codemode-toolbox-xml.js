@@ -725,7 +725,8 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     backdropName = xmlEscape(backdropName);
     soundName = xmlEscape(soundName);
 
-    console.log(categoriesXML)
+    // 打印工具箱的XML格式
+    //console.log(categoriesXML)
     categoriesXML = categoriesXML.slice();
     const moveCategory = categoryId => {
         const index = categoriesXML.findIndex(categoryInfo => categoryInfo.id === categoryId);

@@ -31,6 +31,16 @@ export default (Blockly) => {
         var code = `aiplayer = AIPlayer('${ip}')\n`;
         return code;
     };
+    Blockly.Python['udblockEXTBIOT_enableSD'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var code = `aiplayer.useSD = True\n`;
+        return code;
+    };
+    Blockly.Python['udblockEXTBIOT_disableSD'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var code = `aiplayer.useSD = False\n`;
+        return code;
+    };
     Blockly.Python['udblockEXTBIOT_startRecording'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         
@@ -131,6 +141,23 @@ export default (Blockly) => {
         var fname = Blockly.Python.valueToCode(block, "FNAME", Blockly.Python.ORDER_ATOMIC)
         var code = `aiplayer.TTS(${text},dst=${fname})\n`;
         return code;
+    };
+
+    // ASR语音模块
+    Blockly.Python['udblockEXTBIOT_startASRMode'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var code = `aiplayer.StartWakeupMode()\n`;
+        return code;
+    };
+    Blockly.Python[`udblockEXTBIOT_menu_asrmenu`] = function (block) {
+        var asrmenu = block.getFieldValue("asrmenu");
+        return [`${asrmenu}`, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python['udblockEXTBIOT_getASRResult'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var menuValue = Blockly.Python.valueToCode(block, 'RESULT', Blockly.Python.ORDER_ATOMIC)
+        var code = `(aiplayer.GetASRCommandID() == ${menuValue})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
     };
 
     // 指纹模块

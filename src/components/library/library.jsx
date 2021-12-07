@@ -86,6 +86,7 @@ class LibraryComponent extends React.Component {
         }
     }
     handleMouseEnter (id) {
+        console.log("a")
         // don't restart if mouse over already playing item
         if (this.props.onItemMouseEnter && this.state.playingItem !== id) {
             this.props.onItemMouseEnter(this.getFilteredData()[id]);
@@ -95,6 +96,7 @@ class LibraryComponent extends React.Component {
         }
     }
     handleMouseLeave (id) {
+        console.log("b")
         if (this.props.onItemMouseLeave) {
             this.props.onItemMouseLeave(this.getFilteredData()[id]);
             this.setState({
@@ -161,7 +163,8 @@ class LibraryComponent extends React.Component {
         return (
             <Modal
                 fullScreen
-                contentLabel={this.props.title}
+                // contentLabel={this.props.title}
+                contentLabel="UDBlock拓展列表"
                 id={this.props.id}
                 onRequestClose={this.handleClose}
             >
@@ -202,6 +205,7 @@ class LibraryComponent extends React.Component {
                         }
                     </div>
                 )}
+                {/* 拓展选择界面内容部分 */}
                 <div
                     className={classNames(styles.libraryScrollGrid, {
                         [styles.withFilterBar]: this.props.filterable || this.props.tags

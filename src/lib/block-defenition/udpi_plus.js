@@ -100,6 +100,20 @@ export default (Blockly) => {
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
 
+    // 读取手势传感器
+    Blockly.Python["udblockUDPiPlus_readGestureSensor"] = function (block) {
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+
+        Blockly.Python[`udblockUDPiPlus_menu_gesture_sensor`] = function (block) {
+            var imageMethod = block.getFieldValue("gesture_sensor");
+            return [`${imageMethod}`, Blockly.Python.ORDER_ATOMIC]
+        }
+
+        var direction = Blockly.Python.valueToCode(block, 'GESTURE', Blockly.Python.ORDER_ATOMIC);
+        var code = `(udpi_sensor.GetGestureSensor() == '${direction}')`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    }
+
     // 控制启用主板RGB
     Blockly.Python['udblockUDPiPlus_openOnBoardRGB'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';

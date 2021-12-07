@@ -104,7 +104,7 @@ class LibraryItemComponent extends React.PureComponent {
                     </div>
                 ) : null}
             </div>
-        ) : (
+        ) : (// ---------------------------------------------------------
             <Box
                 className={classNames(
                     styles.libraryItem, {

@@ -161,7 +161,7 @@ class TerminalComponent extends React.Component {
                     // 否则串口选择会乱套
                     for (var i = 0; i < portSelect.children.length; i++) {
                         // console.log(portSelect.children.item(i).innerText)
-                        console.log("state: " + comState + " value: " + portSelect.children.item(i).value)
+                        //console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(i).value)
                         // 找到历史选中串口
                         if (portSelect.children.item(i).value == comState) {
                             //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
@@ -198,10 +198,6 @@ class TerminalComponent extends React.Component {
             if (request.readyState == 4 && request.status == 200) {
                 terminalJS.print("软件版本: " + request.responseText)
                 terminalJS.print("---------------------------")
-                useEffect(() => {
-                    document.title = "new title"
-                 }, []);
-                
             }
         }
 

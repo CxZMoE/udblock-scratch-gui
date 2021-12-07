@@ -53,10 +53,6 @@ import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
 import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 
-
-import ModifyUDPi from '../lib/udrobot-modify/udpi'
-import ModifyUDPiPlus from '../lib/udrobot-modify/udpi_plus'
-
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
     object[property] = function (...args) {
@@ -450,31 +446,31 @@ class Blocks extends React.Component {
 
         // 修改默认刚快
         Blockly.Blocks['data_itemoflist'] = {
-  /**
-   * Block for reporting item of list.
-   * @this Blockly.Block
-   */
-        init: function() {
-            this.jsonInit({
-            "message0": Blockly.Msg.DATA_ITEMOFLIST,
-            "args0": [
-                {
-                "type": "input_value",
-                "name": "INDEX"
-                },
-                {
-                "type": "field_variable",
-                "name": "LIST",
-                "variableTypes": [Blockly.LIST_VARIABLE_TYPE, 'string']
-                }
-            ],
-            "output": null,
-            "category": Blockly.Categories.dataLists,
-            "extensions": ["colours_data_lists"],
-            "outputShape": Blockly.OUTPUT_SHAPE_ROUND
-            });
-        }
-};
+            /**
+             * Block for reporting item of list.
+             * @this Blockly.Block
+             */
+            init: function () {
+                this.jsonInit({
+                    "message0": Blockly.Msg.DATA_ITEMOFLIST,
+                    "args0": [
+                        {
+                            "type": "input_value",
+                            "name": "INDEX"
+                        },
+                        {
+                            "type": "field_variable",
+                            "name": "LIST",
+                            "variableTypes": [Blockly.LIST_VARIABLE_TYPE, 'string']
+                        }
+                    ],
+                    "output": null,
+                    "category": Blockly.Categories.dataLists,
+                    "extensions": ["colours_data_lists"],
+                    "outputShape": Blockly.OUTPUT_SHAPE_ROUND
+                });
+            }
+        };
         // 初始化Python生成器
         initPythonGenerator();
         // 初始化Arduino生成器
@@ -510,9 +506,9 @@ class Blocks extends React.Component {
         //console.log(Blockly)
         let codeText = Blockly.Python.workspaceToCode(this.workspace);
         Blockly.Python._content = codeText;
-        if (!Blockly.Python.hasLoop && Blockly.Python.hasBtnCallback){
+        if (!Blockly.Python.hasLoop && Blockly.Python.hasBtnCallback) {
             Blockly.Python._content += '\nwhile True:\n' +
-            '  for c in btn_callbacks:c()\n'
+                '  for c in btn_callbacks:c()\n'
         }
         let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
         Blockly.Python._content = codeSplit.join("")
@@ -538,8 +534,10 @@ class Blocks extends React.Component {
         const workspaceConfig = defaultsDeep({},
             Blocks.defaultOptions,
             this.props.options,
-            { rtl: this.props.isRtl, toolbox: this.props.toolboxXMLz}
+            { rtl: this.props.isRtl, toolbox: this.props.toolboxXMLz }
         );
+
+        // 注入工作区
         this.workspace = Blockly.inject(this.blocks, workspaceConfig);
         this.workspace.addChangeListener(() => {
             if (this.props.editorMode == "code") {
@@ -584,6 +582,9 @@ class Blocks extends React.Component {
         if (this.props.isVisible) {
             this.setLocale();
         }
+
+        // 添加拓展
+        // this.props.vm.extensionManager.loadExtensionURL('udblockEXTBIOT');
 
 
     }
@@ -952,9 +953,6 @@ class Blocks extends React.Component {
                 });
 
 
-                // 修改工具箱的方块央样式
-                ModifyUDPi(Blockly)
-                ModifyUDPiPlus(Blockly)
                 //this.updateToolbox()
 
                 //this.handleBlocksInfoUpdate(categoryInfo);
@@ -1298,7 +1296,7 @@ const mapDispatchToProps = dispatch => ({
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
     },
-    updatePyCode : code => {
+    updatePyCode: code => {
         dispatch(updatePyCode(code));
     }
 
