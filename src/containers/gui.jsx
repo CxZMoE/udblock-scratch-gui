@@ -40,6 +40,11 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 import GUIComponent from '../components/gui/gui.jsx';
 import { setIsScratchDesktop } from '../lib/isScratchDesktop.js';
 import VMScratchBlocks from '../lib/blocks';
+import PromptComponent from '../components/prompt/prompt.jsx';
+import ModalComponent from '../components/modal/modal.jsx';
+
+
+import { makeShowPrompt, makeHidePrompt } from '../reducers/popup'
 
 class GUI extends React.Component {
 
@@ -87,6 +92,8 @@ class GUI extends React.Component {
         })
 
 
+
+
     }
     componentDidUpdate(prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -126,6 +133,9 @@ class GUI extends React.Component {
             loadingStateVisible,
             setEditorMode,
             editor,
+            showPrompt,
+            onShowPrompt,
+            onHidePrompt,
             ...componentProps
         } = this.props;
 
@@ -135,7 +145,11 @@ class GUI extends React.Component {
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
+                showPrompt={showPrompt}
+                onShowPrompt={this.props.makeShowPrompt}
+                onHidePrompt={this.props.makeHidePrompt}
             >
+                
                 {children}
             </GUIComponent>
         );
@@ -202,7 +216,8 @@ const mapStateToProps = state => {
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
         vm: state.scratchGui.vm,
-        editor: state.editorRef.o
+        editor: state.editorRef.o,
+        showPrompt: state.showPrompt.showPrompt
     };
 };
 
@@ -214,6 +229,8 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
     onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
+    makeShowPrompt: () => dispatch(makeShowPrompt()),
+    makeHidePrompt: () => dispatch(makeHidePrompt()),
 });
 
 const ConnectedGUI = injectIntl(connect(

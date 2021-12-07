@@ -507,6 +507,38 @@ class MenuBar extends React.Component {
             </Button>
         );
 
+        const updateButton = (
+            <MenuSection>
+                {/* 模式切换 */}
+                <MenuItem>
+                    <ModeButton
+                        id={"Update-btn"}
+                        title="发现更新"
+                        img={pythonIcon}
+
+                        className={classNames(
+                            styles.menuBarItem
+                        )}
+                    />
+                </MenuItem>
+                {/* 代码生成模式切换 */}
+                {/* <MenuItem>
+                    <ModeButton
+                        id={"Arduino-btn"}
+                        title={"Arduino"}
+                        img={arduinoIcon}
+                        onclick={()=>{
+                            this.props.editorToggle();
+                        }}
+                        className={classNames(
+                            styles.menuBarItem
+                        )}
+
+                    />
+                </MenuItem> */}
+            </MenuSection>
+
+        )
 
         const modeButton = (
             <MenuSection>
@@ -1058,6 +1090,7 @@ class MenuBar extends React.Component {
                     </div>
                     {/* 在这里添加菜单项目 */}
                 </div>
+                {/* {updateButton} */}
                 {modeButton}
                 {showHideButton}
                 {/* show the proper UI in the account menu, given whether the user is

@@ -9,7 +9,7 @@ import editorReducer from '../reducers/editor'
 import editorRefReducer from '../reducers/editor-ref'
 import editorHideReducer from '../reducers/editorhide'
 import pyCodeReducer from '../reducers/pycode.js';
-
+import promptReducer from '../reducers/popup.js';
 import terminalReducer from '../reducers/terminaljs'
 
 
@@ -85,6 +85,7 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                     editorRef: editorRefReducer,
                     terminal: terminalReducer,
                     pycode: pyCodeReducer,
+                    showPrompt: promptReducer
                 };
                 initialState = {
                     locales: initializedLocales,
