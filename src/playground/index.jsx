@@ -27,9 +27,11 @@ if (supportedBrowser()) {
     require('./render-gui.jsx').default(appTarget);
 
 } else {
-    BrowserModalComponent.setAppElement(appTarget);
-    const WrappedBrowserModalComponent = AppStateHOC(BrowserModalComponent, true /* localesOnly */);
-    const handleBack = () => {};
-    // eslint-disable-next-line react/jsx-no-bind
-    ReactDOM.render(<WrappedBrowserModalComponent onBack={handleBack} />, appTarget);
+    alert('当前浏览器不被支持，可能会导致潜在的问题。')
+    require('./render-gui.jsx').default(appTarget);
+    // BrowserModalComponent.setAppElement(appTarget);
+    // const WrappedBrowserModalComponent = AppStateHOC(BrowserModalComponent, true /* localesOnly */);
+    // const handleBack = () => {};
+    // // eslint-disable-next-line react/jsx-no-bind
+    // ReactDOM.render(<WrappedBrowserModalComponent onBack={handleBack} />, appTarget);
 }

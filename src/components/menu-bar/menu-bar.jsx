@@ -201,6 +201,7 @@ class MenuBar extends React.Component {
             'restoreOptionMessage',
             'handleEditorModeSelect',
             'handleEditorHide',
+            'handleUpdate',
             'onPortSelect'
         ]);
         this.state = {
@@ -238,6 +239,16 @@ class MenuBar extends React.Component {
         console.log("blocks.jsx:", this.props.editorHide)
     }
 
+    handleUpdate(){
+         // 请求更新
+         window.open('https://forum.udrobot.net/thread/2')
+        //  fetch('http://127.0.0.1:3000/checkVersion').then((res) => {
+        //     var text = res.text()
+        //     return text
+        // }).then((text) => {
+        //     console.log(text)
+        // })
+    }
 
     onPortSelect(comName) {
         this.setState({
@@ -248,6 +259,7 @@ class MenuBar extends React.Component {
         document.addEventListener('keydown', this.handleKeyPress);
         document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
         document.getElementById("editorShow-btn").addEventListener("click", this.handleEditorHide)
+        
         this.props.editorToggleCode();
 
         // 检测版本
@@ -506,39 +518,6 @@ class MenuBar extends React.Component {
                 {remixMessage}
             </Button>
         );
-
-        const updateButton = (
-            <MenuSection>
-                {/* 模式切换 */}
-                <MenuItem>
-                    <ModeButton
-                        id={"Update-btn"}
-                        title="发现更新"
-                        img={pythonIcon}
-
-                        className={classNames(
-                            styles.menuBarItem
-                        )}
-                    />
-                </MenuItem>
-                {/* 代码生成模式切换 */}
-                {/* <MenuItem>
-                    <ModeButton
-                        id={"Arduino-btn"}
-                        title={"Arduino"}
-                        img={arduinoIcon}
-                        onclick={()=>{
-                            this.props.editorToggle();
-                        }}
-                        className={classNames(
-                            styles.menuBarItem
-                        )}
-
-                    />
-                </MenuItem> */}
-            </MenuSection>
-
-        )
 
         const modeButton = (
             <MenuSection>
@@ -833,15 +812,15 @@ class MenuBar extends React.Component {
 
 
                                                 terminal.ws.send(`closecom:${terminal.com}`)
-                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")){
+                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
                                                     terminal.ws.send(`firmware:${terminal.com}`)
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("开始更新主板固件");
-                                                }else{
+                                                } else {
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("取消更新主板固件");
                                                 }
-                                                
+
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="主板固件更新"
@@ -855,15 +834,15 @@ class MenuBar extends React.Component {
 
 
                                                 terminal.ws.send(`closecom:${terminal.com}`)
-                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")){
+                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
                                                     terminal.ws.send(`factory:${terminal.com}`)
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("开始恢复出厂设置");
-                                                }else{
+                                                } else {
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("取消恢复出厂设置");
                                                 }
-                                                
+
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="恢复主板出厂设置"
@@ -1091,6 +1070,22 @@ class MenuBar extends React.Component {
                     {/* 在这里添加菜单项目 */}
                 </div>
                 {/* {updateButton} */}
+                {
+                    (this.props.showPrompt) ? (
+                        <MenuSection>
+                            <MenuItem>
+                                <ModeButton
+                                    id={"update-btn"}
+                                    title={"发现更新"}
+                                    className={classNames(
+                                        styles.menuBarItem
+                                    )}
+                                    onclick={this.handleUpdate}
+                                />
+                            </MenuItem>
+                        </MenuSection>
+                    ):([])
+                }
                 {modeButton}
                 {showHideButton}
                 {/* show the proper UI in the account menu, given whether the user is
@@ -1209,7 +1204,7 @@ class MenuBar extends React.Component {
                                                 src={profileIcon}
                                             />
                                             <span>
-                                            {'scratch-cat'}
+                                                {'scratch-cat'}
                                             </span>
                                             <img
                                                 className={styles.dropdownCaretIcon}
@@ -1336,7 +1331,8 @@ const mapStateToProps = (state, ownProps) => {
         toolboxXML: state.scratchGui.toolbox.toolboxXML,
         editor: state.editorRef.o,
         pycode: state.pycode.value,
-        editorHide: state.editorHide.editorHide
+        editorHide: state.editorHide.editorHide,
+        showPrompt: state.showPrompt.showPrompt
     };
 };
 

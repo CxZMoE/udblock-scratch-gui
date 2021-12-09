@@ -7,6 +7,7 @@ import Box from '../box/box.jsx';
 import Modal from '../../containers/modal.jsx';
 
 import styles from './prompt.css';
+import { style } from 'scratch-storage';
 
 
 const messages = defineMessages({
@@ -43,7 +44,7 @@ const PromptComponent = props => (
             <Box className={styles.label}>
                 {props.label}
             </Box>
-            <Box>
+            {(props.showInput)?<Box>
                 <input
                     autoFocus
                     className={styles.variableNameTextInput}
@@ -53,7 +54,7 @@ const PromptComponent = props => (
                     onFocus={props.onFocus}
                     onKeyPress={props.onKeyPress}
                 />
-            </Box>
+            </Box>:([])}
             {props.showVariableOptions ?
                 <div>
                     {props.isStage ?
@@ -109,7 +110,11 @@ const PromptComponent = props => (
                         </Box> : null}
                 </div> : null}
 
-            <Box className={styles.buttonRow}>
+            <Box 
+                className={styles.buttonRow}
+                style={(props.showInput)?"text-align: center;":""}
+            >
+                
                 <button
                     className={styles.cancelButton}
                     onClick={props.onCancel}

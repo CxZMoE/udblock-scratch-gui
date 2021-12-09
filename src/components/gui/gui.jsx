@@ -42,8 +42,6 @@ import soundsIcon from './icon--sounds.svg';
 
 
 import MonicaEditor from '../monica-editor/monica-editor.jsx';
-import Terminal from 'terminal-in-react';
-import stage from '../../containers/stage.jsx';
 import ModalComponent from '../modal/modal.jsx';
 import PromptComponent from '../prompt/prompt.jsx';
 
@@ -263,17 +261,28 @@ const GUIComponent = props => {
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
                         {/* 正文 */}
-                        {(!showPrompt) ? (<ModalComponent
+                        {/* 软件更新提示 */}
+                        {/* {(showPrompt) ? (<ModalComponent
                             fullScreen={false}
-                            children={
-                                <Box>
-                                    <PromptComponent
-                                        title={"发现软件更新"}
-                                        onCancel={a => { onHidePrompt(false) }}
-                                    />
-                                </Box>
-                            }
-                        />) : ([])}
+
+                        >
+                            <PromptComponent
+                                showInput={false}
+                                title={"发现软件更新"}
+                                label={"是否进行更新？"}
+                                onOk={() => {
+                                    // 请求更新
+                                    fetch('http://127.0.0.1:3000/checkVersion').then((res) => {
+                                        var text = res.text()
+                                        return text
+                                    }).then((text) => {
+                                        console.log(text)
+                                        onHidePrompt(true)
+                                    })
+                                }}
+                                onCancel={a => { onHidePrompt(true) }}
+                            />
+                        </ModalComponent>) : ([])} */}
                         {editorMode == "code" ?
                             <Box className={(editorHide ? styles.editorWrapperCodeHide : styles.editorWrapperCode)}>
                                 <Tabs

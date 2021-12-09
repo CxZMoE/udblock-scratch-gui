@@ -91,7 +91,34 @@ class GUI extends React.Component {
             //blocklyBlockMenuClipRect.width = "248px";
         })
 
-
+        // 检测软件更新
+        setInterval(() => {
+            var currentVersion = '';
+            var networkVersion = '';
+            fetch('http://127.0.0.1:3000/version').then((res) => {
+                var text = res.text()
+                return text
+            }).then((version) => {
+                //console.log("当前版本：" + version)
+                currentVersion = version
+                networkVersion = currentVersion
+                // 获取网络版本
+                fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_sw.json').then(res => {
+                    var data = res.json()
+                    return data
+                }).then(data => {
+                    networkVersion = data.version;
+                    //console.log("网络版本: " + networkVersion)
+                    if (currentVersion == networkVersion) {
+                        //console.log('版本不需要更新')
+                        this.props.makeHidePrompt(true)
+                    } else {
+                        //console.log('版本需要更新')
+                        this.props.makeShowPrompt(true)
+                    }
+                })
+            })
+        }, 2*1000)
 
 
     }
@@ -149,7 +176,7 @@ class GUI extends React.Component {
                 onShowPrompt={this.props.makeShowPrompt}
                 onHidePrompt={this.props.makeHidePrompt}
             >
-                
+
                 {children}
             </GUIComponent>
         );

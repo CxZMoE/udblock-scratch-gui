@@ -63,7 +63,7 @@ class TerminalComponent extends React.Component {
                     ws.send(`closecom:${com}`)
                     ws.send(`opencom:${com}`)
                 }
-
+                ws.onmessage = wsOnMsg
                 // 在Websocket连接建立失败后执行
                 ws.onerror = function (ws, e) {
                     ws.close()

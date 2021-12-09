@@ -1,12 +1,12 @@
 
-const reducer = (state={showPrompt: true},action) =>{
+const reducer = (state={showPrompt: false},action) =>{
     switch (action.type){
         case "SHOW":
             //console.log("before: " + state.value)
-            return {value: true}
+            return {showPrompt: true}
         case "HIDE":
             //console.log("before: " + state.value)
-            return {value: false}
+            return {showPrompt: false}
         default: 
             return state
     }
