@@ -43,8 +43,12 @@ import initArduinoGenerator from '../lib/block-generators/arduino'
 import initDefaultBlocks from '../lib/block-defenition/default'
 import initUDPiBlocks from '../lib/block-defenition/udpi'
 import initUDPiPlusBlocks from '../lib/block-defenition/udpi_plus'
+import initUDPiV2Blocks from '../lib/block-defenition/udpi_v2'
+import initUDPiPlusV2Blocks from '../lib/block-defenition/udpi_plus_v2'
 import initUDBlockEXTBMFBlocks from '../lib/block-defenition/udblockextb_mf'
 import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
+import initUDBlockEXTBMFV2Blocks from '../lib/block-defenition/udblockextb_mf_v2'
+import initUDBlockEXTBSMV2Blocks from '../lib/block-defenition/udblockextb_sm_v2'
 import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
 import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
 import initUDBlockCar2DBlocks from '../lib/block-defenition/udblockextb_car_2d'
@@ -479,8 +483,12 @@ class Blocks extends React.Component {
         initDefaultBlocks(Blockly);
         initUDPiBlocks(Blockly);
         initUDPiPlusBlocks(Blockly);
+        initUDPiV2Blocks(Blockly);
+        initUDPiPlusV2Blocks(Blockly);
         initUDBlockEXTBMFBlocks(Blockly);
         initUDBlockEXTBSMBlocks(Blockly);
+        initUDBlockEXTBMFV2Blocks(Blockly);
+        initUDBlockEXTBSMV2Blocks(Blockly);
         initUDBlockEXTBIOBlocks(Blockly);
         initUDBlockCarBlocks(Blockly);
         initUDBlockCar2DBlocks(Blockly);

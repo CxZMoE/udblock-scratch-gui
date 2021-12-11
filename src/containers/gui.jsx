@@ -40,8 +40,6 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 import GUIComponent from '../components/gui/gui.jsx';
 import { setIsScratchDesktop } from '../lib/isScratchDesktop.js';
 import VMScratchBlocks from '../lib/blocks';
-import PromptComponent from '../components/prompt/prompt.jsx';
-import ModalComponent from '../components/modal/modal.jsx';
 
 
 import { makeShowPrompt, makeHidePrompt } from '../reducers/popup'
@@ -112,7 +110,7 @@ class GUI extends React.Component {
                     if (currentVersion == networkVersion) {
                         //console.log('版本不需要更新')
                         this.props.makeHidePrompt(true)
-                    } else {
+                    } else if (data.beta){
                         //console.log('版本需要更新')
                         this.props.makeShowPrompt(true)
                     }

@@ -138,7 +138,8 @@ function loadActionDefinition(board = "") {
     Blockly.Python[`${board}_turnMotorAnticlock`] = function (block) {
         Blockly.Python.definitions_['import_driver_motor'] = 'from drivers.motor import Motor';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        Blockly.Python.definitions_[`motor_${port}`] = `myMotor${port.split(",")[0]} = Motor(${port})`;
+        var name = port.split(',').join('')
+        Blockly.Python.definitions_[`motor_${name}`] = `myMotor${port.split(",")[0]} = Motor(${port})`;
         var intensity = Blockly.Python.valueToCode(block, 'SPEED', Blockly.Python.ORDER_ATOMIC)
         if (intensity > 100) {
             intensity = 100;
@@ -151,7 +152,8 @@ function loadActionDefinition(board = "") {
     Blockly.Python[`${board}_closeMotor`] = function (block) {
         Blockly.Python.definitions_['import_driver_motor'] = 'from drivers.motor import Motor';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        Blockly.Python.definitions_[`motor_${port}`] = `myMotor${port.split(",")[0]} = Motor(${port})`;
+        var name = port.split(',').join('')
+        Blockly.Python.definitions_[`motor_${name}`] = `myMotor${port.split(",")[0]} = Motor(${port})`;
         // var intensity = Math.abs(Number(Blockly.Python.valueToCode(block, 'SPEED', Blockly.Python.ORDER_ATOMIC)))
         // if (intensity > 100) {
         //     intensity = 100;
@@ -165,12 +167,11 @@ function loadActionDefinition(board = "") {
 
         Blockly.Python.definitions_['import_driver_servo'] = 'from drivers.servo import Servo';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        Blockly.Python.definitions_[`servo_${port}`] = `myServo${port} = Servo(${port})`;
-        var angle = Math.abs(Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC))
-        if (angle > 180) {
-            angle = 180;
-        }
-        return `myServo${port}.turn(${angle})\n`;
+        Blockly.Python.definitions_[`servo_${port.split(',')[0]}`] = `myServo${port.split(',')[0]} = Servo(${port})`;
+        
+        var angle = Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC)
+        console.log(typeof(angle))
+        return `myServo${port.split(',')[0]}.turn(abs(${angle}))\n`;
     }
 
     // 表情面板
@@ -260,7 +261,7 @@ function loadActionDefinition(board = "") {
     // 主板显示屏
     Blockly.Python[`${board}_displayWrite`] = function(block){
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
-        var line = parseInt(Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)) * 16 || 0
+        var line = Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)
 
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 

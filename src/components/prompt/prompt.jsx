@@ -112,7 +112,6 @@ const PromptComponent = props => (
 
             <Box 
                 className={styles.buttonRow}
-                style={(props.showInput)?"text-align: center;":""}
             >
                 
                 <button
@@ -158,5 +157,8 @@ PromptComponent.propTypes = {
     showVariableOptions: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired
 };
+PromptComponent.defaultProps = {
+    showInput: true,
+}
 
 export default PromptComponent;

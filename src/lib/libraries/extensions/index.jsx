@@ -46,16 +46,71 @@ import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
 import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
-import udpiIconURL from './udblock-udpi/udpi.png';
-import udpiplusIconURL from './udblock-udpiplus/udpiplus.png';
-import udpiExtbMFIconURL from './udblock-extbmf/extbmf.png';
-import udpiExtbSMIconURL from './udblock-extbsm/extbsm.png';
-import udpiExtbIOIconURL from './udblock-extbio/extbio.png';
+import udpiIconURL from './udblock/udpi 开发板.png';
+import udpiplusIconURL from './udblock/udpi plus开发板.png';
+import udpiExtbMFIconURL from './udblock/udblock 多功能拓展版.png';
+import udpiExtbSMIconURL from './udblock/udblock 电机拓展版.png';
+import udpiExtbIOIconURL from './udblock/udblock IO拓展版.png';
+import udpiExtbCarIconURL from './udblock/四驱小车主板.png';
+import udpiExtbCar2WDIconURL from './udblock/双驱小车主板.png';
+import udpiExtbIOTIconURL from './udblock/语音拓展版.png';
+import udpiIconURLV2 from './udblock/udpi 开发板v2.png';
+import udpiplusIconURLV2 from './udblock/udpi plus开发板v2.png';
+import udpiExtbMFIconURLV2 from './udblock/udblock 多功能拓展版v2.png';
+import udpiExtbSMIconURLV2 from './udblock/udblock 电机拓展版v2.png';
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
 import udpiInsetIconURL from './zkgz.svg';
 
 
 export default [
+    {
+        name: 'UDPi 开发板 V2',
+        extensionId: 'udblockUDPiV2',
+        collaborator: 'UDRobot',
+        iconURL: udpiIconURLV2,
+        insetIconURL: udpiInsetIconURL,
+        description: "板载5x5 RGB 矩阵，可以连接多种外设。",
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: 'https://forum.udrobot.net/'
+    },
+    {
+        name: 'UDPi Plus开发板 V2',
+        extensionId: 'udblockUDPiPlusV2',
+        collaborator: 'UDRobot',
+        iconURL: udpiplusIconURLV2,
+        insetIconURL: udpiInsetIconURL,
+        description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: 'https://forum.udrobot.net/'
+    },
     {
         name: 'UDPi 开发板',
         extensionId: 'udblockUDPi',
@@ -134,6 +189,66 @@ export default [
         ),
         helpLink: 'https://forum.udrobot.net/'
     },
+    // {
+    //     name: 'UDBlock 电机拓展板 V2',
+    //     extensionId: 'udblockEXTBSMV2',
+    //     collaborator: 'UDRobot',
+    //     iconURL: udpiExtbSMIconURLV2,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Sense push, pull, motion, and spin."
+    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
+    //             id="gui.extension.gdxfor.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://forum.udrobot.net/'
+    // },
+    // {
+    //     name: 'UDBlock 多功能拓展板 V2',
+    //     extensionId: 'udblockEXTBMFV2',
+    //     collaborator: 'UDRobot',
+    //     iconURL: udpiExtbMFIconURLV2,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Sense push, pull, motion, and spin."
+    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
+    //             id="gui.extension.gdxfor.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://forum.udrobot.net/'
+    // },
     {
         name: 'UDBlock 电机拓展板',
         extensionId: 'udblockEXTBSM',
@@ -198,7 +313,7 @@ export default [
         name: 'UDBlock 小车拓展板',
         extensionId: 'udblockEXTBCar',
         collaborator: 'UDRobot',
-        iconURL: udpiExtbSMIconURL,
+        iconURL: udpiExtbCarIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
             <FormattedMessage
@@ -228,7 +343,7 @@ export default [
         name: 'UDBlock 双驱小车拓展板',
         extensionId: 'udblockEXTBCar2D',
         collaborator: 'UDRobot',
-        iconURL: udpiExtbSMIconURL,
+        iconURL: udpiExtbCar2WDIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
             <FormattedMessage
@@ -258,7 +373,7 @@ export default [
         name: 'UDBlock 智能语音拓展板',
         extensionId: 'udblockEXTBIOT',
         collaborator: 'UDRobot',
-        iconURL: udpiExtbSMIconURL,
+        iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
             <FormattedMessage
@@ -284,36 +399,36 @@ export default [
         ),
         helpLink: 'https://forum.udrobot.net/'
     },
-    {
-        name: 'UDBlock MQTT拓展库',
-        extensionId: 'udblockMQTT',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbSMIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: 'https://forum.udrobot.net/'
-    },
+    // {
+    //     name: 'UDBlock MQTT拓展库',
+    //     extensionId: 'udblockMQTT',
+    //     collaborator: 'UDRobot',
+    //     iconURL: udpiExtbSMIconURL,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Sense push, pull, motion, and spin."
+    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
+    //             id="gui.extension.gdxfor.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://forum.udrobot.net/'
+    // },
     {
         name: 'micro:bit主板',
         extensionId: 'udblockMicrobit',

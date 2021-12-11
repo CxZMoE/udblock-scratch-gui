@@ -239,9 +239,18 @@ class MenuBar extends React.Component {
         console.log("blocks.jsx:", this.props.editorHide)
     }
 
-    handleUpdate(){
-         // 请求更新
-         window.open('https://forum.udrobot.net/thread/2')
+    handleUpdate() {
+        // 请求更新
+        fetch('http://127.0.0.1:3000/open', {
+            method: 'post', headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                url: 'https://forum.udrobot.net/thread/2'
+            })
+        }
+        )
         //  fetch('http://127.0.0.1:3000/checkVersion').then((res) => {
         //     var text = res.text()
         //     return text
@@ -259,7 +268,7 @@ class MenuBar extends React.Component {
         document.addEventListener('keydown', this.handleKeyPress);
         document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
         document.getElementById("editorShow-btn").addEventListener("click", this.handleEditorHide)
-        
+
         this.props.editorToggleCode();
 
         // 检测版本
@@ -754,21 +763,22 @@ class MenuBar extends React.Component {
                                                 terminal.print("开始上传代码");
                                                 this.props.onRequestCloseTool()
                                                 terminal.ws.send(`closecom:${terminal.com}`)
-                                                var request = new XMLHttpRequest();
-                                                request.open("POST", "http://127.0.0.1:3000/ampy/upload", true);
-                                                request.send(JSON.stringify({
-                                                    sourceCode: this.props.pycode,
-                                                    com: terminal.com
-                                                }))
-
-                                                request.onreadystatechange = function (e) {
-                                                    if (request.readyState == 4 && request.status == 200) {
-                                                        var response = request.responseText;
-                                                        console.log(response)
-                                                        // terminal.print("上传代码成功");
-                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                fetch(
+                                                    'http://127.0.0.1:3000/ampy/upload',
+                                                    {
+                                                        method: 'post',
+                                                        body: JSON.stringify({
+                                                            sourceCode: this.props.pycode,
+                                                            com: terminal.com
+                                                        })
                                                     }
-                                                }
+                                                ).then((res) => res.text()).then((data) => {
+                                                    console.log(data)
+                                                    // terminal.print("上传代码成功");
+                                                    terminal.ws.send(`opencom:${terminal.com}`)
+                                                })
+
+
 
                                             }}>
                                                 <FormattedMessage
@@ -871,22 +881,16 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
-                                                var request = new XMLHttpRequest();
-                                                request.open("GET", "http://127.0.0.1:3000/installDriver", true);
-                                                request.send()
-                                                request.onreadystatechange = function (e) {
-                                                    if (request.readyState == 4 && request.status == 200) {
-                                                        var response = request.responseText;
-                                                        console.log(response)
-                                                        if (response == "ok") {
-                                                            terminal.print("开始安装驱动");
-                                                        } else {
-                                                            terminal.print("安装驱动失败");
-                                                        }
-
-                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                fetch('http://127.0.0.1:3000/installDriver').then((res) => res.text()).then((text) => {
+                                                    console.log(text)
+                                                    if (response == "ok") {
+                                                        terminal.print("开始安装驱动");
+                                                    } else {
+                                                        terminal.print("安装驱动失败");
                                                     }
-                                                }
+
+                                                    terminal.ws.send(`opencom:${terminal.com}`)
+                                                })
 
                                                 this.props.onRequestCloseTool()
                                                 this.props.terminal.print("开始安装驱动");
@@ -924,17 +928,14 @@ class MenuBar extends React.Component {
                                                 <MenuItem onClick={() => {
                                                     console.log(this.props.pycode)
                                                     var terminal = this.props.terminal
+
+
+                                                    fetch('http://127.0.0.1:3000/checkVersion').then(res => res.text()).then(response => {
+                                                        console.log(response)
+                                                        terminal.print(response)
+                                                    })
+
                                                     this.props.onRequestCloseSystem()
-                                                    var request = new XMLHttpRequest();
-                                                    request.open("GET", "http://127.0.0.1:3000/checkVersion", true);
-                                                    request.send()
-                                                    request.onreadystatechange = function (e) {
-                                                        if (request.readyState == 4 && request.status == 200) {
-                                                            var response = request.responseText;
-                                                            console.log(response)
-                                                            terminal.print(response)
-                                                        }
-                                                    }
 
                                                 }}>
                                                     <FormattedMessage
@@ -986,7 +987,18 @@ class MenuBar extends React.Component {
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onClick={() => { window.open("https://forum.udrobot.net") }}
+                        onClick={() => {
+                            fetch('http://127.0.0.1:3000/open', {
+                                method: 'post', headers: {
+                                    'Accept': '*/*',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    url: 'http://forum.udrobot.net/'
+                                })
+                            }
+                            )
+                        }}
                     >
                         <img
                             className={styles.helpIcon}
@@ -1076,7 +1088,7 @@ class MenuBar extends React.Component {
                             <MenuItem>
                                 <ModeButton
                                     id={"update-btn"}
-                                    title={"发现更新"}
+                                    title={"发现BETA更新"}
                                     className={classNames(
                                         styles.menuBarItem
                                     )}
@@ -1084,7 +1096,7 @@ class MenuBar extends React.Component {
                                 />
                             </MenuItem>
                         </MenuSection>
-                    ):([])
+                    ) : ([])
                 }
                 {modeButton}
                 {showHideButton}

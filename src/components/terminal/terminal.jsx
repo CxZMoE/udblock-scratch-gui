@@ -16,10 +16,10 @@ var getDateTimeString = function () {
     var date = new Date();
     return `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
 }
-function wsOnMsg (e){
+function wsOnMsg(e) {
     var data = decodeURIComponent(escape(window.atob(e.data)));
     terminalJS.print(`${getDateTimeString()} ${data}`)
-    if (data.indexOf("OK") > -1){
+    if (data.indexOf("OK") > -1) {
         console.log(`opencom:${terminalJS.com}`)
         terminalJS.ws.send(`opencom:${terminalJS.com}`)
     }
@@ -38,7 +38,7 @@ class TerminalComponent extends React.Component {
         }
     }
 
-    
+
     // 选择串口，并且更新串口的state
     onPortSelect(comName) {
         this.setState({
@@ -53,7 +53,7 @@ class TerminalComponent extends React.Component {
         function connect(com) {
             try {
                 var ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
-                
+
                 // 为终端绑定一个Websocket对象
                 terminalJS.ws = ws
 
@@ -66,7 +66,8 @@ class TerminalComponent extends React.Component {
                 ws.onmessage = wsOnMsg
                 // 在Websocket连接建立失败后执行
                 ws.onerror = function (ws, e) {
-                    ws.close()
+                    console.log("建立Websocket连接失败：" + String(e))
+                    // ws.close()
                 }
 
                 // 在Websocket连接关闭后执行
@@ -126,66 +127,63 @@ class TerminalComponent extends React.Component {
             var comState = this.state.com;  // 串口状态（串口号）
 
             // 请求获取当前设备的串口列表
-            var request = new XMLHttpRequest();
 
-            request.open("GET", "http://127.0.0.1:3000/serialport", true);
-            request.send();
+            fetch(
+                "http://127.0.0.1:3000/serialport"
+            ).then(res => {
+                return res.json()
+            }).then((data) => {
+                var portSelect = document.getElementById("portSelect")
+                portSelect.innerHTML = ""
 
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-
-                    var portSelect = document.getElementById("portSelect")
-                    portSelect.innerHTML = ""
-
-                    // 解析返回的数据并且将可用串口添加到下拉选项中
-                    var serialportList = JSON.parse(request.responseText)   // 解析
-                    for (var index in serialportList) {
-                        // 不是USB设备则过滤
-                        if (serialportList[index].isUSB == false) {
-                            continue
-                        }
-
-                        // 创建新的下拉选项
-                        var option = document.createElement("option");
-                        // 命名规范：${串口号} - [UDRobot ${序列号}]
-                        var portName = `${serialportList[index].name} - [UDRobot ${serialportList[index].sn}]`;
-                        option.text = portName; // 串口号
-                        option.value = serialportList[index].name; // 串口名字（串口号）
-
-                        portSelect.appendChild(option)
+                // 解析返回的数据并且将可用串口添加到下拉选项中
+                var serialportList = data
+                for (var index in serialportList) {
+                    // 不是USB设备则过滤
+                    if (serialportList[index].isUSB == false) {
+                        continue
                     }
 
-                    // 每次扫描串口后
-                    // 如果上次已经选中的串口还在列表中
-                    // 则需要选中上次选择的串口
-                    // 否则串口选择会乱套
-                    for (var i = 0; i < portSelect.children.length; i++) {
-                        // console.log(portSelect.children.item(i).innerText)
-                        //console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(i).value)
-                        // 找到历史选中串口
-                        if (portSelect.children.item(i).value == comState) {
-                            //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
-                            portSelect.children.item(i).selected = true;
-                            selectPort(portSelect.children.item(i).value);
-                            return;
-                        }
+                    // 创建新的下拉选项
+                    var option = document.createElement("option");
+                    // 命名规范：${串口号} - [UDRobot ${序列号}]
+                    var portName = `${serialportList[index].name} - [UDRobot ${serialportList[index].sn}]`;
+                    option.text = portName; // 串口号
+                    option.value = serialportList[index].name; // 串口名字（串口号）
 
-                    }
-
-                    // 没有找到，或者只有一个串口设备
-                    if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
-                        //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
-                        portSelect.children.item(0).selected = true;
-                        selectPort(portSelect.children.item(0).value);
-                    }
-
-                    // 没有串口设备，则清空选中的串口
-                    if (portSelect.children.length == 0){
-                        selectPort("")
-                    }
+                    portSelect.appendChild(option)
                 }
-            }
 
+                // 每次扫描串口后
+                // 如果上次已经选中的串口还在列表中
+                // 则需要选中上次选择的串口
+                // 否则串口选择会乱套
+                for (var i = 0; i < portSelect.children.length; i++) {
+                    // console.log(portSelect.children.item(i).innerText)
+                    //console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(i).value)
+                    // 找到历史选中串口
+                    if (portSelect.children.item(i).value == comState) {
+                        //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
+                        portSelect.children.item(i).selected = true;
+                        selectPort(portSelect.children.item(i).value);
+                        return;
+                    }
+
+                }
+
+                // 没有找到，或者只有一个串口设备
+                if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
+                    //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
+                    portSelect.children.item(0).selected = true;
+                    selectPort(portSelect.children.item(0).value);
+                }
+
+                // 没有串口设备，则清空选中的串口
+                if (portSelect.children.length == 0) {
+                    selectPort("")
+                }
+            })
+        
         }, 1000);
 
         // 获取软件版本
@@ -201,7 +199,7 @@ class TerminalComponent extends React.Component {
             }
         }
 
-        
+
         // [热键绑定] Ctrl + C 停止代码执行
         // document.addEventListener("keydown", function (e) {
         //     var keyCode = e.keyCode || e.charCode;
@@ -213,7 +211,7 @@ class TerminalComponent extends React.Component {
         // })
 
         terminalJS.print("---------------------------")
-        
+
         document.getElementById("serialOpenBtn").onclick = function (e) {
             // 检查固件版本
             // var http = require('http')

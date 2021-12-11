@@ -185,8 +185,22 @@ function loadSensorDefinition(board = "") {
     };
     Blockly.Python[`${board}_getUID`] = function (block) {
         Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
+        Blockly.Python.definitions_['import_init_nfc'] = 'nfcSensor = NFC()';
         var code = `nfcSensor.GetUID()`;
         return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readText`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
+        Blockly.Python.definitions_['import_init_nfc'] = 'nfcSensor = NFC()';
+        var code = `nfcSensor.ReadText()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_writeText`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
+        Blockly.Python.definitions_['import_init_nfc'] = 'nfcSensor = NFC()';
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC);
+        var code = `nfcSensor.WriteText(${text})\n`;
+        return code;
     };
     
     
