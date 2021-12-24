@@ -174,6 +174,24 @@ function loadActionDefinition(board = "") {
         return `myServo${port.split(',')[0]}.turn(abs(${angle}))\n`;
     }
 
+    // 舵机
+    Blockly.Python[`${board}_turnStepper`] = function (block) {
+
+        Blockly.Python.definitions_['import_driver_stepper'] = 'from drivers.stepper import Stepper';
+        var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        Blockly.Python.definitions_[`stepper_${port.split(',')[0]}`] = `myStepper${port.split(',')[0]} = Stepper(${port})`;
+        Blockly.Python[`${board}_menu_StepperDirectionMenu`] = function(block){
+            var text = block.getFieldValue("StepperDirectionMenu");
+            return [text, Blockly.Python.ORDER_ATOMIC]
+        }
+
+        var direction = Blockly.Python.valueToCode(block, "DIRECTION", Blockly.Python.ORDER_ATOMIC)
+        var period = Blockly.Python.valueToCode(block, "PERIOD", Blockly.Python.ORDER_ATOMIC)
+        var rounds = Blockly.Python.valueToCode(block, "ROUNDS", Blockly.Python.ORDER_ATOMIC)
+        
+        return `myStepper${port.split(',')[0]}.Turn(${direction}, ${period}, ${rounds})\n`;
+    }
+
     // 表情面板
     Blockly.Python[`${board}_setFacePanelPreset`] = function (block) {
         Blockly.Python.definitions_['import_face_panel'] = 'from udrobot.action_module.face_panel import *';
@@ -186,11 +204,14 @@ function loadActionDefinition(board = "") {
 
         var getPixelArray = function (box) {
             //console.log(box.length)
+            console.log(box)
+            box = String(box)
+            box = box.substring(1,box.length-1)
             var output = []
             for (var i = 0; i < 16; i++) {
                 var linePixel = []
                 for (var j = i * 8; j < i * 8 + 8; j++) {
-                    if (String(box[j]) == "1") {
+                    if (String(box[j]).indexOf("1") > -1) {
                         linePixel.push(JSON.parse(color
                             .replace(/\(/g, '[')
                             .replace(/\)/g, ']')
@@ -208,6 +229,7 @@ function loadActionDefinition(board = "") {
             for (var i = 0; i < output.length; i++) {
                 var linePixel = output[i]
                 var lineHex = 0x00
+                console.log(linePixel)
                 for (var j = 0; j < linePixel.length; j++) {
                     if (linePixel[j][0] > 100) {
                         lineHex |= 0x80 >> j
@@ -247,7 +269,7 @@ function loadActionDefinition(board = "") {
         //console.log(Blockly.Xml.blockToDom(block))
         Blockly.Python.definitions_['import_face_panel'] = 'from udrobot.action_module.face_panel import *';
         var action = Blockly.Python.valueToCode(block, "FACE", Blockly.Python.ORDER_ATOMIC);
-
+        console.log(action)
 
 
 
