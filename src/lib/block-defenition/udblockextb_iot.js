@@ -153,11 +153,21 @@ export default (Blockly) => {
         var asrmenu = block.getFieldValue("asrmenu");
         return [`${asrmenu}`, Blockly.Python.ORDER_ATOMIC]
     }
-    Blockly.Python['udblockEXTBIOT_getASRResult'] = function (block) {
+    Blockly.Python['udblockEXTBIOT_getASRResultBL'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         var menuValue = Blockly.Python.valueToCode(block, 'RESULT', Blockly.Python.ORDER_ATOMIC)
         var code = `(aiplayer.GetASRCommandID() == ${menuValue})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIOT_getASRResult'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var code = `aiplayer.GetASRCommandID()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python['udblockEXTBIOT_asrResult'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var menuValue = Blockly.Python.valueToCode(block, 'RESULT', Blockly.Python.ORDER_ATOMIC)
+        return [menuValue, Blockly.Python.ORDER_ATOMIC];
     };
 
     // 指纹模块
