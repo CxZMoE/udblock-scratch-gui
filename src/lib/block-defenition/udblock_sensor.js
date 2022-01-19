@@ -167,6 +167,12 @@ function loadSensorDefinition(board = "") {
         var code = `udpi_sensor.GetFourChannelInferredSensor(${status})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_readKeyboardModuleValue`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.GetKeyboardModule()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    
     // Blockly.Python[`${board}_initNFC`] = function (block) {
     //     Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
     //     var code = `nfcSensor = NFC()\n`;
