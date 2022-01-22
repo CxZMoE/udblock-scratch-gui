@@ -246,6 +246,27 @@ function loadCamaraDefinition(board=""){
 
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+
+    // 口罩识别 
+    Blockly.Python[`${board}_doMaskDectection`] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_mask()\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_mask()\n`;
+        }
+
+        return code;
+    };
+    Blockly.Python[`${board}_getMaskResult`] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var code = ''
+        code = `myCamara.GetMaskResult()`;
+
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
 }
 
 module.exports = loadCamaraDefinition;
