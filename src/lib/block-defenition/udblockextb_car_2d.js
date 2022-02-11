@@ -86,6 +86,12 @@ export default (Blockly) => {
         return code
     };
     // PS2 遥控
+    Blockly.Python[`${id}_ps2Init`] = function (block) {
+        Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var code = `myCar.initPS2()\n`;
+        return code
+    };
     Blockly.Python[`${id}_ps2ControlEnable`] = function (block) {
         Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
         Blockly.Python.definitions_['get_car_2wd'] = 'myCar2WD = Car()';
@@ -108,7 +114,7 @@ export default (Blockly) => {
         }
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCar2WD.ps2.Get_PS2_Button()[${btn}]`;
+        var code = `myCar2WD.ps2.btn_pressed[${btn}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     Blockly.Python[`${id}_ps2GetRemote`] = function (block) {
@@ -122,7 +128,24 @@ export default (Blockly) => {
         
 
         var remote = Blockly.Python.valueToCode(block, "POS", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCar2WD.ps2.Get_PS2_Remote()[${remote}]`;
+        var variable = 'ly'
+        switch (remote){
+            case "0":
+                variable = 'ly'
+                break
+            case "1":
+                variable = "lx"
+                break
+            case "2":
+                variable = "ry"
+                break
+            case "3":
+                variable = "rx"
+                break
+            default:
+                break
+        }
+        var code = `myCar.ps2.${variable}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     Blockly.Python[`${id}_ps2SetForwardSpd`] = function (block) {
