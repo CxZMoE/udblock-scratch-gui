@@ -6,6 +6,11 @@ function loadCamaraDefinition(board=""){
         var code = `myCamara = Camera(${port})\n`;
         return code;
     };
+    Blockly.Python[`${board}_resetCamera`] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var code = `myCamara.Reset()\n`;
+        return code;
+    };
     Blockly.Python[`${board}_doFaceDectection`] = function (block) {
         Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
         

@@ -26,7 +26,7 @@ const base = {
         library: 'GUI',
         filename: '[name].js',
         chunkFilename: 'chunks/[name].js',
-        path: "/mnt/c/Users/CxZMoE/Documents/workspace/udrobot_aicomming/udblock-app-v2/udblock-server/static/"
+        path: "/mnt/f/workspace/udrobot_aicomming/udblock-app-v2/udblock-server/static/"
     },
     resolve: {
         symlinks: false

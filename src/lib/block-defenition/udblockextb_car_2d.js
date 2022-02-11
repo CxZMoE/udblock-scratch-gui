@@ -98,6 +98,33 @@ export default (Blockly) => {
         var code = `myCar2WD.Stop_PS2_Car_Controller()\n`;
         return code
     };
+    Blockly.Python[`${id}_ps2GetButtonStatus`] = function (block) {
+        Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
+        Blockly.Python.definitions_['get_car_2wd'] = 'myCar2WD = Car()';
+        // 定义菜单
+        Blockly.Python[`${id}_menu_ps2BtnMenu`] = function (block) {
+            var remote = block.getFieldValue("ps2BtnMenu");
+            return [`${remote}`, Blockly.Python.ORDER_ATOMIC]
+        }
+
+        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar2WD.ps2.Get_PS2_Button()[${btn}]`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
+    Blockly.Python[`${id}_ps2GetRemote`] = function (block) {
+        Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
+        Blockly.Python.definitions_['get_car_2wd'] = 'myCar2WD = Car()';
+        // 定义菜单
+        Blockly.Python[`${id}_menu_ps2RemoteMenu`] = function (block) {
+            var remote = block.getFieldValue("ps2RemoteMenu");
+            return [`${remote}`, Blockly.Python.ORDER_ATOMIC]
+        }
+        
+
+        var remote = Blockly.Python.valueToCode(block, "POS", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar2WD.ps2.Get_PS2_Remote()[${remote}]`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
     Blockly.Python[`${id}_ps2SetForwardSpd`] = function (block) {
         Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
         Blockly.Python.definitions_['get_car_2wd'] = 'myCar2WD = Car()';
