@@ -193,7 +193,7 @@ export default (Blockly) => {
         }
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCar.ps2.btn_pressed[${btn}]`;
+        var code = `myCar.btn_pressed[${btn}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     
@@ -225,7 +225,7 @@ export default (Blockly) => {
             default:
                 break
         }
-        var code = `myCar.ps2.${variable}`;
+        var code = `myCar.${variable}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
 

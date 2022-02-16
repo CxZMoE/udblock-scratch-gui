@@ -88,8 +88,8 @@ export default (Blockly) => {
     // PS2 遥控
     Blockly.Python[`${id}_ps2Init`] = function (block) {
         Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
-        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
-        var code = `myCar.initPS2()\n`;
+        Blockly.Python.definitions_['get_car'] = 'myCar2WD = Car()';
+        var code = `myCar2WD.initPS2()\n`;
         return code
     };
     Blockly.Python[`${id}_ps2ControlEnable`] = function (block) {
@@ -114,7 +114,7 @@ export default (Blockly) => {
         }
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCar2WD.ps2.btn_pressed[${btn}]`;
+        var code = `myCar2WD.btn_pressed[${btn}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     Blockly.Python[`${id}_ps2GetRemote`] = function (block) {
@@ -145,7 +145,7 @@ export default (Blockly) => {
             default:
                 break
         }
-        var code = `myCar.ps2.${variable}`;
+        var code = `myCar.${variable}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     Blockly.Python[`${id}_ps2SetForwardSpd`] = function (block) {
