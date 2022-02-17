@@ -145,7 +145,7 @@ export default (Blockly) => {
             default:
                 break
         }
-        var code = `myCar.${variable}`;
+        var code = `myCar2WD.${variable}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     Blockly.Python[`${id}_ps2SetForwardSpd`] = function (block) {
@@ -170,6 +170,31 @@ export default (Blockly) => {
         var code = `myCar2WD.turnSpd = ${speed}\n`;
         return code
     };
+    Blockly.Python[`${id}_turnCustomize`] = function (block) {
+        Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
+        Blockly.Python.definitions_['get_car_2wd'] = 'myCar2WD = Car()';
+
+        Blockly.Python[`${id}_menu_carServoMode`] = function (block) {
+            var mode = block.getFieldValue("carServoMode");
+            return [`${mode}`, Blockly.Python.ORDER_ATOMIC]
+        }
+
+        var speedLeft = Blockly.Python.valueToCode(block, "SPDL", Blockly.Python.ORDER_ATOMIC);
+        if (speedLeft > 100) { speedLeft = 100 }
+        if (speedLeft < 0) { speedLeft = 0 }
+        var speedRight = Blockly.Python.valueToCode(block, "SPDR", Blockly.Python.ORDER_ATOMIC);
+        if (speedRight > 100) { speedRight = 100 }
+        if (speedRight < 0) { speedRight = 0 }
+
+        var modeLeft = Blockly.Python.valueToCode(block, "MODEL", Blockly.Python.ORDER_ATOMIC);
+        var modeRight = Blockly.Python.valueToCode(block, "MODER", Blockly.Python.ORDER_ATOMIC);
+
+        speedLeft = Math.round((speedLeft/100) * 4096)
+        speedRight = Math.round((speedRight/100) * 4096)
+        var code = `myCar2WD.motorLeft.${modeLeft=="clock"?"clock":"anticlock"}(${speedLeft});myCar2WD.motorRight.${modeRight=="clock"?"clock":"anticlock"}(${speedRight});`;
+        return code
+    };
+    
     Blockly.Python[`${id}_ps2SetServoSpd`] = function (block) {
         Blockly.Python.definitions_['import_car_2wd'] = 'from udrobot.extend_board.car_2wd import Car';
         Blockly.Python.definitions_['get_car_2wd'] = 'myCar2WD = Car()';
