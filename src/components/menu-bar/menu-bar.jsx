@@ -25,6 +25,7 @@ import AuthorInfo from './author-info.jsx';
 import AccountNav from '../../containers/account-nav.jsx';
 import LoginDropdown from './login-dropdown.jsx';
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
+import downloadBlob from '../../lib/download-blob';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
@@ -101,6 +102,8 @@ import {
     editorToggleShow,
     editorToggleHide,
 } from '../../reducers/editorhide'
+
+import {projectTitleInitialState} from '../../reducers/project-title';
 
 const ariaMessages = defineMessages({
     language: {
@@ -313,7 +316,14 @@ class MenuBar extends React.Component {
         //         confirm(`发现新版本${versionInfo.version}是否更新？`)
         //     }
         // }
-
+        document.body.addEventListener('keydown',(e)=>{
+            if (e.ctrlKey && e.key === 's'){
+                this.props.vm.saveProjectSb3().then(content => {
+                    downloadBlob(this.props.projectTitle+'.sb3', content);
+                });
+            }
+            
+        })
 
     }
     componentWillUnmount() {
@@ -918,6 +928,7 @@ class MenuBar extends React.Component {
                                                 id="gui.menuBar.system"
                                             />
                                         </div>
+                                        
                                         <MenuBarMenu
                                             className={classNames(styles.menuBarMenu)}
                                             open={this.props.systemMenuOpen}
@@ -1344,7 +1355,7 @@ const mapStateToProps = (state, ownProps) => {
         editor: state.editorRef.o,
         pycode: state.pycode.value,
         editorHide: state.editorHide.editorHide,
-        showPrompt: state.showPrompt.showPrompt
+        showPrompt: state.showPrompt.showPrompt,
     };
 };
 
