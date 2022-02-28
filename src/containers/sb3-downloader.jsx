@@ -24,7 +24,12 @@ class SB3Downloader extends React.Component {
         bindAll(this, [
             'downloadProject'
         ]);
+        document.body.addEventListener('dblclick',()=>{
+            console.log('downlaod')
+            this.downloadProject()
+        })
     }
+    
     downloadProject () {
         this.props.saveProjectSb3().then(content => {
             if (this.props.onSaveFinished) {
