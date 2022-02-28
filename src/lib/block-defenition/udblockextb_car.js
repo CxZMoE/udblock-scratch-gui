@@ -45,6 +45,22 @@ export default (Blockly) => {
         var code = `myCar.turnRight(${speed})\n`;
         return code
     };
+    Blockly.Python[`${id}_turnLeftDegree`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from udrobot.extend_board.car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var degree = Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC);
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar.turnLeftDegree(${degree}, ${speed})\n`;
+        return code
+    };
+    Blockly.Python[`${id}_turnRightDegree`] = function (block) {
+        Blockly.Python.definitions_['import_car'] = 'from udrobot.extend_board.car import Car';
+        Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
+        var degree = Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC);
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCar.turnRightDegree(${degree}, ${speed})\n`;
+        return code
+    };
     Blockly.Python[`${id}_shiftLeft`] = function (block) {
         Blockly.Python.definitions_['import_car'] = 'from udrobot.extend_board.car import Car';
         Blockly.Python.definitions_['get_car'] = 'myCar = Car()';
