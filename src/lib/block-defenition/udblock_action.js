@@ -1,4 +1,6 @@
-function loadActionDefinition(board = "") {
+import { extb_mf } from "../../../../udblock-scratch-vm/src/util/extb-definitions";
+
+export default (board = "") => {
     /* 执行器开始 */
     Blockly.Python[`${board}_digitalDisplayShow`] = function (block) {
         Blockly.Python.definitions_['import_driver_fdd'] = 'from drivers.FourDigitDisplay import FourDigitDisplay';
@@ -94,10 +96,22 @@ function loadActionDefinition(board = "") {
     Blockly.Python[`${board}_openReplayDbl`] = function (block) {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
         var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
-        if (channel == ''){channel = 0}
+        if (channel == '') { channel = 0 }
         console.log("channel: " + String(channel))
         var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
-        
+        if (relay_pin >= 34 && relay_pin <= 39) {
+
+            console.log(block)
+            for (var i in extb_mf.RJ11) {
+                for (var j in extb_mf.RJ11[i].value) {
+                    if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
+                        fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
+
+                    }
+                }
+            }
+            block.dispose(true);
+        }
         Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
 
         return `relay_control_dbl_${relay_pin}.on()\n`;
@@ -105,18 +119,43 @@ function loadActionDefinition(board = "") {
     Blockly.Python[`${board}_closeReplayDbl`] = function (block) {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
         var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
-        if (channel == ''){channel = 0}
+        if (channel == '') { channel = 0 }
         var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
-        
+        if (relay_pin >= 34 && relay_pin <= 39) {
+
+            console.log(block)
+            for (var i in extb_mf.RJ11) {
+                for (var j in extb_mf.RJ11[i].value) {
+                    if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
+                        fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
+
+                    }
+                }
+            }
+            block.dispose(true)
+        }
         Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
         return `relay_control_dbl_${relay_pin}.off()\n`;
     }
     Blockly.Python[`${board}_switchReplayDbl`] = function (block) {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
         var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
-        if (channel == ''){channel = 0}
+        if (channel == '') { channel = 0 }
         var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
-        
+        if (relay_pin >= 34 && relay_pin <= 39) {
+
+            console.log(block)
+            for (var i in extb_mf.RJ11) {
+                for (var j in extb_mf.RJ11[i].value) {
+                    if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
+                        fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
+
+                    }
+                }
+            }
+            block.dispose(true)
+        }
+
         Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
         return `relay_control_dbl_${relay_pin}.toggle()\n`;
     }
@@ -168,9 +207,9 @@ function loadActionDefinition(board = "") {
         Blockly.Python.definitions_['import_driver_servo'] = 'from drivers.servo import Servo';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
         Blockly.Python.definitions_[`servo_${port.split(',')[0]}`] = `myServo${port.split(',')[0]} = Servo(${port})`;
-        
+
         var angle = Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC)
-        console.log(typeof(angle))
+        console.log(typeof (angle))
         return `myServo${port.split(',')[0]}.turn(abs(${angle}))\n`;
     }
 
@@ -180,7 +219,7 @@ function loadActionDefinition(board = "") {
         Blockly.Python.definitions_['import_driver_stepper'] = 'from drivers.stepper import Stepper';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
         Blockly.Python.definitions_[`stepper_${port.split(',')[0]}`] = `myStepper${port.split(',')[0]} = Stepper(${port})`;
-        Blockly.Python[`${board}_menu_StepperDirectionMenu`] = function(block){
+        Blockly.Python[`${board}_menu_StepperDirectionMenu`] = function (block) {
             var text = block.getFieldValue("StepperDirectionMenu");
             return [text, Blockly.Python.ORDER_ATOMIC]
         }
@@ -188,7 +227,7 @@ function loadActionDefinition(board = "") {
         var direction = Blockly.Python.valueToCode(block, "DIRECTION", Blockly.Python.ORDER_ATOMIC)
         var period = Blockly.Python.valueToCode(block, "PERIOD", Blockly.Python.ORDER_ATOMIC)
         var rounds = Blockly.Python.valueToCode(block, "ROUNDS", Blockly.Python.ORDER_ATOMIC)
-        
+
         return `myStepper${port.split(',')[0]}.Turn(${direction}, ${period}, ${rounds})\n`;
     }
 
@@ -206,7 +245,7 @@ function loadActionDefinition(board = "") {
             //console.log(box.length)
             console.log(box)
             box = String(box)
-            box = box.substring(1,box.length-1)
+            box = box.substring(1, box.length - 1)
             var output = []
             for (var i = 0; i < 16; i++) {
                 var linePixel = []
@@ -281,7 +320,7 @@ function loadActionDefinition(board = "") {
 
     // OLED显示屏模组
     // 主板显示屏
-    Blockly.Python[`${board}_displayWrite`] = function(block){
+    Blockly.Python[`${board}_displayWrite`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var line = Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)
 
@@ -290,7 +329,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.text(str(${text}), ${line}, 0)\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawLabel`] = function(block){
+    Blockly.Python[`${board}_displayDrawLabel`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var col = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
         var row = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
@@ -299,7 +338,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.label( ${col}, ${row}, ${text})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawPoint`] = function(block){
+    Blockly.Python[`${board}_displayDrawPoint`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
         var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
@@ -307,7 +346,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_point(${x}, ${y})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawLine`] = function(block){
+    Blockly.Python[`${board}_displayDrawLine`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
         var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
@@ -318,7 +357,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_line(${sx}, ${sy}, ${ex}, ${ey})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawRect`] = function(block){
+    Blockly.Python[`${board}_displayDrawRect`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
         var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
@@ -329,7 +368,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_rect(${sx}, ${sy}, ${length}, ${width})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawRectFill`] = function(block){
+    Blockly.Python[`${board}_displayDrawRectFill`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
         var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
@@ -340,7 +379,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_rect_fill(${sx}, ${sy}, ${length}, ${width})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawCircle`] = function(block){
+    Blockly.Python[`${board}_displayDrawCircle`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
         var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
@@ -349,7 +388,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_circle(${sx}, ${sy}, ${radius})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawCircleFill`] = function(block){
+    Blockly.Python[`${board}_displayDrawCircleFill`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var sx = Blockly.Python.valueToCode(block, "SX", Blockly.Python.ORDER_ATOMIC)
         var sy = Blockly.Python.valueToCode(block, "SY", Blockly.Python.ORDER_ATOMIC)
@@ -358,7 +397,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_circle_fill(${sx}, ${sy}, ${radius})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawTriangle`] = function(block){
+    Blockly.Python[`${board}_displayDrawTriangle`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var x1 = Blockly.Python.valueToCode(block, "X1", Blockly.Python.ORDER_ATOMIC)
         var y1 = Blockly.Python.valueToCode(block, "Y1", Blockly.Python.ORDER_ATOMIC)
@@ -370,7 +409,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_triangle(${x1}, ${y1}, ${x2}, ${y2}, ${x3}, ${y3})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayDrawTriangleFill`] = function(block){
+    Blockly.Python[`${board}_displayDrawTriangleFill`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var x1 = Blockly.Python.valueToCode(block, "X1", Blockly.Python.ORDER_ATOMIC)
         var y1 = Blockly.Python.valueToCode(block, "Y1", Blockly.Python.ORDER_ATOMIC)
@@ -382,7 +421,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.draw_triangle_fill(${x1}, ${y1}, ${x2}, ${y2}, ${x3}, ${y3})\n`;
         return code
     }
-    Blockly.Python[`${board}_displayScroll`] = function(block){
+    Blockly.Python[`${board}_displayScroll`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
         var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
         var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_ATOMIC)
@@ -391,7 +430,7 @@ function loadActionDefinition(board = "") {
         var code = `oled_module.scroll(${x}, ${y})\n`;
         return code
     }
-    Blockly.Python[`${board}_menu_displayLine`] = function(block){
+    Blockly.Python[`${board}_menu_displayLine`] = function (block) {
         var text = block.getFieldValue("displayLine");
         return [text, Blockly.Python.ORDER_ATOMIC]
     }
@@ -405,5 +444,3 @@ function loadActionDefinition(board = "") {
         return `oled_module.clear()\n`;
     }
 }
-
-module.exports = loadActionDefinition

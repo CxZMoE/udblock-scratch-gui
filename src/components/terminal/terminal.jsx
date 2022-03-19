@@ -17,6 +17,7 @@ var getDateTimeString = function () {
     return `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
 }
 function wsOnMsg(e) {
+    console.log('comming  data')
     var data = decodeURIComponent(escape(window.atob(e.data)));
     terminalJS.print(`${getDateTimeString()} ${data}`)
     if (data.indexOf("OK") > -1) {
