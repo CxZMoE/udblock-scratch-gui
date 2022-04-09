@@ -189,9 +189,9 @@ export default (Blockly) => {
         var modeLeft = Blockly.Python.valueToCode(block, "MODEL", Blockly.Python.ORDER_ATOMIC);
         var modeRight = Blockly.Python.valueToCode(block, "MODER", Blockly.Python.ORDER_ATOMIC);
 
-        speedLeft = Math.round((speedLeft/100) * 4096)
-        speedRight = Math.round((speedRight/100) * 4096)
-        var code = `myCar2WD.motorLeft.${modeLeft=="clock"?"clock":"anticlock"}(${speedLeft});myCar2WD.motorRight.${modeRight=="clock"?"clock":"anticlock"}(${speedRight});`;
+        speedLeft = (speedLeft/100)
+        speedRight = (speedRight/100)
+        var code = `myCar2WD.motorLeft.${modeLeft=="clock"?"clock":"anticlock"}(${speedLeft});myCar2WD.motorRight.${modeRight=="clock"?"clock":"anticlock"}(${speedRight});\n`;
         return code
     };
     
