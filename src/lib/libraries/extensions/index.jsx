@@ -310,6 +310,32 @@ export default [
         helpLink: 'https://forum.udrobot.net/'
     },
     {
+        name: 'UDPi+最小系统板V1',
+        extensionId: 'udblockUDPiMiniV1',
+        collaborator: 'UDRobot',
+        // iconURL: udpiplusIconURLV2,
+        // insetIconURL: udpiInsetIconURL,
+        iconURL: penIconURL,
+        insetIconURL: penInsetIconURL,
+        description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板",
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: 'https://forum.udrobot.net/'
+    },
+    {
         name: 'UDBlock 小车拓展板',
         extensionId: 'udblockEXTBCar',
         collaborator: 'UDRobot',
@@ -401,7 +427,7 @@ export default [
     },
     {
         name: 'UDBlock 拓展类',
-        extensionId: 'udblockUtils',
+        extensionId: '',
         collaborator: 'UDRobot',
         iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,

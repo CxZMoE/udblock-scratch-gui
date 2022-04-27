@@ -57,6 +57,7 @@ import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
 import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 import initUDBlockUtils from '../lib/block-defenition/udblock-utils'
+import initUDPiPlusMiniBlocks from '../lib/block-defenition/udpi_plus_miniV1'
 
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
@@ -498,6 +499,7 @@ class Blocks extends React.Component {
         initUDBlockMicrobitBlocks(Blockly);
         initUDBlockMQTTBlocks(Blockly)
         initUDBlockUtils(Blockly);
+        initUDPiPlusMiniBlocks(Blockly);
         // 回调函数
         Blockly.Python.Callbacks = {}
         Blockly.Python.hasLoop = false
