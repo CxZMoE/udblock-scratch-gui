@@ -58,6 +58,7 @@ import udpiIconURLV2 from './udblock/udpi 开发板v2.png';
 import udpiplusIconURLV2 from './udblock/udpi plus开发板v2.png';
 import udpiExtbMFIconURLV2 from './udblock/udblock 多功能拓展版v2.png';
 import udpiExtbSMIconURLV2 from './udblock/udblock 电机拓展版v2.png';
+import udpiMiniIconURL from './udblock/ESP32核心板.png';
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
 import udpiInsetIconURL from './zkgz.svg';
 
@@ -315,8 +316,8 @@ export default [
         collaborator: 'UDRobot',
         // iconURL: udpiplusIconURLV2,
         // insetIconURL: udpiInsetIconURL,
-        iconURL: penIconURL,
-        insetIconURL: penInsetIconURL,
+        iconURL: udpiMiniIconURL,
+        insetIconURL: udpiInsetIconURL,
         description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板",
         featured: true,
         disabled: false,
