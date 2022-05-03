@@ -2,6 +2,12 @@ function loadMiscMenu(board=""){
     Blockly.Python[`${board}_menu_RJMenu`] = function (block) {
         return [block.getFieldValue("RJMenu"), Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_menu_dblRelayPinYellow`] = function (block) {
+        return [block.getFieldValue("dblRelayPinYellow"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_menu_dblRelayPinBlue`] = function (block) {
+        return [block.getFieldValue("dblRelayPinBlue"), Blockly.Python.ORDER_ATOMIC]
+    }
     Blockly.Python[`${board}_menu_actions`] = function (block) {
         var action = block.getFieldValue("actions");
         return [`${action}`, Blockly.Python.ORDER_ATOMIC]

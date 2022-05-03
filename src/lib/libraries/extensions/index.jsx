@@ -427,7 +427,7 @@ export default [
     },
     {
         name: 'UDBlock 拓展类',
-        extensionId: '',
+        extensionId: 'udblockUtils',
         collaborator: 'UDRobot',
         iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,

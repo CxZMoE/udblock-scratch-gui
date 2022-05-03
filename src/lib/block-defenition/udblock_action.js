@@ -1,4 +1,4 @@
-import { extb_mf } from "../../../../udblock-scratch-vm/src/util/extb-definitions";
+import { extb_udpi_mini } from "../../../../udblock-scratch-vm/src/util/extb-definitions";
 
 export default (board = "") => {
     /* 执行器开始 */
@@ -93,69 +93,40 @@ export default (board = "") => {
     }
 
     // 双路继电器
-    Blockly.Python[`${board}_openReplayDbl`] = function (block) {
+    Blockly.Python[`${board}_openReplayDblYellow`] = function (block) {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
-        var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
-        if (channel == '') { channel = 0 }
-        console.log("channel: " + String(channel))
-        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
-        if (relay_pin >= 34 && relay_pin <= 39) {
-
-            console.log(block)
-            for (var i in extb_mf.RJ11) {
-                for (var j in extb_mf.RJ11[i].value) {
-                    if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
-                        fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
-
-                    }
-                }
-            }
-            block.dispose(true);
-        }
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
+        return `relay_control_dbl_${relay_pin}.on()\n`;
+    }
+    Blockly.Python[`${board}_openReplayDblBlue`] = function (block) {
+        Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
         Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
 
         return `relay_control_dbl_${relay_pin}.on()\n`;
     }
-    Blockly.Python[`${board}_closeReplayDbl`] = function (block) {
+    Blockly.Python[`${board}_closeReplayDblYellow`] = function (block) {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
-        var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
-        if (channel == '') { channel = 0 }
-        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
-        if (relay_pin >= 34 && relay_pin <= 39) {
-
-            console.log(block)
-            for (var i in extb_mf.RJ11) {
-                for (var j in extb_mf.RJ11[i].value) {
-                    if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
-                        fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
-
-                    }
-                }
-            }
-            block.dispose(true)
-        }
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
         Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
         return `relay_control_dbl_${relay_pin}.off()\n`;
     }
-    Blockly.Python[`${board}_switchReplayDbl`] = function (block) {
+    Blockly.Python[`${board}_closeReplayDblBlue`] = function (block) {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
-        var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
-        if (channel == '') { channel = 0 }
-        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
-        if (relay_pin >= 34 && relay_pin <= 39) {
-
-            console.log(block)
-            for (var i in extb_mf.RJ11) {
-                for (var j in extb_mf.RJ11[i].value) {
-                    if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
-                        fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
-
-                    }
-                }
-            }
-            block.dispose(true)
-        }
-
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
+        return `relay_control_dbl_${relay_pin}.off()\n`;
+    }
+    Blockly.Python[`${board}_switchReplayDblYellow`] = function (block) {
+        Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
+        Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
+        return `relay_control_dbl_${relay_pin}.toggle()\n`;
+    }
+    Blockly.Python[`${board}_switchReplayDblBlue`] = function (block) {
+        Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
+        var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
         Blockly.Python.definitions_[`relay_pin_${relay_pin}`] = `relay_control_dbl_${relay_pin} = Relay(${relay_pin})`;
         return `relay_control_dbl_${relay_pin}.toggle()\n`;
     }
