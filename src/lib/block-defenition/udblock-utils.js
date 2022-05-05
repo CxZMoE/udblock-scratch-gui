@@ -81,6 +81,42 @@ export default (Blockly) => {
         var code = `mqttClient.wait_msg()\n`;
         return code
     }
+    Blockly.Python[`${board}_checkMQTT`] = function (block) {
+        Blockly.Python.definitions_['import_mqttclient'] = 'from tools.mqtt import MQTTClient';
+        var code = `mqttClient.check_msg()\n`;
+        return code
+    }
+    Blockly.Python[`${board}_jsonLoads`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var str = Blockly.Python.valueToCode(block, "STR", Blockly.Python.ORDER_ATOMIC);
+        
+        var code = `(json.loads(${str}))`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_jsonDumps`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var obj = Blockly.Python.valueToCode(block, "OBJ", Blockly.Python.ORDER_ATOMIC);
+        
+        var code = `(json.dumps(${obj}))`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_diyLine`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC);
+        text = String(text).substring(1,String(text).length-1)
+        var code = `${text}`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_jsonGetIndex`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var text = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC);
+        var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        text = String(text).substring(1,String(text).length-1)
+        obj = String(obj).replaceAll("'","")
+        var code = `${obj}[${text}]`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    }
+    
     Blockly.Python[`${board}_setcallbackMQTT`] = function (block) {
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
         // var functionName = Blockly.Python.provideFunction_(
@@ -93,7 +129,7 @@ export default (Blockly) => {
         codeInit += 'def ' + `myMQTTCallback` + '(topic, msg, retained, duplicate):\n'
         codeInit += statements
         Blockly.Python.definitions_[`mqtt_bind_callback`] = codeInit;
-        var code = `mqttClient.set_callback(callback=myMQTTCallback)\n`
+        var code = `mqttClient.set_callback(myMQTTCallback)\n`
         return code
     }
     Blockly.Python[`${board}_mqttValueTopic`] = function (block) {
