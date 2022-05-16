@@ -1,7 +1,7 @@
 import Blockly from 'scratch-blocks'
-import BlockUtility from 'scratch-vm/src/engine/block-utility';
+import {wrap} from './utils/string'
 
-const  initPythonGenerator = () =>{
+const initPythonGenerator = () => {
     // Add code generator callback
     Blockly.Python = new Blockly.Generator("Python")
     Blockly.Python.addReservedWords(
@@ -111,7 +111,7 @@ const  initPythonGenerator = () =>{
         Blockly.Python.PASS = this.INDENT + 'pass\n';
         // Create a dictionary of definitions to be printed before the code.
         Blockly.Python.definitions_ = Object.create(null);
-        
+
         // Create a dictionary mapping desired function names in definitions_
         // to actual function names (to avoid collisions with user functions).
         Blockly.Python.functionNames_ = Object.create(null);
@@ -139,8 +139,6 @@ const  initPythonGenerator = () =>{
                 Blockly.Names.DEVELOPER_VARIABLE_TYPE) + ' = None');
         }
         Blockly.Python.definitions_['variables'] = defvars.join('\n');
-
-        
     };
 
     /**
@@ -218,7 +216,7 @@ const  initPythonGenerator = () =>{
             // Collect comment for this block.
             var comment = block.getCommentText();
             if (comment) {
-                comment = Blockly.utils.string.wrap(comment,
+                comment = wrap(comment,
                     Blockly.Python.COMMENT_WRAP - 3);
                 commentCode += Blockly.Python.prefixLines(comment + '\n', '# ');
             }
