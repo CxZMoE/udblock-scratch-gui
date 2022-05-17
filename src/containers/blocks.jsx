@@ -598,7 +598,7 @@ class Blocks extends React.Component {
         // 添加拓展
         // this.props.vm.extensionManager.loadExtensionURL('udblockEXTBIOT');
         
-
+        this.requestToolboxUpdate()
     }
     shouldComponentUpdate(nextProps, nextState) {
         //console.log('shouldComponentUpdate')
@@ -625,8 +625,6 @@ class Blocks extends React.Component {
         // Do not check against prevProps.toolboxXML because that may not have been rendered.
         if (this.props.isVisible && this.props.toolboxXML !== this._renderedToolboxXML) {
             this.requestToolboxUpdate();
-            this.updateToolbox();   // 每次工作区XML有变化的时候更新工具箱内容
-            // 修复已保存工程变量在工具箱不显示
         }
 
         if (this.props.isVisible === prevProps.isVisible) {
@@ -684,6 +682,7 @@ class Blocks extends React.Component {
     }
 
     updateToolbox() {
+        console.log('update toolbox')
         this.toolboxUpdateTimeout = false;
 
         const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
@@ -773,7 +772,7 @@ class Blocks extends React.Component {
         }
     }
     onWorkspaceMetricsChange() {
-        console.log('onWorkspaceMetricsChange')
+        // console.log('onWorkspaceMetricsChange')
         const target = this.props.vm.editingTarget;
         if (target && target.id) {
             // Dispatch updateMetrics later, since onWorkspaceMetricsChange may be (very indirectly)
@@ -886,7 +885,7 @@ class Blocks extends React.Component {
         // workspace to be 'undone' here.
         this.workspace.clearUndo();
 
-        this.updateToolbox()
+        this.updateToolbox();
     }
 
     removeExtendBoards(a) {
