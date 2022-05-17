@@ -173,18 +173,21 @@ class TerminalComponent extends React.Component {
                 }
 
                 // 没有找到，或者只有一个串口设备
-                if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
-                    //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
-                    portSelect.children.item(0).selected = true;
-                    selectPort(portSelect.children.item(0).value);
+                if (portSelect.children.length > 0) {
+                    if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
+                        //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
+                        portSelect.children.item(0).selected = true;
+                        selectPort(portSelect.children.item(0).value);
+                    }
                 }
+
 
                 // 没有串口设备，则清空选中的串口
                 if (portSelect.children.length == 0) {
                     selectPort("")
                 }
             })
-        
+
         }, 1000);
 
         // 获取软件版本
