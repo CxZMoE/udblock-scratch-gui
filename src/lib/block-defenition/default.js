@@ -741,8 +741,8 @@ export default function (Blockly) {
         return [block.inputList[0].fieldRow[0].text_, Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_addtolist'] = function(block){
-        console.log(Blockly.Xml.blockToDom(block))
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
         return `${list}.append(${item})\n`
     }
@@ -751,22 +751,21 @@ export default function (Blockly) {
         if (index >= 1) index -= 1;
         else index = 0;
 
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         //return `${list} = ${list}[:${index}].append(${list}[${index+1}:])`
         return `del ${list}[${index}]\n`
     }
 
     Blockly.Python['data_deletealloflist'] = function(block){
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         return `${list} = []\n`
         
     }
     Blockly.Python['data_insertatlist'] = function(block){
-        console.log(Blockly.Xml.blockToDom(block))
-
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
 
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
@@ -779,8 +778,8 @@ export default function (Blockly) {
         else index = 0;
 
 
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
 
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
@@ -789,38 +788,37 @@ export default function (Blockly) {
     Blockly.Python['data_itemoflist'] = function(block){
         var index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
 
-
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         return [`${list}[${index}]`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_itemnumoflist'] = function(block){
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
 
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
         return [`${list}.index${item})`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_lengthoflist'] = function(block){
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         return [`len(${list})`, Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_listcontainsitem'] = function(block){
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
 
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         return [`(${list}.count(${item}) >  0)`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_itemnumoflist'] = function(block){
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
 
-        var list = Blockly.Xml.blockToDom(block).firstChild.innerText;
-        console.log(Blockly.Xml.blockToDom(block))
+        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+            Blockly.VARIABLE_CATEGORY_NAME);
         return [`${list}.count(${item})`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_showlist'] = function(block){
