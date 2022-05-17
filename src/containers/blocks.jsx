@@ -626,6 +626,7 @@ class Blocks extends React.Component {
         if (this.props.isVisible && this.props.toolboxXML !== this._renderedToolboxXML) {
             this.requestToolboxUpdate();
             this.updateToolbox();   // 每次工作区XML有变化的时候更新工具箱内容
+            // 修复已保存工程变量在工具箱不显示
         }
 
         if (this.props.isVisible === prevProps.isVisible) {
