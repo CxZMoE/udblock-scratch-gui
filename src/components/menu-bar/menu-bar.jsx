@@ -244,7 +244,7 @@ class MenuBar extends React.Component {
 
     handleUpdate() {
         // 请求更新
-        fetch('http://127.0.0.1:3000/open', {
+        fetch('http://127.0.0.1:12888/open', {
             method: 'post', headers: {
                 'Accept': '*/*',
                 'Content-Type': 'application/json',
@@ -254,7 +254,7 @@ class MenuBar extends React.Component {
             })
         }
         )
-        //  fetch('http://127.0.0.1:3000/checkVersion').then((res) => {
+        //  fetch('http://127.0.0.1:12888/checkVersion').then((res) => {
         //     var text = res.text()
         //     return text
         // }).then((text) => {
@@ -287,7 +287,7 @@ class MenuBar extends React.Component {
         //                 var updateConfirm = confirm(`发现新版本${versionInfo.version}是否更新？`)
         //                 if (updateConfirm) {
         //                     var ok = -1
-        //                     fetch("http://127.0.0.1:3000/doUpdate?update=" + versionInfo.filename)
+        //                     fetch("http://127.0.0.1:12888/doUpdate?update=" + versionInfo.filename)
         //                         .then(res => res.body())
         //                         .then((status) => {
         //                             if (status == "ok") {
@@ -774,7 +774,7 @@ class MenuBar extends React.Component {
                                                 this.props.onRequestCloseTool()
                                                 terminal.ws.send(`closecom:${terminal.com}`)
                                                 fetch(
-                                                    'http://127.0.0.1:3000/ampy/upload',
+                                                    'http://127.0.0.1:12888/ampy/upload',
                                                     {
                                                         method: 'post',
                                                         body: JSON.stringify({
@@ -804,7 +804,7 @@ class MenuBar extends React.Component {
                                                 this.props.onRequestCloseTool()
                                                 terminal.print("开始热加载");
                                                 var request = new XMLHttpRequest();
-                                                request.open("POST", "http://127.0.0.1:3000/ampy/run", true);
+                                                request.open("POST", "http://127.0.0.1:12888/ampy/run", true);
                                                 request.send(JSON.stringify({
                                                     sourceCode: this.props.pycode,
                                                     com: terminal.com
@@ -891,7 +891,7 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
-                                                fetch('http://127.0.0.1:3000/installDriver').then((res) => res.text()).then((text) => {
+                                                fetch('http://127.0.0.1:12888/installDriver').then((res) => res.text()).then((text) => {
                                                     console.log(text)
                                                     if (response == "ok") {
                                                         terminal.print("开始安装驱动");
@@ -941,7 +941,7 @@ class MenuBar extends React.Component {
                                                     var terminal = this.props.terminal
 
 
-                                                    fetch('http://127.0.0.1:3000/checkVersion').then(res => res.text()).then(response => {
+                                                    fetch('http://127.0.0.1:12888/checkVersion').then(res => res.text()).then(response => {
                                                         console.log(response)
                                                         terminal.print(response)
                                                     })
@@ -999,7 +999,7 @@ class MenuBar extends React.Component {
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={() => {
-                            fetch('http://127.0.0.1:3000/open', {
+                            fetch('http://127.0.0.1:12888/open', {
                                 method: 'post', headers: {
                                     'Accept': '*/*',
                                     'Content-Type': 'application/json',

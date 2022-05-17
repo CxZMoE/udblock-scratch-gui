@@ -93,7 +93,7 @@ class GUI extends React.Component {
         setInterval(() => {
             var currentVersion = '';
             var networkVersion = '';
-            fetch('http://127.0.0.1:3000/version').then((res) => {
+            fetch('http://127.0.0.1:12888/version').then((res) => {
                 var text = res.text()
                 return text
             }).then((version) => {

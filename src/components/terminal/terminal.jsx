@@ -53,7 +53,7 @@ class TerminalComponent extends React.Component {
     onConnectWS(terminalJS) {
         function connect(com) {
             try {
-                var ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+                var ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
                 // 为终端绑定一个Websocket对象
                 terminalJS.ws = ws
@@ -130,7 +130,7 @@ class TerminalComponent extends React.Component {
             // 请求获取当前设备的串口列表
 
             fetch(
-                "http://127.0.0.1:3000/serialport"
+                "http://127.0.0.1:12888/serialport"
             ).then(res => {
                 return res.json()
             }).then((data) => {
@@ -193,7 +193,7 @@ class TerminalComponent extends React.Component {
         // 获取软件版本
         var request = new XMLHttpRequest();
 
-        request.open("GET", "http://127.0.0.1:3000/version", true);
+        request.open("GET", "http://127.0.0.1:12888/version", true);
         request.send();
 
         request.onreadystatechange = function () {
@@ -219,7 +219,7 @@ class TerminalComponent extends React.Component {
         document.getElementById("serialOpenBtn").onclick = function (e) {
             // 检查固件版本
             // var http = require('http')
-            // http.get(`http://127.0.0.1:3000/check/firmware?com=${terminalJS.com}`, function (res) {
+            // http.get(`http://127.0.0.1:12888/check/firmware?com=${terminalJS.com}`, function (res) {
             //     var str = ''
             //     console.log(res)
             //     res.on('data', function (chunk) {
@@ -238,7 +238,7 @@ class TerminalComponent extends React.Component {
                 var FVERSION = "0.5.8"
                 console.log("打开串口:", terminalJS.com)
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                    terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+                    terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
                 }
                 terminalJS.ws.send(`opencom:${terminalJS.com}`)
                 terminalJS.ws.onmessage = wsOnMsg
@@ -251,7 +251,7 @@ class TerminalComponent extends React.Component {
                 e.target.innerText = "关闭"
             } else {
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                    terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+                    terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
                 }
                 console.log("关闭串口:", terminalJS.com)
                 terminalJS.ws.send(`closecom:${terminalJS.com}`)
@@ -270,7 +270,7 @@ class TerminalComponent extends React.Component {
         //         e.preventDefault()
         //         var text = document.getElementById("serialInput").value;
         //         if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-        //             terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+        //             terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
         //             terminalJS.ws.onopen = (e) => {
         //                 // terminalJS.ws.send("closecom:COM3")
@@ -287,7 +287,7 @@ class TerminalComponent extends React.Component {
         //     e.preventDefault()
         //     var text = document.getElementById("serialInput").value;
         //     if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-        //         terminalJS.ws = new WebSocket("ws://127.0.0.1:3000/ws/client")
+        //         terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
         //         terminalJS.ws.onopen = (e) => {
         //             // terminalJS.ws.send("closecom:COM3")

@@ -272,7 +272,7 @@ const GUIComponent = props => {
                                 label={"是否进行更新？"}
                                 onOk={() => {
                                     // 请求更新
-                                    fetch('http://127.0.0.1:3000/checkVersion').then((res) => {
+                                    fetch('http://127.0.0.1:12888/checkVersion').then((res) => {
                                         var text = res.text()
                                         return text
                                     }).then((text) => {

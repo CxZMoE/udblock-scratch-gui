@@ -20,7 +20,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         var request = new XMLHttpRequest();
         var ip = "127.0.0.1"
-        request.open("GET","http://127.0.0.1:3000/myIP",false)
+        request.open("GET","http://127.0.0.1:12888/myIP",false)
         request.onreadystatechange = function(e){
             if (request.status == 200 && request.readyState == 4){
                 ip = request.responseText;
