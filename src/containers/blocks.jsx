@@ -462,12 +462,13 @@ class Blocks extends React.Component {
                     "args0": [
                         {
                             "type": "input_value",
-                            "name": "INDEX"
+                            "name": "INDEX",
+                            "variableTypes": ['string', 'number']
                         },
                         {
                             "type": "field_variable",
                             "name": "LIST",
-                            "variableTypes": [Blockly.LIST_VARIABLE_TYPE, 'string']
+                            "variableTypes": [Blockly.LIST_VARIABLE_TYPE]
                         }
                     ],
                     "output": null,
@@ -596,10 +597,11 @@ class Blocks extends React.Component {
 
         // 添加拓展
         // this.props.vm.extensionManager.loadExtensionURL('udblockEXTBIOT');
-
+        
 
     }
     shouldComponentUpdate(nextProps, nextState) {
+        //console.log('shouldComponentUpdate')
         return (
             this.state.prompt !== nextState.prompt ||
             this.props.isVisible !== nextProps.isVisible ||
@@ -612,6 +614,7 @@ class Blocks extends React.Component {
         );
     }
     componentDidUpdate(prevProps) {
+        //console.log('componentDidUpdate')
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
             Blockly.hideChaff();
@@ -622,6 +625,7 @@ class Blocks extends React.Component {
         // Do not check against prevProps.toolboxXML because that may not have been rendered.
         if (this.props.isVisible && this.props.toolboxXML !== this._renderedToolboxXML) {
             this.requestToolboxUpdate();
+            this.updateToolbox();   // 每次工作区XML有变化的时候更新工具箱内容
         }
 
         if (this.props.isVisible === prevProps.isVisible) {
@@ -650,6 +654,7 @@ class Blocks extends React.Component {
         }
     }
     componentWillUnmount() {
+        console.log('componentWillUnmount')
         this.detachVM();
         this.workspace.dispose();
         clearTimeout(this.toolboxUpdateTimeout);
@@ -657,12 +662,14 @@ class Blocks extends React.Component {
 
     }
     requestToolboxUpdate() {
+        console.log('requestToolboxUpdate')
         clearTimeout(this.toolboxUpdateTimeout);
         this.toolboxUpdateTimeout = setTimeout(() => {
             this.updateToolbox();
         }, 0);
     }
     setLocale() {
+        console.log('setLocale')
         Blockly.ScratchMsgs.setLocale(this.props.locale);
         this.props.vm.setLocale(this.props.locale, this.props.messages)
             .then(() => {
@@ -756,6 +763,7 @@ class Blocks extends React.Component {
     }
 
     onTargetsUpdate() {
+        console.log('onTargetsUpdate')
         if (this.props.vm.editingTarget && this.workspace.getFlyout()) {
             ['glide', 'move', 'set'].forEach(prefix => {
                 this.updateToolboxBlockValue(`${prefix}x`, Math.round(this.props.vm.editingTarget.x).toString());
@@ -764,6 +772,7 @@ class Blocks extends React.Component {
         }
     }
     onWorkspaceMetricsChange() {
+        console.log('onWorkspaceMetricsChange')
         const target = this.props.vm.editingTarget;
         if (target && target.id) {
             // Dispatch updateMetrics later, since onWorkspaceMetricsChange may be (very indirectly)
@@ -830,6 +839,7 @@ class Blocks extends React.Component {
         }
     }
     onWorkspaceUpdate(data) {
+        console.log('onWorkspaceUpdate')
         // When we change sprites, update the toolbox to have the new sprite's blocks
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
@@ -874,6 +884,8 @@ class Blocks extends React.Component {
         // fresh workspace and we don't want any changes made to another sprites
         // workspace to be 'undone' here.
         this.workspace.clearUndo();
+
+        this.updateToolbox()
     }
 
     removeExtendBoards(a) {
