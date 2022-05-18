@@ -475,8 +475,8 @@ class Blocks extends React.Component {
         initUDBlockUtils(Blockly);
         initUDPiPlusMiniBlocks(Blockly);
         // 回调函数
-        Blockly.Python.Callbacks = {}
-        Blockly.Python.hasLoop = false
+        Blockly.Python.Callbacks = {}           // 删除方块回调
+        Blockly.Python.hasLoop = false          // Microbit按钮时间
         Blockly.Python.hasBtnCallback = false
         this.state = {
             prompt: null
