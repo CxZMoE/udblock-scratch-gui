@@ -27,7 +27,7 @@ import { closeExtensionLibrary, openSoundRecorder, openConnectionModal } from '.
 import { activateCustomProcedures, deactivateCustomProcedures } from '../reducers/custom-procedures';
 import { setConnectionModalExtensionId } from '../reducers/connection-modal';
 import { updateMetrics } from '../reducers/workspace-metrics';
-import { updatePyCode } from '../reducers/pycode';
+import { updatePyCode } from '../reducers/pycode';  // For updating code in codebox
 
 import {
     activateTab,
@@ -450,34 +450,7 @@ class Blocks extends React.Component {
         Blockly.recordSoundCallback = this.handleOpenSoundRecorder;
 
 
-        // 修改默认刚快
-        Blockly.Blocks['data_itemoflist'] = {
-            /**
-             * Block for reporting item of list.
-             * @this Blockly.Block
-             */
-            init: function () {
-                this.jsonInit({
-                    "message0": Blockly.Msg.DATA_ITEMOFLIST,
-                    "args0": [
-                        {
-                            "type": "input_value",
-                            "name": "INDEX",
-                            "variableTypes": ['string', 'number']
-                        },
-                        {
-                            "type": "field_variable",
-                            "name": "LIST",
-                            "variableTypes": [Blockly.LIST_VARIABLE_TYPE]
-                        }
-                    ],
-                    "output": null,
-                    "category": Blockly.Categories.dataLists,
-                    "extensions": ["colours_data_lists"],
-                    "outputShape": Blockly.OUTPUT_SHAPE_ROUND
-                });
-            }
-        };
+        
         // 初始化Python生成器
         initPythonGenerator();
         // 初始化Arduino生成器
@@ -518,6 +491,8 @@ class Blocks extends React.Component {
         //console.log(Blockly)
         let codeText = Blockly.Python.workspaceToCode(this.workspace);
         Blockly.Python._content = codeText;
+
+        // Add this for micro-bit support. btn event bindings.
         if (!Blockly.Python.hasLoop && Blockly.Python.hasBtnCallback) {
             Blockly.Python._content += '\nwhile True:\n' +
                 '  for c in btn_callbacks:c()\n'
@@ -552,6 +527,7 @@ class Blocks extends React.Component {
         // 注入工作区
         this.workspace = Blockly.inject(this.blocks, workspaceConfig);
         this.workspace.addChangeListener(() => {
+            // Change code box once the workspace is changed.
             if (this.props.editorMode == "code") {
                 this.updateCodeBox(this.workspace)
             }
@@ -803,7 +779,7 @@ class Blocks extends React.Component {
     onVisualReport(data) {
         this.workspace.reportValue(data.id, data.value);
     }
-    getToolboxXML(isExtLoad) {
+    getToolboxXML() {
         // Use try/catch because this requires digging pretty deep into the VM
         // Code inside intentionally ignores several error situations (no stage, etc.)
         // Because they would get caught by this try/catch
@@ -885,6 +861,7 @@ class Blocks extends React.Component {
         // workspace to be 'undone' here.
         this.workspace.clearUndo();
 
+        // Update toolbox after changing workspace enviroment.
         this.updateToolbox();
     }
 
@@ -975,9 +952,6 @@ class Blocks extends React.Component {
                     Blockly.Blocks[extendedOpcode] = blockDefinition;
                 });
 
-
-                //this.updateToolbox()
-
                 //this.handleBlocksInfoUpdate(categoryInfo);
             }
         };
@@ -993,7 +967,7 @@ class Blocks extends React.Component {
 
 
         // Update the toolbox with new blocks if possible
-        var toolboxXML = this.getToolboxXML(true);
+        var toolboxXML = this.getToolboxXML();
 
         // if (toolboxXML) {
         //     // 创建新的XML

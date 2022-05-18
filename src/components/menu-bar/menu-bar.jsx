@@ -211,6 +211,8 @@ class MenuBar extends React.Component {
             com: null
         }
     }
+
+    // HOC 处理编辑器模式 舞台或者Python代码
     handleEditorModeSelect() {
         switch (this.props.editorMode) {
             case "code":
@@ -230,6 +232,8 @@ class MenuBar extends React.Component {
         console.log("blocks.jsx:", this.props.editorMode)
         //this.props.vm.emitWorkspaceUpdate();
     }
+
+    // HOC 处理隐藏右侧文本编辑区
     handleEditorHide() {
         if (this.props.editorHide) {
             this.props.editorToggleShow();

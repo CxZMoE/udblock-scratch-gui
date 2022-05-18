@@ -385,9 +385,9 @@ const GUIComponent = props => {
                                         {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                     </TabPanel>
                                 </Tabs>
-                                {/* {backpackVisible ? (
+                                {backpackVisible && editorMode == "default" ? (
                                 <Backpack host={backpackHost} />
-                            ) : null} */}
+                            ) : null}
                             </Box> : (
                                 <Box className={styles.editorWrapper}>
                                     <Tabs
@@ -498,9 +498,6 @@ const GUIComponent = props => {
 
 
                         {/* 舞台 */}
-
-
-
                         {(editorMode == "code") ? (
                             <Box
                                 className={
@@ -530,8 +527,6 @@ const GUIComponent = props => {
                                 </Box>
                             </Box>
                         )}
-
-
                     </Box>
                 </Box>
                 <DragLayer />

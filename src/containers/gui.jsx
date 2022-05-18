@@ -56,10 +56,10 @@ class GUI extends React.Component {
         document.body.style.overflowY = "hidden"
         document.body.style.overflowX = "hidden"
         setIsScratchDesktop(this.props.isScratchDesktop);
-        this.props.onStorageInit(storage);
+        // this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
 
-        // 修改工具箱悬浮习性
+        // 修改工具箱悬浮习性, 鼠标在上面的时候将工具箱的方块显示在最上层
         var injectDiv = document.getElementsByClassName("injectionDiv")[0];
         var blocklyFlyout = document.getElementsByClassName("blocklyFlyout")[0];
         //var blocklyBlockMenuClipRect = document.getElementById("blocklyBlockMenuClipRect");
@@ -85,7 +85,6 @@ class GUI extends React.Component {
                 blocklyFlyout.style.zIndex = zIndex_prev;
             }
             mouseIsIn = false;
-
             //blocklyBlockMenuClipRect.width = "248px";
         })
 
@@ -94,10 +93,10 @@ class GUI extends React.Component {
             var currentVersion = '';
             var networkVersion = '';
             fetch('http://127.0.0.1:12888/version').then((res) => {
-                var text = res.text()
-                return text
+                var version = res.text()
+                return version
             }).then((version) => {
-                //console.log("当前版本：" + version)
+                console.log("当前版本：" + version)
                 currentVersion = version
                 networkVersion = currentVersion
                 // 获取网络版本
@@ -110,13 +109,13 @@ class GUI extends React.Component {
                     if (currentVersion == networkVersion) {
                         //console.log('版本不需要更新')
                         this.props.makeHidePrompt(true)
-                    } else if (data.beta){
+                    } else if (data.beta){  // 显示BETA更新提示图标
                         //console.log('版本需要更新')
                         this.props.makeShowPrompt(true)
                     }
                 })
             })
-        }, 2*1000)
+        }, 2000)
 
 
     }

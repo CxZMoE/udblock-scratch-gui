@@ -122,7 +122,10 @@ class MonicaEditor extends React.Component {
                                 if (Blockly != undefined){
                                     Blockly.Python._content = newText;
                                 }
-                                this.props.updatePyCode(newText)
+                                if (this.props.updatePyCode){
+                                    this.props.updatePyCode(newText)
+                                }
+                                
 
                             }}
                             name="ace_editor"
@@ -218,7 +221,8 @@ class MonicaEditor extends React.Component {
 }
 
 MonicaEditor.propTypes = {
-    stageSize: PropTypes.any
+    stageSize: PropTypes.any,
+    updatePyCode: PropTypes.func
 };
 
 const mapStateToProps = state => ({

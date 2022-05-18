@@ -5,6 +5,37 @@
 
 
 export default function (Blockly) {
+
+    // 修改默认刚快
+    Blockly.Blocks['data_itemoflist'] = {
+        /**
+         * Block for reporting item of list.
+         * @this Blockly.Block
+         */
+        init: function () {
+            this.jsonInit({
+                "message0": Blockly.Msg.DATA_ITEMOFLIST,
+                "args0": [
+                    {
+                        "type": "input_value",
+                        "name": "INDEX",
+                        "variableTypes": ['string', 'number']
+                    },
+                    {
+                        "type": "field_variable",
+                        "name": "LIST",
+                        "variableTypes": [Blockly.LIST_VARIABLE_TYPE]
+                    }
+                ],
+                "output": null,
+                "category": Blockly.Categories.dataLists,
+                "extensions": ["colours_data_lists"],
+                "outputShape": Blockly.OUTPUT_SHAPE_ROUND
+            });
+        }
+    };
+
+    
     /** For Python Generator */
     Blockly.Python['motion_movesteps'] = function (block) {
         
