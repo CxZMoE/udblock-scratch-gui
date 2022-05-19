@@ -50,6 +50,7 @@ import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
 import initUDBlockEXTBMFV2Blocks from '../lib/block-defenition/udblockextb_mf_v2'
 import initUDBlockEXTBSMV2Blocks from '../lib/block-defenition/udblockextb_sm_v2'
 import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
+import initUDBlockCarProBlocks from '../lib/block-defenition/udblockextb_carpro'
 import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
 import initUDBlockCar2DBlocks from '../lib/block-defenition/udblockextb_car_2d'
 import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
@@ -58,6 +59,8 @@ import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
 import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 import initUDBlockUtils from '../lib/block-defenition/udblock-utils'
 import initUDPiPlusMiniBlocks from '../lib/block-defenition/udpi_plus_miniV1'
+
+
 
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
@@ -467,6 +470,7 @@ class Blocks extends React.Component {
         initUDBlockEXTBSMV2Blocks(Blockly);
         initUDBlockEXTBIOBlocks(Blockly);
         initUDBlockCarBlocks(Blockly);
+        initUDBlockCarProBlocks(Blockly);
         initUDBlockCar2DBlocks(Blockly);
         initUDBlockCamerabBlocks(Blockly);
         initUDBlockIOTBlocks(Blockly);
