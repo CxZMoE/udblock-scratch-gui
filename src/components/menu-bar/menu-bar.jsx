@@ -960,6 +960,36 @@ class MenuBar extends React.Component {
                                                     />
                                                 </MenuItem>
                                             </MenuSection>
+                                            <MenuSection>
+                                                <MenuItem onClick={() => {
+                                                    console.log(this.props.pycode)
+                                                    var terminal = this.props.terminal
+
+
+                                                    fetch(`http://127.0.0.1:12888/fwVersion?com=${terminal.com}`).then(res => res.text()).then(response => {
+                                                        var configVersion = response.split(":")[1] // 配置文件中的版本
+                                                        var boardVersion = response.split(":")[0]  // 主板返回的版本信息
+                                                        console.log(`当前固件版本: ${boardVersion}`)
+                                                        console.log(`最新固件版本: ${configVersion}`)
+                                                        terminal.print(`当前固件版本: ${boardVersion}`)
+                                                        terminal.print(`最新固件版本: ${configVersion}`)
+                                                        if (String(boardVersion).indexOf(String(configVersion)) < 0){
+                                                            terminal.print("主板固件需要更新！")
+                                                        }else{
+                                                            terminal.print("主板固件已是最新！")
+                                                        }
+                                                    })
+
+                                                    this.props.onRequestCloseSystem()
+
+                                                }}>
+                                                    <FormattedMessage
+                                                        defaultMessage="检查主板固件更新"
+                                                        description="Menu bar item for turning off turbo mode"
+                                                        id="gui.menuBar.checkFWUpdate"
+                                                    />
+                                                </MenuItem>
+                                            </MenuSection>
                                         </MenuBarMenu>
                                     </div>
                                 </React.Fragment>
