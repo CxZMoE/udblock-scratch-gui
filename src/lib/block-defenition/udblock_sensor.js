@@ -35,6 +35,12 @@ function loadSensorDefinition(board = "") {
         }
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_getColorSensor`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var select = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_sensor.GetColorDetector('${select}')`
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
     Blockly.Python[`${board}_detectColorSensorColor`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);

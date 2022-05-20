@@ -16,6 +16,10 @@ function loadMiscMenu(board=""){
         var color = block.getFieldValue("color");
         return [`${color}`, Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_menu_colorRGBMenu`] = function (block) {
+        var color = block.getFieldValue("colorRGBMenu");
+        return [`${color}`, Blockly.Python.ORDER_ATOMIC]
+    }
     Blockly.Python[`${board}_menu_imageMethods`] = function (block) {
         var imageMethod = block.getFieldValue("imageMethods");
         return [`${imageMethod}`, Blockly.Python.ORDER_ATOMIC]
