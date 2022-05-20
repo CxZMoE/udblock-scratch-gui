@@ -31,6 +31,12 @@ export default (Blockly) => {
         var code = `aiplayer = AIPlayer('${ip}')\n`;
         return code;
     };
+    Blockly.Python['udblockEXTBIOT_initAiPlayerWithIP'] = function (block) {
+        Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
+        var ip = Blockly.Python.valueToCode(block, "IP", Blockly.Python.ORDER_ATOMIC)
+        var code = `aiplayer = AIPlayer(${ip})\n`;
+        return code;
+    };
     Blockly.Python['udblockEXTBIOT_enableSD'] = function (block) {
         Blockly.Python.definitions_['import_iot'] = 'from udrobot.extend_board.iot import AIPlayer';
         var code = `aiplayer.useSD = True\n`;
