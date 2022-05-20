@@ -140,4 +140,25 @@ export default (Blockly) => {
         Blockly.Python.definitions_['import_mqttclient'] = 'from tools.mqtt import MQTTClient';
         return ['(msg)',Blockly.Python.ORDER_ATOMIC]
     }
+
+    // 线程
+    Blockly.Python[`${board}_create_thread`] = function (block) {
+        Blockly.Python.definitions_['import_thread'] = 'import _thread';
+        var thread_name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");
+        var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
+        // var functionName = Blockly.Python.provideFunction_(
+        //     `OnBtn${btn}PressedFunc`,
+        //     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(v):',
+        //         '  hcsr04 = HCSR04(trigger_pin=trig_pin, echo_pin=echo_pin)',
+        //         '  distance = hcsr04.distance_cm()',
+        //         '  return distance']);
+        var codeInit = `# MQTT客户端回调\n`
+        var thread_callback_name = `${thread_name}_callback`
+        codeInit += 'def ' + thread_callback_name + '():\n'
+        codeInit += statements
+        Blockly.Python.definitions_[`mqtt_bind_callback`] = codeInit;
+        var code = `_thread.start_new_thread(${thread_callback_name}, ())\n`
+        return code
+    }
+    
 }
