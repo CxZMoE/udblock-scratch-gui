@@ -147,7 +147,20 @@ export default (Blockly) => {
         }
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.btn_pressed[${btn}]`;
+        var code = `myCarPro.ButtonUP[${btn}]`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
+    Blockly.Python[`${id}_ps2GetButtonUP`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        // 定义菜单
+        Blockly.Python[`${id}_menu_ps2BtnMenu`] = function (block) {
+            var remote = block.getFieldValue("ps2BtnMenu");
+            return [`${remote}`, Blockly.Python.ORDER_ATOMIC]
+        }
+
+        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.ButtonUP(${btn})`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     
