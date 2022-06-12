@@ -577,7 +577,7 @@ class Blocks extends React.Component {
 
         // 添加拓展
         // this.props.vm.extensionManager.loadExtensionURL('udblockEXTBIOT');
-        
+        this.props.vm.extensionManager.removeAllLoadedExtension()
         this.requestToolboxUpdate()
     }
     shouldComponentUpdate(nextProps, nextState) {
