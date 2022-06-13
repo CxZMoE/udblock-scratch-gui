@@ -185,6 +185,7 @@ class TerminalComponent extends React.Component {
                 // 没有串口设备，则清空选中的串口
                 if (portSelect.children.length == 0) {
                     selectPort("")
+                    document.getElementById("serialOpenBtn").innerText = "打开"
                 }
             })
 
