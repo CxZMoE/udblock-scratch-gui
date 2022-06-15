@@ -210,9 +210,9 @@ class MonicaEditor extends React.Component {
                         height: "35px"
                     }}
                 >
-                    {/* <input id="serialInput" className={classNames(styles.serialInput)} type="text" placeholder="输入要发送的消息"></input> */}
+                    <input id="serialInput" className={classNames(styles.serialInput)} type="text" placeholder="输入要发送的消息"></input>
                     
-                    {/* <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送</span> */}
+                    <span id="serialControlBtn" className={classNames(styles.serialBtn)}>发送</span>
                 </Box>
 
             </Box>

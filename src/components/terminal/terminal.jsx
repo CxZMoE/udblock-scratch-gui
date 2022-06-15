@@ -266,40 +266,23 @@ class TerminalComponent extends React.Component {
 
 
         }
-        // document.getElementById("serialInput").onkeydown = function (e) {
-        //     if (e.keyCode == 13) {
-        //         e.preventDefault()
-        //         var text = document.getElementById("serialInput").value;
-        //         if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-        //             terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
+        
+        document.getElementById("serialControlBtn").onclick = function (e) {
+            e.preventDefault()
+            var text = document.getElementById("serialInput").value;
+            if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
+                terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
-        //             terminalJS.ws.onopen = (e) => {
-        //                 // terminalJS.ws.send("closecom:COM3")
-        //                 // terminalJS.ws.send("opencom:COM3")
-        //             }
-        //             terminalJS.ws.onmessage = wsOnMsg
-        //         }
+                terminalJS.ws.onopen = (e) => {
+                    // terminalJS.ws.send("closecom:COM3")
+                    // terminalJS.ws.send("opencom:COM3")
+                }
+                terminalJS.ws.onmessage = wsOnMsg
+            }
 
-        //         terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
-        //         document.getElementById("serialInput").value = ""
-        //     }
-        // }
-        // document.getElementById("serialControlBtn").onclick = function (e) {
-        //     e.preventDefault()
-        //     var text = document.getElementById("serialInput").value;
-        //     if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-        //         terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
-
-        //         terminalJS.ws.onopen = (e) => {
-        //             // terminalJS.ws.send("closecom:COM3")
-        //             // terminalJS.ws.send("opencom:COM3")
-        //         }
-        //         terminalJS.ws.onmessage = wsOnMsg
-        //     }
-
-        //     terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
-        //     document.getElementById("serialInput").value = ""
-        // }
+            terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
+            document.getElementById("serialInput").value = ""
+        }
     }
 
 
