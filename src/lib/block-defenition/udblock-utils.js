@@ -96,7 +96,7 @@ export default (Blockly) => {
     Blockly.Python[`${board}_jsonDumps`] = function (block) {
         Blockly.Python.definitions_['import_json'] = 'import json';
         var obj = Blockly.Python.valueToCode(block, "OBJ", Blockly.Python.ORDER_ATOMIC);
-        
+        obj = String(obj).replaceAll("'","");
         var code = `(json.dumps(${obj}))`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
@@ -107,11 +107,29 @@ export default (Blockly) => {
         var code = `${text}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_jsonInitObj`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        obj = String(obj).replaceAll("'","")
+        var code = `${obj} = {}\n`;
+        return code
+    }
+    Blockly.Python[`${board}_jsonSetItem`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        var index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC);
+        var value = Blockly.Python.valueToCode(block, "VALUE", Blockly.Python.ORDER_ATOMIC);
+        obj = String(obj).replaceAll("'","")
+        index = String(index).replaceAll("'","")
+        value = String(value).replaceAll("'","")
+        var code = `${obj}[${index}] = ${value}\n`;
+        return code
+    }
     Blockly.Python[`${board}_jsonGetIndex`] = function (block) {
         Blockly.Python.definitions_['import_json'] = 'import json';
         var text = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC);
         var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
-        text = String(text).substring(1,String(text).length-1)
+        text =  String(text).replaceAll("'","")
         obj = String(obj).replaceAll("'","")
         var code = `${obj}[${text}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
