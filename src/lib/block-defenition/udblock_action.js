@@ -2,6 +2,34 @@ import { extb_udpi_mini } from "../../../../udblock-scratch-vm/src/util/extb-def
 
 export default (board = "") => {
     /* 执行器开始 */
+    // 电机模块
+    Blockly.Python[`${board}_motorModuleMotorClock`] = function (block) {
+        Blockly.Python.definitions_['import_driver_motormodule'] = 'from drivers.motor_v2 import MotorModule';
+        Blockly.Python.definitions_['use_motormodule'] = 'motor_module = MotorModule(udpi_i2c)';
+        var index = Blockly.Python.valueToCode(block, 'MOTOR', Blockly.Python.ORDER_ATOMIC)
+        var val = Blockly.Python.valueToCode(block, 'SPD', Blockly.Python.ORDER_ATOMIC)
+        return `motor_module.MotorSpeed(${index}, ${val})\n`;
+    }
+    Blockly.Python[`${board}_motorModuleMotorAntiClock`] = function (block) {
+        Blockly.Python.definitions_['import_driver_motormodule'] = 'from drivers.motor_v2 import MotorModule';
+        Blockly.Python.definitions_['use_motormodule'] = 'motor_module = MotorModule(udpi_i2c)';
+        var index = Blockly.Python.valueToCode(block, 'MOTOR', Blockly.Python.ORDER_ATOMIC)
+        var val = Blockly.Python.valueToCode(block, 'SPD', Blockly.Python.ORDER_ATOMIC)
+        return `motor_module.MotorSpeed(${index}, ${val}, True)\n`;
+    }
+    Blockly.Python[`${board}_motorModuleMotorStop`] = function (block) {
+        Blockly.Python.definitions_['import_driver_motormodule'] = 'from drivers.motor_v2 import MotorModule';
+        Blockly.Python.definitions_['use_motormodule'] = 'motor_module = MotorModule(udpi_i2c)';
+        var index = Blockly.Python.valueToCode(block, 'MOTOR', Blockly.Python.ORDER_ATOMIC)
+        return `motor_module.MotorSpeed(${index}, 0)\n`;
+    }
+    Blockly.Python[`${board}_motorModuleServoTurn`] = function (block) {
+        Blockly.Python.definitions_['import_driver_motormodule'] = 'from drivers.motor_v2 import MotorModule';
+        Blockly.Python.definitions_['use_motormodule'] = 'motor_module = MotorModule(udpi_i2c)';
+        var index = Blockly.Python.valueToCode(block, 'SERVO', Blockly.Python.ORDER_ATOMIC)
+        var angle = Blockly.Python.valueToCode(block, 'ANGLE', Blockly.Python.ORDER_ATOMIC)
+        return `motor_module.ServoTurn(${index}, ${angle})\n`;
+    }
     Blockly.Python[`${board}_digitalDisplayShow`] = function (block) {
         Blockly.Python.definitions_['import_driver_fdd'] = 'from drivers.FourDigitDisplay import FourDigitDisplay';
         Blockly.Python.definitions_['use_tm1650'] = 'fdd = FourDigitDisplay(udpi_i2c)';
