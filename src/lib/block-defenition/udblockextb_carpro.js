@@ -147,7 +147,7 @@ export default (Blockly) => {
         }
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.ButtonUP[${btn}]`;
+        var code = `myCarPro.btn_pressed[${btn}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
     Blockly.Python[`${id}_ps2GetButtonUP`] = function (block) {
