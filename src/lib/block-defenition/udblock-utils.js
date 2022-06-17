@@ -66,7 +66,7 @@ export default (Blockly) => {
         var topic = Blockly.Python.valueToCode(block, "TOPIC", Blockly.Python.ORDER_ATOMIC);
         var payload = Blockly.Python.valueToCode(block, "MSG", Blockly.Python.ORDER_ATOMIC);
         var qos = Blockly.Python.valueToCode(block, "QOS", Blockly.Python.ORDER_ATOMIC);
-        var code = `mqttClient.publish(${topic}, ${payload}, qos=${qos})\n`;
+        var code = `mqttClient.publish(${topic}, ${payload}.encode('utf-8'), qos=${qos})\n`;
         return code
     }
     Blockly.Python[`${board}_subscribeMQTT`] = function (block) {
@@ -132,6 +132,20 @@ export default (Blockly) => {
         text =  String(text).replaceAll("'","")
         obj = String(obj).replaceAll("'","")
         var code = `${obj}[${text}]`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_jsonDecodeUTF8`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        obj = String(obj).replaceAll("'","")
+        var code = `(${obj}.decode('utf-8'))`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_jsonEncodeUTF8`] = function (block) {
+        Blockly.Python.definitions_['import_json'] = 'import json';
+        var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        obj = String(obj).replaceAll("'","")
+        var code = `(${obj}.encode('utf-8'))`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
     
