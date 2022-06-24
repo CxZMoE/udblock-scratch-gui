@@ -73,9 +73,9 @@ export default (Blockly) => {
     Blockly.Python[`${id}_stopCar`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
-        var code = `myCarPro.move('x', 0, 0, 0);`;
-        code += `myCarPro.move('y', 0, 0, 0);`;
-        code += `myCarPro.move('yaw', 0, 0, 0)\n`;
+        var code = `myCarPro.move('x', 0, 0, 500);`;
+        code += `myCarPro.move('y', 0, 0, 500);`;
+        code += `myCarPro.move('yaw', 0, 0, 500)\n`;
         return code
     };
     Blockly.Python[`${id}_servoTurn`] = function (block) {
