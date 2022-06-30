@@ -16,6 +16,78 @@ export default (Blockly) => {
     // 执行器
     loadActionDefinition(id)
 
+
+    // 小车功能
+    Blockly.Python[`${id}_moveFrontSpdDis`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('y', ${distance}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_moveBackSpdDis`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('y', -${distance}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_moveLeftSpdDis`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('x', -${distance}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_moveRightSpdDis`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('x', ${distance}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+
+    // 小车功能
+    Blockly.Python[`${id}_moveFrontSpd`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('y', ${0}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_moveBackSpd`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('y', -${0}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_moveLeftSpd`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('x', -${0}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_moveRightSpd`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('x', ${0}, ${speed}, ${speed*2})\n`;
+        return code;
+    };
+    Blockly.Python[`${id}_rotateSpd`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.move('yaw', ${distance}, ${180}, ${360})\n`;
+        return code;
+    };
+
     // 小车功能
     Blockly.Python[`${id}_moveFront`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
@@ -73,9 +145,9 @@ export default (Blockly) => {
     Blockly.Python[`${id}_stopCar`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
-        var code = `myCarPro.move('x', 0, 0, 500);`;
-        code += `myCarPro.move('y', 0, 0, 500);`;
-        code += `myCarPro.move('yaw', 0, 0, 500)\n`;
+        var code = `myCarPro.move('x', 0, 0, 900);`;
+        code += `myCarPro.move('y', 0, 0, 900);`;
+        code += `myCarPro.move('yaw', 0, 0, 900)\n`;
         return code
     };
     Blockly.Python[`${id}_servoTurn`] = function (block) {
