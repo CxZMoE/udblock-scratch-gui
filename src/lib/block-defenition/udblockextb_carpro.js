@@ -31,7 +31,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('y', -${distance}, ${speed}, ${speed*2})\n`;
+        var code = `myCarPro.move('y', -${distance}, -${speed}, ${speed*2})\n`;
         return code;
     };
     Blockly.Python[`${id}_moveLeftSpdDis`] = function (block) {
@@ -39,7 +39,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('x', -${distance}, ${speed}, ${speed*2})\n`;
+        var code = `myCarPro.move('x', ${distance}, ${speed}, ${speed*2})\n`;
         return code;
     };
     Blockly.Python[`${id}_moveRightSpdDis`] = function (block) {
@@ -47,7 +47,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('x', ${distance}, ${speed}, ${speed*2})\n`;
+        var code = `myCarPro.move('x', -${distance}, -${speed}, ${speed*2})\n`;
         return code;
     };
 
@@ -63,21 +63,21 @@ export default (Blockly) => {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('y', -${0}, ${speed}, ${speed*2})\n`;
+        var code = `myCarPro.move('y', -${0}, -${speed}, ${speed*2})\n`;
         return code;
     };
     Blockly.Python[`${id}_moveLeftSpd`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('x', -${0}, ${speed}, ${speed*2})\n`;
+        var code = `myCarPro.move('x', ${0}, ${speed}, ${speed*2})\n`;
         return code;
     };
     Blockly.Python[`${id}_moveRightSpd`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('x', ${0}, ${speed}, ${speed*2})\n`;
+        var code = `myCarPro.move('x', -${0}, -${speed}, ${speed*2})\n`;
         return code;
     };
     Blockly.Python[`${id}_rotateSpd`] = function (block) {
@@ -108,7 +108,7 @@ export default (Blockly) => {
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
         var accel = Blockly.Python.valueToCode(block, "ACCEL", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('y', -${distance}, ${speed}, ${accel})\n`;
+        var code = `myCarPro.move('y', -${distance}, -${speed}, ${accel})\n`;
         return code;
     };
     Blockly.Python[`${id}_moveLeft`] = function (block) {
@@ -119,7 +119,7 @@ export default (Blockly) => {
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
         var accel = Blockly.Python.valueToCode(block, "ACCEL", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('x', -${distance}, ${speed}, ${accel})\n`;
+        var code = `myCarPro.move('x', ${distance}, ${speed}, ${accel})\n`;
         return code;
     };
     Blockly.Python[`${id}_moveRight`] = function (block) {
@@ -130,7 +130,7 @@ export default (Blockly) => {
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
         var accel = Blockly.Python.valueToCode(block, "ACCEL", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('x', ${distance}, ${speed}, ${accel})\n`;
+        var code = `myCarPro.move('x', -${distance}, -${speed}, ${accel})\n`;
         return code;
     };
     Blockly.Python[`${id}_rotate`] = function (block) {
