@@ -173,6 +173,22 @@ function loadSensorDefinition(board = "") {
         var code = `udpi_sensor.GetFourChannelInferredSensor(${status})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_readFourChannelInferredSensorOffset`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.GetFourChannelIFSensorOffset()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readFourChannelInferredSensorDirectionRight`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.GetFourChannelIFDirection('r')`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readFourChannelInferredSensorDirectionLeft`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var code = `udpi_sensor.GetFourChannelIFDirection('l')`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    
     Blockly.Python[`${board}_readKeyboardModuleValue`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var code = `udpi_sensor.GetKeyboardModule()`;
