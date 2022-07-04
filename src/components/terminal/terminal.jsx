@@ -16,15 +16,16 @@ var getDateTimeString = function () {
     var date = new Date();
     return `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
 }
-function wsOnMsg(e) {
+function wsOnMsg(e)  {
     console.log('comming  data')
-    var data = decodeURIComponent(escape(window.atob(e.data)));
+    var data = e.data;
     terminalJS.print(`${getDateTimeString()} ${data}`)
     if (data.indexOf("OK") > -1) {
         console.log(`opencom:${terminalJS.com}`)
-        terminalJS.ws.send(`opencom:${terminalJS.com}`)
+        Send(`opencom:${terminalJS.com}`)
     }
 }
+var Send = undefined
 class TerminalComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -37,8 +38,11 @@ class TerminalComponent extends React.Component {
             target: "UDTerminal",
             com: null
         }
+
+        Send = this.Send
     }
 
+    
 
     // 选择串口，并且更新串口的state
     onPortSelect(comName) {
@@ -54,20 +58,23 @@ class TerminalComponent extends React.Component {
         function connect(com) {
             try {
                 var ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
-
                 // 为终端绑定一个Websocket对象
                 terminalJS.ws = ws
 
                 // 在Websocket连接建立的时候执行
                 ws.onopen = (e) => {
                     console.log("Websocket尝试使用串口:", com)
-                    ws.send(`closecom:${com}`)
-                    ws.send(`opencom:${com}`)
+                    Send(`closecom:${com}`)
+                    Send(`opencom:${com}`)
+                    setInterval(() => {
+                        Send(`keep-alive>>`)
+                    }, 2000);
                 }
                 ws.onmessage = wsOnMsg
                 // 在Websocket连接建立失败后执行
                 ws.onerror = function (ws, e) {
                     console.log("建立Websocket连接失败：" + String(e))
+                    
                     // ws.close()
                 }
 
@@ -90,14 +97,23 @@ class TerminalComponent extends React.Component {
         connect(terminalJS.com);
     }
 
+    Send(msg){
+        try{
+            var ws = terminalJS.ws
+            ws.send(msg)
+        }catch(ex){
+            console.log(ex)
+            this.onConnectWS(terminalJS)
+        }
+    }
     // 终端组件成功挂载后发生
     componentDidMount() {
         this.terminalJS = new TerminalJS("UDTerminal-machine")
 
         terminalJS = this.terminalJS
-
+        terminalJS.Send = this.Send
         this.onConnectWS(terminalJS);
-
+        
         document.getElementById(this.state.target).appendChild(terminalJS.html);
 
         // 打开软件后在终端里面显示的内容
@@ -209,7 +225,7 @@ class TerminalComponent extends React.Component {
         // document.addEventListener("keydown", function (e) {
         //     var keyCode = e.keyCode || e.charCode;
         //     if (keyCode == 67 && e.ctrlKey) {
-        //         terminalJS.ws.send(`intcom:${terminalJS.com}`)
+        //         Send(`intcom:${terminalJS.com}`)
         //     }
 
         //     return false;
@@ -241,7 +257,7 @@ class TerminalComponent extends React.Component {
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
                 }
-                terminalJS.ws.send(`opencom:${terminalJS.com}`)
+                Send(`opencom:${terminalJS.com}`)
                 terminalJS.ws.onmessage = wsOnMsg
 
                 terminalJS.ws.onclose = function (e) {
@@ -255,7 +271,7 @@ class TerminalComponent extends React.Component {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
                 }
                 console.log("关闭串口:", terminalJS.com)
-                terminalJS.ws.send(`closecom:${terminalJS.com}`)
+                Send(`closecom:${terminalJS.com}`)
                 e.target.innerText = "打开"
                 terminalJS.ws.onclose = function (e) {
                     console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
@@ -274,17 +290,17 @@ class TerminalComponent extends React.Component {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
                     terminalJS.ws.onopen = (e) => {
-                        // terminalJS.ws.send("closecom:COM3")
-                        // terminalJS.ws.send("opencom:COM3")
+                        // Send("closecom:COM3")
+                        // Send("opencom:COM3")
                     }
                     terminalJS.ws.onmessage = wsOnMsg
                 }
 
-                terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
+                Send(`writecom:${terminalJS.com}:${text}\r\n`)
                 document.getElementById("serialInput").value = ""
             }
             if (e.ctrlKey && e.keyCode == 67){
-                terminalJS.ws.send(`intcom:${terminalJS.com}`)
+                Send(`intcom:${terminalJS.com}`)
             }
         }
         document.getElementById("serialControlBtn").onclick = function (e) {
@@ -294,13 +310,13 @@ class TerminalComponent extends React.Component {
                 terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
                 terminalJS.ws.onopen = (e) => {
-                    // terminalJS.ws.send("closecom:COM3")
-                    // terminalJS.ws.send("opencom:COM3")
+                    // Send("closecom:COM3")
+                    // Send("opencom:COM3")
                 }
                 terminalJS.ws.onmessage = wsOnMsg
             }
 
-            terminalJS.ws.send(`writecom:${terminalJS.com}:${text}\r\n`)
+            Send(`writecom:${terminalJS.com}:${text}\r\n`)
             document.getElementById("serialInput").value = ""
         }
     }

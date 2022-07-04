@@ -776,7 +776,7 @@ class MenuBar extends React.Component {
 
                                                 terminal.print("开始上传代码");
                                                 this.props.onRequestCloseTool()
-                                                terminal.ws.send(`closecom:${terminal.com}`)
+                                                terminal.Send(`closecom:${terminal.com}`)
                                                 fetch(
                                                     'http://127.0.0.1:12888/ampy/upload',
                                                     {
@@ -789,7 +789,7 @@ class MenuBar extends React.Component {
                                                 ).then((res) => res.text()).then((data) => {
                                                     console.log(data)
                                                     // terminal.print("上传代码成功");
-                                                    terminal.ws.send(`opencom:${terminal.com}`)
+                                                    terminal.Send(`opencom:${terminal.com}`)
                                                 })
 
 
@@ -818,7 +818,7 @@ class MenuBar extends React.Component {
                                                         var response = request.responseText;
                                                         console.log(response)
                                                         terminal.print("运行代码成功");
-                                                        terminal.ws.send(`opencom:${terminal.com}`)
+                                                        terminal.Send(`opencom:${terminal.com}`)
                                                     }
                                                 }
 
@@ -835,9 +835,10 @@ class MenuBar extends React.Component {
                                                 var terminal = this.props.terminal
 
 
-                                                terminal.ws.send(`closecom:${terminal.com}`)
+                                                terminal.Send(`closecom:${terminal.com}`)
+                                                console.log()
                                                 if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
-                                                    terminal.ws.send(`firmware:${terminal.com}`)
+                                                    terminal.Send(`firmware:${terminal.com}`)
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("开始更新主板固件");
                                                 } else {
@@ -857,9 +858,9 @@ class MenuBar extends React.Component {
                                                 var terminal = this.props.terminal
 
 
-                                                terminal.ws.send(`closecom:${terminal.com}`)
+                                                terminal.Send(`closecom:${terminal.com}`)
                                                 if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
-                                                    terminal.ws.send(`factory:${terminal.com}`)
+                                                    terminal.Send(`factory:${terminal.com}`)
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("开始恢复出厂设置");
                                                 } else {
@@ -878,10 +879,10 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
-                                                terminal.ws.send(`closecom:${terminal.com}`)
+                                                terminal.Send(`closecom:${terminal.com}`)
 
 
-                                                terminal.ws.send(`carfirmware:${terminal.com}`)
+                                                terminal.Send(`carfirmware:${terminal.com}`)
                                                 this.props.onRequestCloseTool()
                                                 this.props.terminal.print("开始更新小车固件");
                                             }}>
@@ -903,7 +904,7 @@ class MenuBar extends React.Component {
                                                         terminal.print("安装驱动失败");
                                                     }
 
-                                                    terminal.ws.send(`opencom:${terminal.com}`)
+                                                    terminal.Send(`opencom:${terminal.com}`)
                                                 })
 
                                                 this.props.onRequestCloseTool()

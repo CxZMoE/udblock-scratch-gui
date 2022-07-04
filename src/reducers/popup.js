@@ -21,7 +21,7 @@ const makeShowPrompt = function(value){
     }
 }
 const makeHidePrompt = function(value){
-    console.log("隐藏弹窗")
+    //console.log("隐藏弹窗")
     //console.log(value)
     return {
         type: "HIDE",

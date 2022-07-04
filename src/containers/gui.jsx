@@ -96,7 +96,7 @@ class GUI extends React.Component {
                 var version = res.text()
                 return version
             }).then((version) => {
-                console.log("当前版本：" + version)
+                //console.log("当前版本：" + version)
                 currentVersion = version
                 networkVersion = currentVersion
                 // 获取网络版本
