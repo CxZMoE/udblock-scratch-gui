@@ -327,7 +327,7 @@ export default (board = "") => {
                 }
                 output.push(linePixel)
             }
-            //console.log(output)
+            console.log(output)
 
             var output2 = []
             // R

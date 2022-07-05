@@ -3,6 +3,17 @@
  * @向前移动X步
  */
 
+function GetFirstFieldNameByIndex(block, y=0,x=0){
+    console.log(block)
+    var a = ''
+    try{
+        a = block.inputList[x].fieldRow[y].text_
+    }catch(ex){
+        console.log(a)
+    }
+    return a
+}
+
 
 export default function (Blockly) {
 
@@ -729,28 +740,30 @@ export default function (Blockly) {
 
     Blockly.Python['data_variable'] = function (block) {
         // Variable getter.
-        var code = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
-            Blockly.VARIABLE_CATEGORY_NAME);
-        return [code, Blockly.Python.ORDER_ATOMIC];
+        // var code = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
+        // console.log(block)
+        
+        return [GetFirstFieldNameByIndex(block), Blockly.Python.ORDER_ATOMIC];
     };
 
     Blockly.Python['data_setvariableto'] = function (block) {
         // Variable setter.
         var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
             Blockly.Python.ORDER_NONE).replaceAll("'", "");
-        var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
-            Blockly.VARIABLE_CATEGORY_NAME);
+        // var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
 
-        return varName + ' = ' + argument0 + '\n';
+        return GetFirstFieldNameByIndex(block, 1) + ' = ' + argument0 + '\n';
     };
     Blockly.Python['data_changevariableby'] = function (block) {
         // Variable setter.
         var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
             Blockly.Python.ORDER_NONE).replaceAll("'", "");
-        var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
-            Blockly.VARIABLE_CATEGORY_NAME);
+        // var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
 
-        return varName + ' += ' + argument0 + '\n';
+        return GetFirstFieldNameByIndex(block, 1) + ' += ' + argument0 + '\n';
     };
     Blockly.Python['data_hidevariable'] = function (block) {
         // Variable setter.
@@ -758,9 +771,9 @@ export default function (Blockly) {
     };
     Blockly.Python['data_showvariable'] = function (block) {
         // Variable setter.
-        var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
-            Blockly.VARIABLE_CATEGORY_NAME);
-        return `global ${varName}\n`;
+        // var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
+        return `global ${GetFirstFieldNameByIndex(block, 1)}\n`;
     };
 
     Blockly.Python['data_listcontents'] = function(block){
@@ -768,31 +781,34 @@ export default function (Blockly) {
         if (block.inputList.length == 0){
             return ['', Blockly.Python.ORDER_ATOMIC]
         }
-        console.log(block.inputList[0].fieldRow[0].text_)
-        return [block.inputList[0].fieldRow[0].text_, Blockly.Python.ORDER_ATOMIC]
+        // console.log(block.inputList[0].fieldRow[0].text_)
+        return [GetFirstFieldNameByIndex(block, 0), Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_addtolist'] = function(block){
-        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
-            Blockly.VARIABLE_CATEGORY_NAME);
+        // var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
-        return `${list}.append(${item})\n`
+        return `${GetFirstFieldNameByIndex(block, 1, 1)}.append(${item})\n`
     }
     Blockly.Python['data_deleteoflist'] = function(block){
         var index = parseInt(Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)) || 1;
         if (index >= 1) index -= 1;
         else index = 0;
 
-        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
-            Blockly.VARIABLE_CATEGORY_NAME);
+        // var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
         //return `${list} = ${list}[:${index}].append(${list}[${index+1}:])`
-        return `del ${list}[${index}]\n`
+        return `del ${GetFirstFieldNameByIndex(block, 1)}[${index}]\n`
     }
 
     Blockly.Python['data_deletealloflist'] = function(block){
-        var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
-            Blockly.VARIABLE_CATEGORY_NAME);
-        return `${list} = []\n`
         
+        // var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+        //     Blockly.VARIABLE_CATEGORY_NAME);
+        var list = GetFirstFieldNameByIndex(block, 1)
+        Blockly.Python.definitions_[`_define_list_${list}`] = `${list} = []`;
+        // return `${GetFirstFieldNameByIndex(block, 1)} = []\n`
+        return ''
     }
     Blockly.Python['data_insertatlist'] = function(block){
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
@@ -800,7 +816,7 @@ export default function (Blockly) {
 
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
-        return `${list}.insert(0, ${item})\n`
+        return `${GetFirstFieldNameByIndex(block, 1)}.insert(0, ${item})\n`
 
     }
     Blockly.Python['data_replaceitemoflist'] = function(block){
@@ -814,14 +830,14 @@ export default function (Blockly) {
 
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
-        return `${list}[${index}] = ${item}\n`
+        return `${GetFirstFieldNameByIndex(block, 1)}[${index}] = ${item}\n`
     }
     Blockly.Python['data_itemoflist'] = function(block){
         var index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
 
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
             Blockly.VARIABLE_CATEGORY_NAME);
-        return [`${list}[${index}]`,Blockly.Python.ORDER_ATOMIC]
+        return [`${GetFirstFieldNameByIndex(block, 0)}[${index}]`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_itemnumoflist'] = function(block){
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
@@ -829,12 +845,12 @@ export default function (Blockly) {
 
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
 
-        return [`${list}.index${item})`,Blockly.Python.ORDER_ATOMIC]
+        return [`${GetFirstFieldNameByIndex(block, 0)}.index${item})`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_lengthoflist'] = function(block){
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
             Blockly.VARIABLE_CATEGORY_NAME);
-        return [`len(${list})`, Blockly.Python.ORDER_ATOMIC]
+        return [`len(${GetFirstFieldNameByIndex(block, 0)})`, Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_listcontainsitem'] = function(block){
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
@@ -842,7 +858,7 @@ export default function (Blockly) {
 
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
             Blockly.VARIABLE_CATEGORY_NAME);
-        return [`(${list}.count(${item}) >  0)`,Blockly.Python.ORDER_ATOMIC]
+        return [`(${GetFirstFieldNameByIndex(block, 0)}.count(${item}) >  0)`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_itemnumoflist'] = function(block){
         var item = Blockly.Python.valueToCode(block, "ITEM", Blockly.Python.ORDER_ATOMIC).replaceAll("'","");;
@@ -850,7 +866,7 @@ export default function (Blockly) {
 
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
             Blockly.VARIABLE_CATEGORY_NAME);
-        return [`${list}.count(${item})`,Blockly.Python.ORDER_ATOMIC]
+        return [`${GetFirstFieldNameByIndex(block, 0)}.count(${item})`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_showlist'] = function(block){
         return ''
@@ -1508,7 +1524,6 @@ export default function (Blockly) {
     }
 
     Blockly.Python['procedures_definition'] = function (block) {
-
         var code = ''
         if (block.childBlocks_.length > 1) {
             console.log(Blockly.Xml.blockToDom(block.childBlocks_[1]))
@@ -1522,7 +1537,7 @@ export default function (Blockly) {
         code = "  " + code.replaceAll("\n", "\n  ")
         Blockly.Python.provideFunction_(
             String(block.childBlocks_[0].procCode_).split(" ")[0],
-            ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(' + block.childBlocks_[0].displayNames_.join(",") + '):',
+            ['def ' + String(block.childBlocks_[0].procCode_).split(" ")[0] + '(' + block.childBlocks_[0].displayNames_.join(",") + '):',
                 code
             ]);
         return null;
