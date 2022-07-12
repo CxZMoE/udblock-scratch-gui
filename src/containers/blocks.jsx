@@ -453,31 +453,34 @@ class Blocks extends React.Component {
         Blockly.recordSoundCallback = this.handleOpenSoundRecorder;
 
 
-        
+
         // 初始化Python生成器
         initPythonGenerator();
         // 初始化Arduino生成器
         initArduinoGenerator();
         // 初始化默认方块
-        initDefaultBlocks(Blockly);
-        initUDPiBlocks(Blockly);
-        initUDPiPlusBlocks(Blockly);
-        initUDPiV2Blocks(Blockly);
-        initUDPiPlusV2Blocks(Blockly);
-        initUDBlockEXTBMFBlocks(Blockly);
-        initUDBlockEXTBSMBlocks(Blockly);
-        initUDBlockEXTBMFV2Blocks(Blockly);
-        initUDBlockEXTBSMV2Blocks(Blockly);
-        initUDBlockEXTBIOBlocks(Blockly);
-        initUDBlockCarBlocks(Blockly);
-        initUDBlockCarProBlocks(Blockly);
-        initUDBlockCar2DBlocks(Blockly);
-        initUDBlockCamerabBlocks(Blockly);
-        initUDBlockIOTBlocks(Blockly);
-        initUDBlockMicrobitBlocks(Blockly);
-        initUDBlockMQTTBlocks(Blockly)
-        initUDBlockUtils(Blockly);
-        initUDPiPlusMiniBlocks(Blockly);
+        {
+            initDefaultBlocks(Blockly); // 默认Blockly方块
+            initUDPiBlocks(Blockly);            // UDPi
+            initUDPiPlusBlocks(Blockly);        // UDPi Plus
+            initUDPiV2Blocks(Blockly);          // UDPi V2
+            initUDPiPlusV2Blocks(Blockly);      // UDPi Plus V2
+            initUDBlockEXTBMFBlocks(Blockly);   // 多功能拓展板
+            initUDBlockEXTBSMBlocks(Blockly);   // 电机拓展板
+            initUDBlockEXTBMFV2Blocks(Blockly); // 多功能拓展板V2
+            initUDBlockEXTBSMV2Blocks(Blockly); // 电机拓展板V2
+            initUDBlockEXTBIOBlocks(Blockly);   // IO拓展板
+            initUDBlockCarBlocks(Blockly);      // 四驱小车拓展板[旧]
+            initUDBlockCarProBlocks(Blockly);   // 四驱小车拓展板Pro
+            initUDBlockCar2DBlocks(Blockly);    // 双驱小车拓展板
+            initUDBlockCamerabBlocks(Blockly);  // 摄像头模组
+            initUDBlockIOTBlocks(Blockly);      // 智能语音拓展板
+            initUDBlockMicrobitBlocks(Blockly); // Microbit适配
+            initUDBlockMQTTBlocks(Blockly)      // MQTT
+            initUDBlockUtils(Blockly);          // 工具类
+            initUDPiPlusMiniBlocks(Blockly);    // UDPi核心板
+        }
+
         // 回调函数
         Blockly.Python.Callbacks = {}           // 删除方块回调
         Blockly.Python.hasLoop = false          // Microbit按钮时间
@@ -577,7 +580,7 @@ class Blocks extends React.Component {
 
         // 添加拓展
         // this.props.vm.extensionManager.loadExtensionURL('udblockEXTBIOT');
-        
+
         this.requestToolboxUpdate()
     }
     shouldComponentUpdate(nextProps, nextState) {
