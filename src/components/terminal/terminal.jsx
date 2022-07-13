@@ -20,10 +20,10 @@ function wsOnMsg(e)  {
     console.log('comming  data')
     var data = e.data;
     terminalJS.print(`${getDateTimeString()} ${data}`)
-    if (data.indexOf("OK") > -1) {
-        console.log(`opencom:${terminalJS.com}`)
-        Send(`opencom:${terminalJS.com}`)
-    }
+    // if (data.indexOf("OK") > -1) {
+    //     console.log(`opencom:${terminalJS.com}`)
+    //     Send(`opencom:${terminalJS.com}`)
+    // }
 }
 var Send = undefined
 class TerminalComponent extends React.Component {
