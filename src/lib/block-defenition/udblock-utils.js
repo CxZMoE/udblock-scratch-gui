@@ -188,7 +188,7 @@ export default (Blockly) => {
         var thread_callback_name = `${thread_name}_callback`
         codeInit += 'def ' + thread_callback_name + '():\n'
         codeInit += statements
-        Blockly.Python.definitions_[`mqtt_bind_callback`] = codeInit;
+        Blockly.Python.definitions_[thread_name] = codeInit;
         var code = `_thread.start_new_thread(${thread_callback_name}, ())\n`
         return code
     }
