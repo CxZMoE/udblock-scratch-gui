@@ -282,43 +282,43 @@ class TerminalComponent extends React.Component {
 
 
         }
-        document.getElementById("serialInput").onkeydown = function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault()
-                var text = document.getElementById("serialInput").value;
-                if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                    terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
+        // document.getElementById("serialInput").onkeydown = function (e) {
+        //     if (e.keyCode == 13) {
+        //         e.preventDefault()
+        //         var text = document.getElementById("serialInput").value;
+        //         if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
+        //             terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
-                    terminalJS.ws.onopen = (e) => {
-                        // Send("closecom:COM3")
-                        // Send("opencom:COM3")
-                    }
-                    terminalJS.ws.onmessage = wsOnMsg
-                }
+        //             terminalJS.ws.onopen = (e) => {
+        //                 // Send("closecom:COM3")
+        //                 // Send("opencom:COM3")
+        //             }
+        //             terminalJS.ws.onmessage = wsOnMsg
+        //         }
 
-                Send(`writecom:${terminalJS.com}:${text}\r\n`)
-                document.getElementById("serialInput").value = ""
-            }
-            if (e.ctrlKey && e.keyCode == 67){
-                Send(`intcom:${terminalJS.com}`)
-            }
-        }
-        document.getElementById("serialControlBtn").onclick = function (e) {
-            e.preventDefault()
-            var text = document.getElementById("serialInput").value;
-            if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
+        //         Send(`writecom:${terminalJS.com}:${text}\r\n`)
+        //         document.getElementById("serialInput").value = ""
+        //     }
+        //     if (e.ctrlKey && e.keyCode == 67){
+        //         Send(`intcom:${terminalJS.com}`)
+        //     }
+        // }
+        // document.getElementById("serialControlBtn").onclick = function (e) {
+        //     e.preventDefault()
+        //     var text = document.getElementById("serialInput").value;
+        //     if (terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
+        //         terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
 
-                terminalJS.ws.onopen = (e) => {
-                    // Send("closecom:COM3")
-                    // Send("opencom:COM3")
-                }
-                terminalJS.ws.onmessage = wsOnMsg
-            }
+        //         terminalJS.ws.onopen = (e) => {
+        //             // Send("closecom:COM3")
+        //             // Send("opencom:COM3")
+        //         }
+        //         terminalJS.ws.onmessage = wsOnMsg
+        //     }
 
-            Send(`writecom:${terminalJS.com}:${text}\r\n`)
-            document.getElementById("serialInput").value = ""
-        }
+        //     Send(`writecom:${terminalJS.com}:${text}\r\n`)
+        //     document.getElementById("serialInput").value = ""
+        // }
     }
 
 

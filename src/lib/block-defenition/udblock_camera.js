@@ -92,6 +92,20 @@ function loadCamaraDefinition(board=""){
 
         return code;
     };
+    Blockly.Python[`${board}_doColorDectectionMannual`] = function (block) {
+        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
+        
+        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
+        var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
+        var code = ''
+        if (action == "START"){
+            code =`myCamara.start_color(${color})\n`;
+        }else if (action == "SWITCH"){
+            code = `myCamara.switch_color(${color})\n`;
+        }
+
+        return code;
+    };
     Blockly.Python[`${board}_doCross`] = function (block) {
         Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
         var code = ''
