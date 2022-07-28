@@ -119,8 +119,9 @@ class TerminalComponent extends React.Component {
         // 打开软件后在终端里面显示的内容
         terminalJS.print("欢迎使用UDBlock智慧儿童编程！");
         terminalJS.print("请在顶部菜单栏选择要连接的设备串口并点击“打开”");
-        terminalJS.print("如果插上主板后没有听见滴的一声，请按下重启主板按钮后再试。");
-        terminalJS.print("如果遇到上传代码卡住的情况，请按下重启主板按钮后再试。");
+        terminalJS.print("如果插上主板后没有听见滴的一声，请按下重启主板按钮后再试");
+        terminalJS.print("★如果遇到上传代码卡住的情况");
+        terminalJS.print("★请按住B键重启主板按钮，听到两声嘀后，重新拔插主板再试")
         terminalJS.setTextColor('lightgreen');
 
         this.props.onCreateTerminal(terminalJS);
