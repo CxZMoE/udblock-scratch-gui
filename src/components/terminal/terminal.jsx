@@ -19,7 +19,7 @@ var getDateTimeString = function () {
 function wsOnMsg(e)  {
     console.log('comming  data')
     var data = e.data;
-    terminalJS.print(`${getDateTimeString()} ${data}`)
+    terminalJS.print(`$ ${data}`)
     // if (data.indexOf("OK") > -1) {
     //     console.log(`opencom:${terminalJS.com}`)
     //     Send(`opencom:${terminalJS.com}`)

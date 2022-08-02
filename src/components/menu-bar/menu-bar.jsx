@@ -773,10 +773,9 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-
-                                                terminal.print("开始上传代码");
                                                 this.props.onRequestCloseTool()
                                                 terminal.Send(`closecom:${terminal.com}`)
+                                                document.getElementById("serialOpenBtn").innerText = "打开"
                                                 fetch(
                                                     'http://127.0.0.1:12888/ampy/upload',
                                                     {
@@ -788,12 +787,10 @@ class MenuBar extends React.Component {
                                                     }
                                                 ).then((res) => res.text()).then((data) => {
                                                     console.log(data)
-                                                    // terminal.print("上传代码成功");
                                                     terminal.Send(`opencom:${terminal.com}`)
+                                                    document.getElementById("serialOpenBtn").innerText = "关闭"
                                                 })
-
-
-
+                                                
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="上传代码"
@@ -806,7 +803,6 @@ class MenuBar extends React.Component {
 
 
                                                 this.props.onRequestCloseTool()
-                                                terminal.print("开始热加载");
                                                 var request = new XMLHttpRequest();
                                                 request.open("POST", "http://127.0.0.1:12888/ampy/run", true);
                                                 request.send(JSON.stringify({
@@ -817,8 +813,6 @@ class MenuBar extends React.Component {
                                                     if (request.readyState == 4 && request.status == 200) {
                                                         var response = request.responseText;
                                                         console.log(response)
-                                                        terminal.print("运行代码成功");
-                                                        terminal.Send(`opencom:${terminal.com}`)
                                                     }
                                                 }
 
@@ -833,12 +827,12 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-
-
-                                                terminal.Send(`closecom:${terminal.com}`)
                                                 console.log()
                                                 if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
-                                                    terminal.Send(`firmware:${terminal.com}`)
+                                                    terminal.Send(`closecom:${terminal.com}`)
+                                                    fetch(`http://127.0.0.1:12888/ampy/firmware?com=${terminal.com}`).then((res)=>res.text()).then(data=>{
+                                                        terminal.Send(`opencom:${terminal.com}`)
+                                                    })
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("开始更新主板固件");
                                                 } else {
@@ -856,11 +850,11 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-
-
-                                                terminal.Send(`closecom:${terminal.com}`)
                                                 if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
-                                                    terminal.Send(`factory:${terminal.com}`)
+                                                    terminal.Send(`closecom:${terminal.com}`)
+                                                    fetch(`http://127.0.0.1:12888/ampy/factory?com=${terminal.com}`).then((res)=>res.text()).then(data=>{
+                                                        terminal.Send(`opencom:${terminal.com}`)
+                                                    })
                                                     this.props.onRequestCloseTool()
                                                     this.props.terminal.print("开始恢复出厂设置");
                                                 } else {
