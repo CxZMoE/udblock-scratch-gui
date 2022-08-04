@@ -289,4 +289,18 @@ export default (Blockly) => {
         var code = `myCarPro.servoSpd = ${speed}\n`;
         return code
     };
+    Blockly.Python[`${id}_startServer`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var ssid = Blockly.Python.valueToCode(block, "SSID", Blockly.Python.ORDER_ATOMIC);
+        var psk = Blockly.Python.valueToCode(block, "PSK", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.startServer(${ssid},${psk})\n`;
+        return code
+    };
+    Blockly.Python[`${id}_stopServer`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var code = `myCarPro.stopServer()\n`;
+        return code
+    };
 }
