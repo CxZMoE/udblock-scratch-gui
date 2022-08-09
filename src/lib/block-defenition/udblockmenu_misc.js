@@ -2,6 +2,9 @@ function loadMiscMenu(board=""){
     Blockly.Python[`${board}_menu_RJMenu`] = function (block) {
         return [block.getFieldValue("RJMenu"), Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_menu_RJMenuDup`] = function (block) {
+        return [block.getFieldValue("RJMenuDup"), Blockly.Python.ORDER_ATOMIC]
+    }
     Blockly.Python[`${board}_menu_dblRelayPinYellow`] = function (block) {
         return [block.getFieldValue("dblRelayPinYellow"), Blockly.Python.ORDER_ATOMIC]
     }
