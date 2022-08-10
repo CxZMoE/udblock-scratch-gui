@@ -293,7 +293,9 @@ export default (board = "") => {
         var direction = Blockly.Python.valueToCode(block, "DIRECTION", Blockly.Python.ORDER_ATOMIC)
         var period = Blockly.Python.valueToCode(block, "PERIOD", Blockly.Python.ORDER_ATOMIC)
         var rounds = Blockly.Python.valueToCode(block, "ROUNDS", Blockly.Python.ORDER_ATOMIC)
-
+        if (parseInt(rounds) == 0){
+            rounds = "0.001"
+        }
         return `myStepper${port.split(',')[0]}.Turn(${direction}, ${period}, ${rounds})\n`;
     }
 
