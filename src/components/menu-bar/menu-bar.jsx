@@ -785,7 +785,7 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 console.log()
-                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
+                                                if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
                                                     //terminal.Send(`closecom:${terminal.com}`)
                                                     terminal.Send(`opencom:${terminal.com}`)
                                                     fetch(`http://127.0.0.1:12888/ampy/firmware?com=${terminal.com}`).then((res) => res.text()).then(data => {
@@ -808,7 +808,7 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-                                                if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
+                                                if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
                                                     terminal.Send(`opencom:${terminal.com}`)
                                                     fetch(`http://127.0.0.1:12888/ampy/factory?com=${terminal.com}`).then((res) => res.text()).then(data => {
                                                         terminal.Send(`opencom:${terminal.com}`)
@@ -998,29 +998,7 @@ class MenuBar extends React.Component {
                         />
                         软件教程PDF
                     </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        aria-label={"论坛"}
-                        className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onClick={() => {
-                            fetch('http://127.0.0.1:12888/open', {
-                                method: 'post', headers: {
-                                    'Accept': '*/*',
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    url: 'http://forum.udrobot.net/'
-                                })
-                            }
-                            )
-                        }}
-                    >
-                        <img
-                            className={styles.helpIcon}
-                            src={helpIcon}
-                        />
-                        论坛
-                    </div>
+                    
                     <Divider className={classNames(styles.divider)} />
                     {this.props.canEditTitle ? (
                         <div className={classNames(styles.menuBarItem, styles.growable)}>
