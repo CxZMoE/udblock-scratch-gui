@@ -273,7 +273,7 @@ class MenuBar extends React.Component {
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
-        document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
+        // document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
         document.getElementById("editorShow-btn").addEventListener("click", this.handleEditorHide)
 
         this.props.editorToggleCode();
@@ -998,7 +998,29 @@ class MenuBar extends React.Component {
                         />
                         软件教程PDF
                     </div>
-                    
+                    <Divider className={classNames(styles.divider)} />
+                    <div
+                        aria-label={"论坛"}
+                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                        onClick={() => {
+                            fetch('http://127.0.0.1:12888/open', {
+                                method: 'post', headers: {
+                                    'Accept': '*/*',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    url: 'http://forum.udrobot.net/'
+                                })
+                            }
+                            )
+                        }}
+                    >
+                        <img
+                            className={styles.helpIcon}
+                            src={helpIcon}
+                        />
+                        论坛
+                    </div>
                     <Divider className={classNames(styles.divider)} />
                     {this.props.canEditTitle ? (
                         <div className={classNames(styles.menuBarItem, styles.growable)}>
@@ -1093,7 +1115,7 @@ class MenuBar extends React.Component {
                         </MenuSection>
                     ) : ([])
                 }
-                {modeButton}
+                {/* {modeButton} */}
                 {showHideButton}
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
