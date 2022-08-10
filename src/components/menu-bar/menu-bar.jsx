@@ -103,7 +103,7 @@ import {
     editorToggleHide,
 } from '../../reducers/editorhide'
 
-import {projectTitleInitialState} from '../../reducers/project-title';
+import { projectTitleInitialState } from '../../reducers/project-title';
 
 const ariaMessages = defineMessages({
     language: {
@@ -113,7 +113,7 @@ const ariaMessages = defineMessages({
     },
     tutorials: {
         id: 'gui.menuBar.tutorialsLibrary',
-        defaultMessage: 'Tutorials',
+        defaultMessage: 'Software Tutorials PDF',
         description: 'accessibility text for the tutorials button'
     }
 });
@@ -277,56 +277,13 @@ class MenuBar extends React.Component {
         document.getElementById("editorShow-btn").addEventListener("click", this.handleEditorHide)
 
         this.props.editorToggleCode();
-
-        // 检测版本
-        // fetch("https://update.udrobot.net/version_control/version.json", {
-        //     method: "GET"
-        // })
-        //     .then(res => res.json())
-        //     .then(
-
-        //         (versionInfo) => {
-        //             var versionCurrent = "0.6.5"
-        //             if (versionCurrent != versionInfo.version) {
-        //                 var updateConfirm = confirm(`发现新版本${versionInfo.version}是否更新？`)
-        //                 if (updateConfirm) {
-        //                     var ok = -1
-        //                     fetch("http://127.0.0.1:12888/doUpdate?update=" + versionInfo.filename)
-        //                         .then(res => res.body())
-        //                         .then((status) => {
-        //                             if (status == "ok") {
-        //                                 terminal.print("下载更新成功")
-        //                             } else {
-        //                                 terminal.print("下载更新失败")
-        //                             }
-        //                         })
-        //                     alert("正在下载更新，请耐心等待。")
-        //                     var terminal = this.props.terminal
-        //                     var downloading = "正在下载更新..."
-        //                     terminal.print(downloading)
-
-        //                 }
-        //             }
-        //         }
-        //     )
-        // var request = new XMLHttpRequest();
-        // request.open("GET", "https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version.json", true);
-        // request.send()
-        // request.onreadystatechange = function (e) {
-        //     if (request.readyState == 4 && request.status == 200) {
-        //         var response = request.responseText;
-        //         var versionInfo = JSON.parse(response)
-        //         console.log(response)
-        //         confirm(`发现新版本${versionInfo.version}是否更新？`)
-        //     }
-        // }
-        document.body.addEventListener('keydown',(e)=>{
-            if (e.ctrlKey && e.key === 's'){
+        document.body.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') {
                 this.props.vm.saveProjectSb3().then(content => {
-                    downloadBlob(this.props.projectTitle+'.sb3', content);
+                    downloadBlob(this.props.projectTitle + '.sb3', content);
                 });
             }
-            
+
         })
 
     }
@@ -790,7 +747,7 @@ class MenuBar extends React.Component {
                                                     terminal.Send(`opencom:${terminal.com}`)
                                                     document.getElementById("serialOpenBtn").innerText = "关闭"
                                                 })
-                                                
+
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="上传代码"
@@ -829,8 +786,9 @@ class MenuBar extends React.Component {
                                                 var terminal = this.props.terminal
                                                 console.log()
                                                 if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
-                                                    terminal.Send(`closecom:${terminal.com}`)
-                                                    fetch(`http://127.0.0.1:12888/ampy/firmware?com=${terminal.com}`).then((res)=>res.text()).then(data=>{
+                                                    //terminal.Send(`closecom:${terminal.com}`)
+                                                    terminal.Send(`opencom:${terminal.com}`)
+                                                    fetch(`http://127.0.0.1:12888/ampy/firmware?com=${terminal.com}`).then((res) => res.text()).then(data => {
                                                         terminal.Send(`opencom:${terminal.com}`)
                                                     })
                                                     this.props.onRequestCloseTool()
@@ -851,8 +809,8 @@ class MenuBar extends React.Component {
                                                 console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 if (confirm("请按住主板的A键同时按主板背面的白色按钮，然后松开白色按钮再松开A键进入下载模式！")) {
-                                                    terminal.Send(`closecom:${terminal.com}`)
-                                                    fetch(`http://127.0.0.1:12888/ampy/factory?com=${terminal.com}`).then((res)=>res.text()).then(data=>{
+                                                    terminal.Send(`opencom:${terminal.com}`)
+                                                    fetch(`http://127.0.0.1:12888/ampy/factory?com=${terminal.com}`).then((res) => res.text()).then(data => {
                                                         terminal.Send(`opencom:${terminal.com}`)
                                                     })
                                                     this.props.onRequestCloseTool()
@@ -910,6 +868,7 @@ class MenuBar extends React.Component {
                                                     id="gui.menuBar.driverInstallation"
                                                 />
                                             </MenuItem>
+
                                         </MenuSection>
                                     </MenuBarMenu>
                                 </div>
@@ -927,7 +886,7 @@ class MenuBar extends React.Component {
                                                 id="gui.menuBar.system"
                                             />
                                         </div>
-                                        
+
                                         <MenuBarMenu
                                             className={classNames(styles.menuBarMenu)}
                                             open={this.props.systemMenuOpen}
@@ -968,9 +927,9 @@ class MenuBar extends React.Component {
                                                         console.log(`最新固件版本: ${configVersion}`)
                                                         terminal.print(`当前固件版本: ${boardVersion}`)
                                                         terminal.print(`最新固件版本: ${configVersion}`)
-                                                        if (String(boardVersion).indexOf(String(configVersion)) < 0){
+                                                        if (String(boardVersion).indexOf(String(configVersion)) < 0) {
                                                             terminal.print("主板固件需要更新！")
-                                                        }else{
+                                                        } else {
                                                             terminal.print("主板固件已是最新！")
                                                         }
                                                     })
@@ -1022,10 +981,26 @@ class MenuBar extends React.Component {
 
 
                     </div>
-
                     <Divider className={classNames(styles.divider)} />
                     <div
-                        aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
+                        aria-label={"软件教程PDF"}
+                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                        onClick={() => {
+                            console.log(this.props.pycode)
+                            console.log()
+                            fetch(`http://127.0.0.1:9098/doc`).then((res) => res.text()).then(data => {})
+
+                        }}
+                    >
+                        <img
+                            className={styles.helpIcon}
+                            src={helpIcon}
+                        />
+                        软件教程PDF
+                    </div>
+                    <Divider className={classNames(styles.divider)} />
+                    <div
+                        aria-label={"论坛"}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={() => {
                             fetch('http://127.0.0.1:12888/open', {
@@ -1044,7 +1019,7 @@ class MenuBar extends React.Component {
                             className={styles.helpIcon}
                             src={helpIcon}
                         />
-                        <FormattedMessage {...ariaMessages.tutorials} />
+                        论坛
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     {this.props.canEditTitle ? (
@@ -1121,6 +1096,8 @@ class MenuBar extends React.Component {
                     </div>
                     {/* 在这里添加菜单项目 */}
                 </div>
+
+
                 {/* {updateButton} */}
                 {
                     (this.props.showPrompt) ? (

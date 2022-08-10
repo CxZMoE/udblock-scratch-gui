@@ -59,6 +59,8 @@ import udpiplusIconURLV2 from './udblock/udpi plus开发板v2.png';
 import udpiExtbMFIconURLV2 from './udblock/udblock 多功能拓展版v2.png';
 import udpiExtbSMIconURLV2 from './udblock/udblock 电机拓展版v2.png';
 import udpiMiniIconURL from './udblock/ESP32核心板.png';
+import udpiCarProIconURL from './udblock/四驱小车pro.png'
+
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
 import udpiInsetIconURL from './zkgz.svg';
 
@@ -340,14 +342,10 @@ export default [
         name: 'UDBlock 小车拓展板Pro',
         extensionId: 'udblockEXTBCarPro',
         collaborator: 'UDRobot',
-        iconURL: udpiExtbCarIconURL,
+        iconURL: udpiCarProIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "四驱小车拓展版升级版，集成多种精密传感器，可以精确的控制移动的距离和速度。"
         ),
         featured: true,
         disabled: false,
