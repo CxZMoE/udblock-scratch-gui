@@ -33,7 +33,7 @@ export default (board = "") => {
     Blockly.Python[`${board}_digitalDisplayShow`] = function (block) {
         Blockly.Python.definitions_['import_driver_fdd'] = 'from drivers.FourDigitDisplay import FourDigitDisplay';
         Blockly.Python.definitions_['use_tm1650'] = 'fdd = FourDigitDisplay(udpi_i2c)';
-        //console.log("arduino:"+Blockly.Arduino.valueToCode(block, 'NUM', Blockly.Python.ORDER_ATOMIC))
+        //// console.log("arduino:"+Blockly.Arduino.valueToCode(block, 'NUM', Blockly.Python.ORDER_ATOMIC))
         var num = Blockly.Python.valueToCode(block, 'NUM', Blockly.Python.ORDER_ATOMIC)
         return `fdd.shownum(${num})\n`;
     }
@@ -125,11 +125,11 @@ export default (board = "") => {
         Blockly.Python.definitions_['import_driver_relay'] = 'from drivers.relay import Relay';
         var channel = Blockly.Python.valueToCode(block, "CH", Blockly.Python.ORDER_ATOMIC);
         if (channel == '') { channel = 0 }
-        console.log("channel: " + String(channel))
+        // console.log("channel: " + String(channel))
         var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
         if (relay_pin >= 34 && relay_pin <= 39) {
 
-            console.log(block)
+            // console.log(block)
             for (var i in extb_mf.RJ11) {
                 for (var j in extb_mf.RJ11[i].value) {
                     if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
@@ -151,7 +151,7 @@ export default (board = "") => {
         var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
         if (relay_pin >= 34 && relay_pin <= 39) {
 
-            console.log(block)
+            // console.log(block)
             for (var i in extb_mf.RJ11) {
                 for (var j in extb_mf.RJ11[i].value) {
                     if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
@@ -172,7 +172,7 @@ export default (board = "") => {
         var relay_pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",")[channel];
         if (relay_pin >= 34 && relay_pin <= 39) {
 
-            console.log(block)
+            // console.log(block)
             for (var i in extb_mf.RJ11) {
                 for (var j in extb_mf.RJ11[i].value) {
                     if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
@@ -275,7 +275,7 @@ export default (board = "") => {
         Blockly.Python.definitions_[`servo_${port.split(',')[0]}`] = `myServo${port.split(',')[0]} = Servo(${port})`;
 
         var angle = Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC)
-        console.log(typeof (angle))
+        // console.log(typeof (angle))
         return `myServo${port.split(',')[0]}.turn(abs(${angle}))\n`;
     }
 
@@ -310,8 +310,8 @@ export default (board = "") => {
         var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
 
         var getPixelArray = function (box) {
-            //console.log(box.length)
-            console.log(box)
+            //// console.log(box.length)
+            // console.log(box)
             box = String(box)
             box = box.substring(1, box.length - 1)
             var output = []
@@ -329,14 +329,14 @@ export default (board = "") => {
                 }
                 output.push(linePixel)
             }
-            console.log(output)
+            // console.log(output)
 
             var output2 = []
             // R
             for (var i = 0; i < output.length; i++) {
                 var linePixel = output[i]
                 var lineHex = 0x00
-                console.log(linePixel)
+                // console.log(linePixel)
                 for (var j = 0; j < linePixel.length; j++) {
                     if (linePixel[j][0] > 100) {
                         lineHex |= 0x80 >> j
@@ -367,16 +367,16 @@ export default (board = "") => {
                 output2.push(lineHex)
             }
 
-            //console.log(output2);
+            //// console.log(output2);
             var arrayStr = `bytearray([0x02,${String(output2)}])`
-            //console.log(arrayStr)
+            //// console.log(arrayStr)
             return arrayStr
         }
 
-        //console.log(Blockly.Xml.blockToDom(block))
+        //// console.log(Blockly.Xml.blockToDom(block))
         Blockly.Python.definitions_['import_face_panel'] = 'from udrobot.action_module.face_panel import *';
         var action = Blockly.Python.valueToCode(block, "FACE", Blockly.Python.ORDER_ATOMIC);
-        console.log(action)
+        // console.log(action)
 
 
 

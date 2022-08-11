@@ -42,9 +42,9 @@ export default (Blockly) => {
     
     // 当主板按钮按下时
     Blockly.Python['udblockUDPiPlus_whenButtonPressed'] = function (block) {
-        console.log(Blockly.Xml.blockToDom(block))
-        console.log(block.toString())
-        console.log(block.nextConnection)
+        // console.log(Blockly.Xml.blockToDom(block))
+        // console.log(block.toString())
+        // console.log(block.nextConnection)
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
@@ -70,7 +70,7 @@ export default (Blockly) => {
     }
     Blockly.Python['udblockUDPiPlus_menu_buttons'] = function (block) {
         var btn = block.getFieldValue("buttons");
-        console.log(btn)
+        // console.log(btn)
         return [`${btn}`, Blockly.Python.ORDER_ATOMIC]
     }
 
@@ -156,7 +156,7 @@ export default (Blockly) => {
         if (parseInt(rgb_board_index) <= 0 || parseInt(rgb_board_index) >=6){
             rgb_board_index = 1
         }
-        console.log(rgb_board_index)
+        // console.log(rgb_board_index)
         // 修复WS2312B反转问题
         var rgb_board_reversed = rgb_board_color.split(",");
         rgb_board_reversed[0] = rgb_board_reversed[0].replace("(", "");
@@ -277,7 +277,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
 
         var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC).replaceAll("'","")
-        console.log(Blockly.Xml.blockToDom(block))
+        // console.log(Blockly.Xml.blockToDom(block))
         var mode = Blockly.Python.valueToCode(block, 'PITCH', Blockly.Python.ORDER_ATOMIC);
         var code = `udpi_buzzer.play(Buzzer.${sound},${mode})\n`;
         return code;

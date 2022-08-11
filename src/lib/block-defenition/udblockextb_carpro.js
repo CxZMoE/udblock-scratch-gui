@@ -267,7 +267,64 @@ export default (Blockly) => {
         var code = `myCarPro.${variable}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
+    Blockly.Python[`${id}_appGetButtonStatus`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        // 定义菜单
+        Blockly.Python[`${id}_menu_appBtnMenu`] = function (block) {
+            var remote = block.getFieldValue("appBtnMenu");
+            return [`${remote}`, Blockly.Python.ORDER_ATOMIC]
+        }
 
+        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.btn_pressed[${btn}]`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
+    Blockly.Python[`${id}_appGetButtonUP`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        // 定义菜单
+        Blockly.Python[`${id}_menu_appBtnMenu`] = function (block) {
+            var remote = block.getFieldValue("appBtnMenu");
+            return [`${remote}`, Blockly.Python.ORDER_ATOMIC]
+        }
+
+        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.ButtonUP(${btn})`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
+    
+    Blockly.Python[`${id}_appGetRemote`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        // 定义菜单
+        Blockly.Python[`${id}_menu_ps2RemoteMenu`] = function (block) {
+            var remote = block.getFieldValue("ps2RemoteMenu");
+            return [`${remote}`, Blockly.Python.ORDER_ATOMIC]
+        }
+        
+
+        var remote = Blockly.Python.valueToCode(block, "POS", Blockly.Python.ORDER_ATOMIC);
+        var variable = 'ly'
+        switch (remote){
+            case "0":
+                variable = 'ly'
+                break
+            case "1":
+                variable = "lx"
+                break
+            case "2":
+                variable = "ry"
+                break
+            case "3":
+                variable = "rx"
+                break
+            default:
+                break
+        }
+        var code = `myCarPro.${variable}`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
     Blockly.Python[`${id}_ps2SetForwardSpd`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';

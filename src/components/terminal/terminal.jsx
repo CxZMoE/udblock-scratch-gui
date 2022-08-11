@@ -17,7 +17,7 @@ var getDateTimeString = function () {
     return `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
 }
 function wsOnMsg(e)  {
-    console.log('comming  data')
+    // console.log('comming  data')
     var data = e.data;
     terminalJS.print(`$ ${data}`)
     // if (data.indexOf("OK") > -1) {
@@ -63,7 +63,7 @@ class TerminalComponent extends React.Component {
 
                 // 在Websocket连接建立的时候执行
                 ws.onopen = (e) => {
-                    console.log("Websocket尝试使用串口:", com)
+                    // console.log("Websocket尝试使用串口:", com)
                     Send(`closecom:${com}`)
                     Send(`opencom:${com}`)
                     setInterval(() => {
@@ -73,24 +73,24 @@ class TerminalComponent extends React.Component {
                 ws.onmessage = wsOnMsg
                 // 在Websocket连接建立失败后执行
                 ws.onerror = function (ws, e) {
-                    console.log("建立Websocket连接失败：" + String(e))
+                    // console.log("建立Websocket连接失败：" + String(e))
                     
                     // ws.close()
                 }
 
                 // 在Websocket连接关闭后执行
                 ws.onclose = function (e) {
-                    console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    console.log(e)
+                    // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+                    // console.log(e)
 
                     // Websocket连接必须保持在线，任何离线的情况都不应该发生
-                    console.log("连接到WebSocket服务器失败，3秒后重新尝试连接。")
+                    // console.log("连接到WebSocket服务器失败，3秒后重新尝试连接。")
                     setTimeout(() => {
                         connect();
                     }, 3000);
                 }
             } catch (ex) {
-                console.log(ex)
+                // console.log(ex)
             }
         }
 
@@ -102,7 +102,7 @@ class TerminalComponent extends React.Component {
             var ws = terminalJS.ws
             ws.send(msg)
         }catch(ex){
-            console.log(ex)
+            // console.log(ex)
             this.onConnectWS(terminalJS)
         }
     }
@@ -133,8 +133,8 @@ class TerminalComponent extends React.Component {
 
         // 端口更改Debug信息
         portSelect.onchange = function (e) {
-            console.log("change to " + e.target.value)
-            console.log(e.target)
+            // console.log("change to " + e.target.value)
+            // console.log(e.target)
             selectPort(e.target.value)
             terminalJS.com = e.target.value
 
@@ -146,65 +146,65 @@ class TerminalComponent extends React.Component {
 
             // 请求获取当前设备的串口列表
 
-            fetch(
-                "http://127.0.0.1:12888/serialport"
-            ).then(res => {
-                return res.json()
-            }).then((data) => {
-                var portSelect = document.getElementById("portSelect")
-                portSelect.innerHTML = ""
-
-                // 解析返回的数据并且将可用串口添加到下拉选项中
-                var serialportList = data
-                for (var index in serialportList) {
-                    // 不是USB设备则过滤
-                    if (serialportList[index].isUSB == false) {
-                        continue
+                fetch(
+                    "http://127.0.0.1:12888/serialport"
+                ).then(res => {
+                    return res.json()
+                }).then((data) => {
+                    var portSelect = document.getElementById("portSelect")
+                    portSelect.innerHTML = ""
+    
+                    // 解析返回的数据并且将可用串口添加到下拉选项中
+                    var serialportList = data
+                    for (var index in serialportList) {
+                        // 不是USB设备则过滤
+                        if (serialportList[index].isUSB == false) {
+                            continue
+                        }
+    
+                        // 创建新的下拉选项
+                        var option = document.createElement("option");
+                        // 命名规范：${串口号} - [UDRobot ${序列号}]
+                        var portName = `${serialportList[index].name} - [UDRobot ${serialportList[index].sn}]`;
+                        option.text = portName; // 串口号
+                        option.value = serialportList[index].name; // 串口名字（串口号）
+    
+                        portSelect.appendChild(option)
                     }
-
-                    // 创建新的下拉选项
-                    var option = document.createElement("option");
-                    // 命名规范：${串口号} - [UDRobot ${序列号}]
-                    var portName = `${serialportList[index].name} - [UDRobot ${serialportList[index].sn}]`;
-                    option.text = portName; // 串口号
-                    option.value = serialportList[index].name; // 串口名字（串口号）
-
-                    portSelect.appendChild(option)
-                }
-
-                // 每次扫描串口后
-                // 如果上次已经选中的串口还在列表中
-                // 则需要选中上次选择的串口
-                // 否则串口选择会乱套
-                for (var i = 0; i < portSelect.children.length; i++) {
-                    // console.log(portSelect.children.item(i).innerText)
-                    //console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(i).value)
-                    // 找到历史选中串口
-                    if (portSelect.children.item(i).value == comState) {
-                        //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
-                        portSelect.children.item(i).selected = true;
-                        selectPort(portSelect.children.item(i).value);
-                        return;
+    
+                    // 每次扫描串口后
+                    // 如果上次已经选中的串口还在列表中
+                    // 则需要选中上次选择的串口
+                    // 否则串口选择会乱套
+                    for (var i = 0; i < portSelect.children.length; i++) {
+                        // console.log(portSelect.children.item(i).innerText)
+                        //console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(i).value)
+                        // 找到历史选中串口
+                        if (portSelect.children.item(i).value == comState) {
+                            //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
+                            portSelect.children.item(i).selected = true;
+                            selectPort(portSelect.children.item(i).value);
+                            return;
+                        }
+    
                     }
-
-                }
-
-                // 没有找到，或者只有一个串口设备
-                if (portSelect.children.length > 0) {
-                    if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
-                        //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
-                        portSelect.children.item(0).selected = true;
-                        selectPort(portSelect.children.item(0).value);
+    
+                    // 没有找到，或者只有一个串口设备
+                    if (portSelect.children.length > 0) {
+                        if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
+                            //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
+                            portSelect.children.item(0).selected = true;
+                            selectPort(portSelect.children.item(0).value);
+                        }
                     }
-                }
-
-
-                // 没有串口设备，则清空选中的串口
-                if (portSelect.children.length == 0) {
-                    selectPort("")
-                    document.getElementById("serialOpenBtn").innerText = "打开"
-                }
-            })
+    
+    
+                    // 没有串口设备，则清空选中的串口
+                    if (portSelect.children.length == 0) {
+                        selectPort("")
+                        document.getElementById("serialOpenBtn").innerText = "打开"
+                    }
+                })
 
         }, 1000);
 
@@ -254,7 +254,7 @@ class TerminalComponent extends React.Component {
 
             if (e.target.innerText == "打开") {
                 var FVERSION = "0.5.8"
-                console.log("打开串口:", terminalJS.com)
+                // console.log("打开串口:", terminalJS.com)
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
                 }
@@ -262,8 +262,8 @@ class TerminalComponent extends React.Component {
                 terminalJS.ws.onmessage = wsOnMsg
 
                 terminalJS.ws.onclose = function (e) {
-                    console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    console.log(e)
+                    // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+                    // console.log(e)
                 }
 
                 e.target.innerText = "关闭"
@@ -271,12 +271,12 @@ class TerminalComponent extends React.Component {
                 if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
                     terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
                 }
-                console.log("关闭串口:", terminalJS.com)
+                // console.log("关闭串口:", terminalJS.com)
                 Send(`closecom:${terminalJS.com}`)
                 e.target.innerText = "打开"
                 terminalJS.ws.onclose = function (e) {
-                    console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    console.log(e)
+                    // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+                    // console.log(e)
                 }
             }
 

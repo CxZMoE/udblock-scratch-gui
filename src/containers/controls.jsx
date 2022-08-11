@@ -23,10 +23,10 @@ class Controls extends React.Component {
             this.props.vm.setTurboMode(!this.props.turbo);
         } else {
             if (!this.props.isStarted) {
-                console.log("sad1")
+                // console.log("sad1")
                 this.props.vm.start();
             }
-            console.log("sad")
+            // console.log("sad")
             this.props.vm.greenFlag();
         }
     }

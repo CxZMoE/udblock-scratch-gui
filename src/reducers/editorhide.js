@@ -11,13 +11,13 @@ const reducer = (state={editorHide: false},action) =>{
 }
 
 const editorToggleHide = function(){
-    console.log("code hide")
+    // console.log("code hide")
     return {
         type: "TOGGLE_HIDE"
     }
 }
 const editorToggleShow = function(){
-    console.log("code show")
+    // console.log("code show")
     return {
         type: "TOGGLE_SHOW"
     }

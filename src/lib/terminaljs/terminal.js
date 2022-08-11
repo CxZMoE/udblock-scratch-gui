@@ -45,7 +45,7 @@ var promptInput = function (terminalObj, message, PROMPT_TYPE, callback) {
 	}
 
 	terminalObj.html.onclick = function () {
-		inputField.focus()
+		//inputField.focus()
 	}
 
 	inputField.onkeydown = function (e) {
@@ -107,7 +107,7 @@ class TerminalJS {
 			terminalBeep.load()
 			terminalBeep.play()
 		}
-
+		var s = document.getElementById('UDTerminal')
 		this.print = function (message) {
 			var output = this._output;
 
@@ -115,10 +115,10 @@ class TerminalJS {
 				var newLine = document.createElement('div')
 				newLine.textContent = message
 				output.appendChild(newLine)
-				terminalLineLength += 1
+				
 
 				// var count = 0
-				if (terminalLineLength > 5000) {
+				if (terminalLineLength > 500) {
 					// var temp = output.childNodes.forEach(function(v,k,p){
 					// 	if (count < 250){
 					// 		v.remove()
@@ -129,8 +129,9 @@ class TerminalJS {
 					output.innerHTML = ""
 					terminalLineLength = 0;
 				}
-				let s = document.getElementById('UDTerminal')
+				
 				s.scrollTop = s.scrollHeight
+				terminalLineLength += 1
 				resolve()
 			})
 		}

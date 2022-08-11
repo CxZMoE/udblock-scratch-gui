@@ -10,7 +10,7 @@ const reducer = (state={value: ""},action) =>{
 }
 
 const updatePyCode = function(value){
-    console.log("更新Python代码")
+    // console.log("更新Python代码")
     //console.log(value)
     return {
         type: "UPDATE",

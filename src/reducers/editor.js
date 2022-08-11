@@ -11,7 +11,7 @@ const reducer = (state={editorMode: "default",editorHide: false},action) =>{
 }
 
 const editorToggleCode = function(){
-    console.log("code toggle")
+    // console.log("code toggle")
     return {
         type: "TOGGLE_CODE"
     }

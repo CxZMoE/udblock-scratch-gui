@@ -48,9 +48,9 @@ export default (Blockly) => {
     
     // 当主板按钮按下时
     Blockly.Python['udblockUDPiMiniV1_whenButtonPressed'] = function (block) {
-        console.log(Blockly.Xml.blockToDom(block))
-        console.log(block.toString())
-        console.log(block.nextConnection)
+        // console.log(Blockly.Xml.blockToDom(block))
+        // console.log(block.toString())
+        // console.log(block.nextConnection)
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
@@ -76,7 +76,7 @@ export default (Blockly) => {
     }
     Blockly.Python['udblockUDPiMiniV1_menu_buttons'] = function (block) {
         var btn = block.getFieldValue("buttons");
-        console.log(btn)
+        // console.log(btn)
         return [`${btn}`, Blockly.Python.ORDER_ATOMIC]
     }
 
@@ -157,7 +157,7 @@ export default (Blockly) => {
         if (parseInt(rgb_board_index) <= 0 || parseInt(rgb_board_index) >=7){
             rgb_board_index = 1
         }
-        console.log(rgb_board_index)
+        // console.log(rgb_board_index)
         return `udpi_rgb.value(${rgb_board_index}-1, ${rgb_board_color})\n`;
     }
     Blockly.Python['udblockUDPiMiniV1_setRGBLineSingleOnlyDraw'] = function (block) {
@@ -268,7 +268,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
 
         var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC).replaceAll("'","")
-        console.log(Blockly.Xml.blockToDom(block))
+        // console.log(Blockly.Xml.blockToDom(block))
         var mode = Blockly.Python.valueToCode(block, 'PITCH', Blockly.Python.ORDER_ATOMIC);
         var code = `udpi_buzzer.play(Buzzer.${sound},${mode})\n`;
         return code;

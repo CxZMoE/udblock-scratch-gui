@@ -636,7 +636,7 @@ class Blocks extends React.Component {
         }
     }
     componentWillUnmount() {
-        console.log('componentWillUnmount')
+        // console.log('componentWillUnmount')
         this.detachVM();
         this.workspace.dispose();
         clearTimeout(this.toolboxUpdateTimeout);
@@ -644,14 +644,14 @@ class Blocks extends React.Component {
 
     }
     requestToolboxUpdate() {
-        console.log('requestToolboxUpdate')
+        // console.log('requestToolboxUpdate')
         clearTimeout(this.toolboxUpdateTimeout);
         this.toolboxUpdateTimeout = setTimeout(() => {
             this.updateToolbox();
         }, 0);
     }
     setLocale() {
-        console.log('setLocale')
+        // console.log('setLocale')
         Blockly.ScratchMsgs.setLocale(this.props.locale);
         this.props.vm.setLocale(this.props.locale, this.props.messages)
             .then(() => {
@@ -665,7 +665,7 @@ class Blocks extends React.Component {
     }
 
     updateToolbox() {
-        console.log('update toolbox')
+        // console.log('update toolbox')
         this.toolboxUpdateTimeout = false;
 
         const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
@@ -746,7 +746,7 @@ class Blocks extends React.Component {
     }
 
     onTargetsUpdate() {
-        console.log('onTargetsUpdate')
+        // console.log('onTargetsUpdate')
         if (this.props.vm.editingTarget && this.workspace.getFlyout()) {
             ['glide', 'move', 'set'].forEach(prefix => {
                 this.updateToolboxBlockValue(`${prefix}x`, Math.round(this.props.vm.editingTarget.x).toString());
@@ -799,7 +799,7 @@ class Blocks extends React.Component {
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
-            console.log("blocks.jsx:", this.props.editorMode)
+            // console.log("blocks.jsx:", this.props.editorMode)
 
             switch (this.props.editorMode) {
                 case "default":
@@ -822,7 +822,7 @@ class Blocks extends React.Component {
         }
     }
     onWorkspaceUpdate(data) {
-        console.log('onWorkspaceUpdate')
+        // console.log('onWorkspaceUpdate')
         // When we change sprites, update the toolbox to have the new sprite's blocks
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
@@ -927,12 +927,12 @@ class Blocks extends React.Component {
             var block = category.children.item(j);
             blockCollection.push(block);
         }
-        console.log("收集到的方块: ", blockCollection)
+        // console.log("收集到的方块: ", blockCollection)
         return blockCollection;
     }
 
     handleExtensionAdded(categoryInfo) {
-        console.log("插件信息：", categoryInfo)
+        // console.log("插件信息：", categoryInfo)
         const defineBlocks = blockInfoArray => {
             //console.log("blockInfoArray:", JSON.stringify(blockInfoArray))
             if (blockInfoArray && blockInfoArray.length > 0) {

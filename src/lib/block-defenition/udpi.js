@@ -40,9 +40,9 @@ export default (Blockly) => {
 
     // 当主板按钮按下时
     Blockly.Python['udblockUDPi_whenButtonPressed'] = function (block) {
-        console.log(Blockly.Xml.blockToDom(block))
-        console.log(block.toString())
-        console.log(block.nextConnection)
+        // console.log(Blockly.Xml.blockToDom(block))
+        // console.log(block.toString())
+        // console.log(block.nextConnection)
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
@@ -68,7 +68,7 @@ export default (Blockly) => {
     }
     Blockly.Python['udblockUDPi_menu_buttons'] = function (block) {
         var btn = block.getFieldValue("buttons");
-        console.log(btn)
+        // console.log(btn)
         return [`${btn}`, Blockly.Python.ORDER_ATOMIC]
     }
 
@@ -133,7 +133,7 @@ export default (Blockly) => {
             return '';
         }
         var rgb_board_reversed = rgb_board_color.split(",");
-        console.log(rgb_board_reversed)
+        // console.log(rgb_board_reversed)
         rgb_board_reversed[0] = rgb_board_reversed[0].replace("(", "");
         rgb_board_reversed[2] = rgb_board_reversed[2].replace(")", "");
         rgb_board_reversed = `(${rgb_board_reversed[1]},${rgb_board_reversed[0]},${rgb_board_reversed[2]})`
@@ -294,7 +294,7 @@ export default (Blockly) => {
         
 
         var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC).replaceAll("'","")
-        console.log(Blockly.Xml.blockToDom(block))
+        // console.log(Blockly.Xml.blockToDom(block))
         var mode = Blockly.Python.valueToCode(block, 'PITCH', Blockly.Python.ORDER_ATOMIC);
         var code = `udpi_buzzer.play(udpi_buzzer.${sound},${mode})\n`;
         return code;

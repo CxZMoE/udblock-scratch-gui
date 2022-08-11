@@ -24,7 +24,7 @@ export default (Blockly) => {
         request.onreadystatechange = function(e){
             if (request.status == 200 && request.readyState == 4){
                 ip = request.responseText;
-                console.log(ip)
+                // console.log(ip)
             }
         }
         request.send()

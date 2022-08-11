@@ -178,8 +178,8 @@ const initPythonGenerator = () => {
             Blockly.Arduino.ORDER_NONE) || 'false';
 
         var branch = Blockly.Arduino.statementToCode(this, 'SUBSTACK');
-        console.log("statementToCode", Blockly.Arduino.statementToCode);
-        console.log(branch);
+        // console.log("statementToCode", Blockly.Arduino.statementToCode);
+        // console.log(branch);
 
         var code = 'if (' + argument + ') {\n' + branch + '\n}';
 

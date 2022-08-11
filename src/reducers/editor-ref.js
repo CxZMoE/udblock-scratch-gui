@@ -10,8 +10,8 @@ const reducer = (state={o: undefined},action)=>{
 }
 
 const editorCreate = (editor)=>{
-    console.log("Create Editor")
-    console.log(editor)
+    // console.log("Create Editor")
+    // console.log(editor)
     return ({
         type: "EDITOR_CREATE",
         value: editor

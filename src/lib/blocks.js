@@ -5,7 +5,7 @@ import ScratchBlocks from 'scratch-blocks';
 
 // ModifyUDPi(ScratchBlocks);
 // ModifyUDPiPlus(ScratchBlocks);
-console.log(ScratchBlocks)
+// console.log(ScratchBlocks)
 
 /**
  * Connect scratch blocks with the vm

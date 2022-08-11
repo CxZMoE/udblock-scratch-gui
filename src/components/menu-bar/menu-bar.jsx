@@ -229,7 +229,7 @@ class MenuBar extends React.Component {
                 break;
         }
 
-        console.log("blocks.jsx:", this.props.editorMode)
+        // console.log("blocks.jsx:", this.props.editorMode)
         //this.props.vm.emitWorkspaceUpdate();
     }
 
@@ -243,7 +243,7 @@ class MenuBar extends React.Component {
             this.props.vm.refreshWorkspace();
         }
         window.dispatchEvent(new Event('resize'));
-        console.log("blocks.jsx:", this.props.editorHide)
+        // console.log("blocks.jsx:", this.props.editorHide)
     }
 
     handleUpdate() {
@@ -728,7 +728,7 @@ class MenuBar extends React.Component {
                                     >
                                         <MenuSection>
                                             <MenuItem onClick={() => {
-                                                console.log(this.props.pycode)
+                                                // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 this.props.onRequestCloseTool()
                                                 terminal.Send(`closecom:${terminal.com}`)
@@ -743,7 +743,7 @@ class MenuBar extends React.Component {
                                                         })
                                                     }
                                                 ).then((res) => res.text()).then((data) => {
-                                                    console.log(data)
+                                                    // console.log(data)
                                                     terminal.Send(`opencom:${terminal.com}`)
                                                     document.getElementById("serialOpenBtn").innerText = "关闭"
                                                 })
@@ -782,9 +782,8 @@ class MenuBar extends React.Component {
                                             </MenuItem> */}
 
                                             <MenuItem onClick={() => {
-                                                console.log(this.props.pycode)
+                                                // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-                                                console.log()
                                                 if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
                                                     //terminal.Send(`closecom:${terminal.com}`)
                                                     terminal.Send(`opencom:${terminal.com}`)
@@ -806,7 +805,7 @@ class MenuBar extends React.Component {
                                                 />
                                             </MenuItem>
                                             <MenuItem onClick={() => {
-                                                console.log(this.props.pycode)
+                                                // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
                                                     terminal.Send(`opencom:${terminal.com}`)
@@ -828,7 +827,7 @@ class MenuBar extends React.Component {
                                                 />
                                             </MenuItem>
                                             <MenuItem onClick={() => {
-                                                console.log(this.props.pycode)
+                                                // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
                                                 terminal.Send(`closecom:${terminal.com}`)
@@ -845,11 +844,11 @@ class MenuBar extends React.Component {
                                                 />
                                             </MenuItem>
                                             <MenuItem onClick={() => {
-                                                console.log(this.props.pycode)
+                                                // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
                                                 fetch('http://127.0.0.1:12888/installDriver').then((res) => res.text()).then((text) => {
-                                                    console.log(text)
+                                                    // console.log(text)
                                                     if (response == "ok") {
                                                         terminal.print("开始安装驱动");
                                                     } else {
@@ -895,12 +894,12 @@ class MenuBar extends React.Component {
                                         >
                                             <MenuSection>
                                                 <MenuItem onClick={() => {
-                                                    console.log(this.props.pycode)
+                                                    // console.log(this.props.pycode)
                                                     var terminal = this.props.terminal
 
 
                                                     fetch('http://127.0.0.1:12888/checkVersion').then(res => res.text()).then(response => {
-                                                        console.log(response)
+                                                        // console.log(response)
                                                         terminal.print(response)
                                                     })
 
@@ -916,15 +915,15 @@ class MenuBar extends React.Component {
                                             </MenuSection>
                                             <MenuSection>
                                                 <MenuItem onClick={() => {
-                                                    console.log(this.props.pycode)
+                                                    // console.log(this.props.pycode)
                                                     var terminal = this.props.terminal
 
 
                                                     fetch(`http://127.0.0.1:12888/fwVersion?com=${terminal.com}`).then(res => res.text()).then(response => {
                                                         var configVersion = response.split(":")[1] // 配置文件中的版本
                                                         var boardVersion = response.split(":")[0]  // 主板返回的版本信息
-                                                        console.log(`当前固件版本: ${boardVersion}`)
-                                                        console.log(`最新固件版本: ${configVersion}`)
+                                                        // console.log(`当前固件版本: ${boardVersion}`)
+                                                        // console.log(`最新固件版本: ${configVersion}`)
                                                         terminal.print(`当前固件版本: ${boardVersion}`)
                                                         terminal.print(`最新固件版本: ${configVersion}`)
                                                         if (String(boardVersion).indexOf(String(configVersion)) < 0) {
@@ -986,8 +985,7 @@ class MenuBar extends React.Component {
                         aria-label={"软件教程PDF"}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={() => {
-                            console.log(this.props.pycode)
-                            console.log()
+                            // console.log(this.props.pycode)
                             fetch(`http://127.0.0.1:9098/doc`).then((res) => res.text()).then(data => {})
 
                         }}

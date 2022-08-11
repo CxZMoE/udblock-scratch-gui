@@ -35,9 +35,9 @@ class MonicaEditor extends React.Component {
 
     loadMonaco() {
         try {
-            console.log("加载编辑器")
+            // console.log("加载编辑器")
             loader.init().then(monaco => {
-                console.log("加载Monaco编辑器")
+                // console.log("加载Monaco编辑器")
                 const wrapper = document.getElementById("monaco-editor-dom");
                 const properties = {
                     value: "# UDRobot MicroPython Code",
@@ -57,7 +57,7 @@ class MonicaEditor extends React.Component {
 
             })
         } catch (ex) {
-            console.log(ex)
+            // console.log(ex)
 
             var monacoDom = document.getElementById("monaco-editor-dom");
             var textArea = document.createElement("textarea")
@@ -118,7 +118,7 @@ class MonicaEditor extends React.Component {
                             mode="python"
                             theme="xcode"
                             onChange={(newText)=>{
-                                console.log("change", newText);
+                                // console.log("change", newText);
                                 if (Blockly != undefined){
                                     Blockly.Python._content = newText;
                                 }

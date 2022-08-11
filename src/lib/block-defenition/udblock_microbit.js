@@ -36,7 +36,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['btn_callbacks'] = 'btn_callbacks = []';
         Blockly.Python.hasBtnCallback = true
         Blockly.Python.Callbacks['delete_' + block.id] = function(){
-            console.log("删除按钮方块循环")
+            // console.log("删除按钮方块循环")
             Blockly.Python.hasBtnCallback = false
         }
 

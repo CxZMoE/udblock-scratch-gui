@@ -86,7 +86,7 @@ class LibraryComponent extends React.Component {
         }
     }
     handleMouseEnter (id) {
-        console.log("a")
+        // console.log("a")
         // don't restart if mouse over already playing item
         if (this.props.onItemMouseEnter && this.state.playingItem !== id) {
             this.props.onItemMouseEnter(this.getFilteredData()[id]);
@@ -96,7 +96,7 @@ class LibraryComponent extends React.Component {
         }
     }
     handleMouseLeave (id) {
-        console.log("b")
+        // console.log("b")
         if (this.props.onItemMouseLeave) {
             this.props.onItemMouseLeave(this.getFilteredData()[id]);
             this.setState({

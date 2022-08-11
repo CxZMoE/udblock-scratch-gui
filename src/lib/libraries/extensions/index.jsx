@@ -169,11 +169,7 @@ export default [
         iconURL: udpiExtbMFIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "支持外接6个RJ11设备以及自带2个电机和4个舵机接口，含有7个触摸按键，支持外接电源供电。"
         ),
         featured: true,
         disabled: false,
@@ -259,11 +255,7 @@ export default [
         iconURL: udpiExtbSMIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "RJ11和外接电机特别优化的拓展版，支持外接供电"
         ),
         featured: true,
         disabled: false,
@@ -289,11 +281,7 @@ export default [
         iconURL: udpiExtbIOIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "支持外接8个RJ11设备，支持外接电源供电。"
         ),
         featured: true,
         disabled: false,
@@ -320,7 +308,7 @@ export default [
         // insetIconURL: udpiInsetIconURL,
         iconURL: udpiMiniIconURL,
         insetIconURL: udpiInsetIconURL,
-        description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板",
+        description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板，支持外接8个RJ11设备，支持外接电源供电。",
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -345,7 +333,7 @@ export default [
         iconURL: udpiCarProIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            "四驱小车拓展版升级版，集成多种精密传感器，可以精确的控制移动的距离和速度。"
+            "四驱小车拓展版升级版，集成多种精密传感器，可以精确的控制移动的距离和速度。支持遥控控制，电池供电"
         ),
         featured: true,
         disabled: false,
@@ -371,11 +359,7 @@ export default [
         iconURL: udpiExtbCarIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "四驱小车拓展版，支持外接6个RJ11设备，以及遥控控制，电池供电。"
         ),
         featured: true,
         disabled: false,
@@ -401,11 +385,7 @@ export default [
         iconURL: udpiExtbCar2WDIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "双驱小车拓展版，支持外接6个RJ11设备，2个电机，以及遥控控制，电池供电。"
         ),
         featured: true,
         disabled: false,
@@ -431,11 +411,7 @@ export default [
         iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "支持外接4个RJ11设备，支持外接指纹模块和SD卡，支持在线、离线的语音识别以及在线语音听写，电池供电。"
         ),
         featured: true,
         disabled: false,
@@ -461,11 +437,7 @@ export default [
         iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
+            "工具类，目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。"
         ),
         featured: true,
         disabled: false,
@@ -521,11 +493,7 @@ export default [
         iconURL: microbitIconURL,
         insetIconURL: microbitInsetIconURL,
         description: (
-            <FormattedMessage
-                defaultMessage="Connect your projects with the world."
-                description="Description for the 'micro:bit' extension"
-                id="gui.extension.microbit.description"
-            />
+            "Micro-Bit主板适配MicroPython"
         ),
         featured: true,
         disabled: false,

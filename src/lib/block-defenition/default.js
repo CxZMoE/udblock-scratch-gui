@@ -4,7 +4,7 @@
  */
 
 function GetFirstFieldNameByIndex(block, y=0,x=0){
-    console.log(block)
+    // console.log(block)
     var a = ''
     try{
         a = block.inputList[x].fieldRow[y].text_
@@ -70,7 +70,7 @@ export default function (Blockly) {
             order = code < 0 ? Blockly.Python.ORDER_UNARY_SIGN :
                 Blockly.Python.ORDER_ATOMIC;
         }
-        console.log(code)
+        // console.log(code)
         return [code, order];
     };
     Blockly.Python['math_angle'] = Blockly.Python['math_number'];
@@ -1013,25 +1013,25 @@ export default function (Blockly) {
     Blockly.Python['control_forever'] = function (block) {
         Blockly.Python.ControlForeverStack = ['while True:']
         // 检测程序是否有循环
-        console.log(block)
+        // console.log(block)
         Blockly.Python.hasLoop = true
         Blockly.Python.Callbacks['delete_' + block.id] = function(){
-            console.log("删除方块循环")
+            // console.log("删除方块循环")
             Blockly.Python.hasLoop = false
         }
 
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
-        console.log(statements)
+        // console.log(statements)
         if (Blockly.Python.definitions_['btn_callbacks']){
             Blockly.Python.ControlForeverStack.push('  for c in btn_callbacks:c()')
         }
         Blockly.Python.ControlForeverStack.push(statements)
         
-        console.log('循环堆栈:')
-        console.log(Blockly.Python.ControlForeverStack)
-        console.log('连接堆栈')
+        // console.log('循环堆栈:')
+        // console.log(Blockly.Python.ControlForeverStack)
+        // console.log('连接堆栈')
         var code = Blockly.Python.ControlForeverStack.join("\n")
-        console.log(code)
+        // console.log(code)
         return code
     }
     Blockly.Python['control_repeat_until'] = function (block) {
@@ -1209,7 +1209,7 @@ export default function (Blockly) {
     // 逻辑
     Blockly.Python['control_if'] = function (block) {
         // If/elseif/else condition.
-        console.log(Blockly.Xml.blockToDom(block))
+        // console.log(Blockly.Xml.blockToDom(block))
         var n = 0;
         var code = '', branchCode, conditionCode;
         if (Blockly.Python.STATEMENT_PREFIX) {
@@ -1490,7 +1490,7 @@ export default function (Blockly) {
 
     // 流程函数
     Blockly.Python['procedures_prototype'] = function (block) {
-        console.log(block)
+        // console.log(block)
         //console.log(Blockly.Python.blockToCode(block))
         return '123'
     }
@@ -1508,13 +1508,13 @@ export default function (Blockly) {
             return undefined
         }
 
-        console.log("call:", block)
+        // console.log("call:", block)
         
         var args = []
-        console.log(block.childBlocks_)
+        // console.log(block.childBlocks_)
         for (var i = 0; i < block.argumentIds_.length; i += 1) {
 
-            console.log(Blockly.Python.blockToCode(getSpecifiedBlock(block.argumentIds_[i]))[0])
+            // console.log(Blockly.Python.blockToCode(getSpecifiedBlock(block.argumentIds_[i]))[0])
             args.push(String(Blockly.Python.blockToCode(getSpecifiedBlock(block.argumentIds_[i]))[0]).replaceAll("'", ""))
 
         }
@@ -1526,7 +1526,7 @@ export default function (Blockly) {
     Blockly.Python['procedures_definition'] = function (block) {
         var code = ''
         if (block.childBlocks_.length > 1) {
-            console.log(Blockly.Xml.blockToDom(block.childBlocks_[1]))
+            // console.log(Blockly.Xml.blockToDom(block.childBlocks_[1]))
             for (var i = 1; i < block.childBlocks_.length; i++) {
                 code += `${Blockly.Python.blockToCode(block.childBlocks_[i])}\n`
             }
@@ -1543,12 +1543,12 @@ export default function (Blockly) {
         return null;
     }
     Blockly.Python['argument_reporter_string_number'] = function (block) {
-        console.log(Blockly.Xml.blockToDom(block))
+        // console.log(Blockly.Xml.blockToDom(block))
         return [block.getFieldValue("VALUE"), Blockly.Python.ORDER_ATOMIC]
     }
 
     Blockly.Python['argument_reporter_boolean'] = function (block) {
-        console.log(Blockly.Xml.blockToDom(block))
+        // console.log(Blockly.Xml.blockToDom(block))
         return [block.getFieldValue("VALUE"), Blockly.Python.ORDER_ATOMIC]
     }
 
@@ -1579,7 +1579,7 @@ export default function (Blockly) {
              order = code < 0 ? Blockly.Python.ORDER_ATOMIC :
                  Blockly.Python.ORDER_ATOMIC;
          }
-         console.log(code)
+         // console.log(code)
          return [code, order];
     }
 }

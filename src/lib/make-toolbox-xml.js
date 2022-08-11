@@ -743,7 +743,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     backdropName = xmlEscape(backdropName);
     soundName = xmlEscape(soundName);
 
-    console.log(categoriesXML)
+    // console.log(categoriesXML)
     categoriesXML = categoriesXML.slice();
     // 移除已存在的类别并且重新加载
     const moveCategory = categoryId => {
