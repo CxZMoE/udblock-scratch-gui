@@ -62,7 +62,7 @@ import udpiMiniIconURL from './udblock/ESP32核心板.png';
 import udpiCarProIconURL from './udblock/四驱小车pro.png'
 
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
-import udpiInsetIconURL from './zkgz.svg';
+import udpiInsetIconURL from './bitmeta.svg';
 
 
 export default [
