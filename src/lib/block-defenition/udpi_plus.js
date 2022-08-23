@@ -236,41 +236,6 @@ export default (Blockly) => {
         var code = `udp_msg`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
-    Blockly.Python['udblockUDPiPlus_urequestsAddItemMap'] = function (block) {
-        Blockly.Python.definitions_['import_urequests'] = 'from tools import urequests';
-        var name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC).replaceAll("'", "");
-        var code = `${name} = {}\n`
-        return code;
-    }
-    Blockly.Python['udblockUDPiPlus_urequestsSetItem'] = function (block) {
-        Blockly.Python.definitions_['import_urequests'] = 'from tools import urequests';
-        var name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC).replaceAll("'", "");
-        var key = Blockly.Python.valueToCode(block, 'KEY', Blockly.Python.ORDER_ATOMIC);
-        var value = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC).replaceAll("'", "");
-        var code = `${name}[${key}] = ${value}\n`
-        return code;
-    }
-    Blockly.Python['udblockUDPiPlus_urequestsDelItem'] = function (block) {
-        Blockly.Python.definitions_['import_urequests'] = 'from tools import urequests';
-        var name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC).replaceAll("'", "");
-        var key = Blockly.Python.valueToCode(block, 'KEY', Blockly.Python.ORDER_ATOMIC);
-        var code = `${name}.pop(${key})\n`
-        return code;
-    }
-    Blockly.Python['udblockUDPiPlus_urequestsGetItem'] = function (block) {
-        Blockly.Python.definitions_['import_urequests'] = 'from tools import urequests';
-        var addr = Blockly.Python.valueToCode(block, 'ADDR', Blockly.Python.ORDER_ATOMIC);
-        var code = `urequests.request('GET', ${addr})\n`
-        return code;
-    }
-    Blockly.Python['udblockUDPiPlus_urequestsPostItem'] = function (block) {
-        Blockly.Python.definitions_['import_urequests'] = 'from tools import urequests';
-        Blockly.Python.definitions_['import_json'] = 'import json';
-        var name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC).replaceAll("'", "");
-        var addr = Blockly.Python.valueToCode(block, 'ADDR', Blockly.Python.ORDER_ATOMIC);
-        var code = `urequests.request('POST', ${addr}, data=json.dumps(${name}).encode('utf-8'), headers={'Content-Type':'application/json'})\n`
-        return code;
-    }
 
     // 控制主板蜂鸣器播放
     Blockly.Python['udblockUDPiPlus_setBuzzerPlay'] = function (block) {
