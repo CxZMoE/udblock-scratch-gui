@@ -952,7 +952,7 @@ class MenuBar extends React.Component {
                                         outline: "none",
                                         color: "#FFF",
                                         marginRight: "10px",
-                                        backgroundColor: "hsla(215, 100%, 65%, 1)",
+                                        backgroundColor: "#ff7f3b",
                                         border: "1px solid #FFF",
                                         height: "35px",
                                         fontSize: "15px",

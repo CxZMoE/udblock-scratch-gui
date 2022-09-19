@@ -375,7 +375,7 @@ $fade-out-distance: 15px;
 .menu-bar-position {
     position: relative;
     z-index: $z-index-menu-bar;
-    background-color: #2a77ff;
+    background-color: #ff7f3b;
 }
 /* Alerts */
 

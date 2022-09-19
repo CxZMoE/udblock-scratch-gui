@@ -67,7 +67,7 @@ import udpiInsetIconURL from './zkgz.svg';
 
 export default [
     {
-        name: 'UDPi 开发板 V2',
+        name: '小凌派开发板',
         extensionId: 'udblockUDPiV2',
         collaborator: 'UDRobot',
         iconURL: udpiIconURLV2,
