@@ -14,7 +14,8 @@ export default (Blockly) => {
     Blockly.Python['udblockCameraB_initCamera'] = function (block) {
         Blockly.Python.definitions_['import_carmera'] = 'from camerab import Camera';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC) 
-        var code = `myCamara = Camera(${port})\n`;
+
+        var code = `from machine import I2C;camI2C=I2C(0);myCamara = Camera(${port}, camI2C)\n`;
         return code;
     };
     Blockly.Python['udblockCameraB_doFaceDectection'] = function (block) {
