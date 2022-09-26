@@ -241,4 +241,48 @@ export default (Blockly) => {
         return code;
     }
     
+    // udp
+    Blockly.Python[`${board}_initUdp`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var code = `mySocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)\n`
+        return code;
+    }
+    Blockly.Python[`${board}_connectUdp`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var addr = Blockly.Python.valueToCode(block, 'ADDR', Blockly.Python.ORDER_ATOMIC);
+        var port = Blockly.Python.valueToCode(block, 'PORT', Blockly.Python.ORDER_ATOMIC);
+        var code = `sockaddr = socket.getaddrinfo(${addr}, ${port})[0][-1]\n`
+        code += `mySocket.connect(sockaddr)\n`
+        return code;
+    }
+    Blockly.Python[`${board}_udpSetBlocking`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var blocking = Blockly.Python.valueToCode(block, 'BLOCK', Blockly.Python.ORDER_ATOMIC);
+        var code = `mySocket.setblocking(${blocking})\n`
+        return code;
+    }
+    Blockly.Python[`${board}_udpSetTimeout`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var timeout = Blockly.Python.valueToCode(block, 'TIMEOUT', Blockly.Python.ORDER_ATOMIC);
+        var code = `mySocket.settimeout(${timeout})\n`
+        return code;
+    }
+    Blockly.Python[`${board}_udpSend`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var data = Blockly.Python.valueToCode(block, 'DATA', Blockly.Python.ORDER_ATOMIC);
+        var code = `mySocket.send(${data})\n`
+        return code;
+    }
+    Blockly.Python[`${board}_udpWrite`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var data = Blockly.Python.valueToCode(block, 'DATA', Blockly.Python.ORDER_ATOMIC);
+        var code = `mySocket.write(${data})\n`
+        return code;
+    }
+    Blockly.Python[`${board}_udpRecv`] = function (block) {
+        Blockly.Python.definitions_[`import_socket_module`] = 'import socket';
+        var n = Blockly.Python.valueToCode(block, 'NUM', Blockly.Python.ORDER_ATOMIC);
+        var code = `(mySocket.recv(${n}))`
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    }
 }

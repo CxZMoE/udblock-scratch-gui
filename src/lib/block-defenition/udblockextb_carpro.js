@@ -169,6 +169,12 @@ export default (Blockly) => {
         var code = `myCarPro.GetMovementData('${axis}')[${dtype}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
+    Blockly.Python[`${id}_getAccelData`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var code = `myCarPro.GetAcclData()`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
     Blockly.Python[`${id}_getServoData`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
@@ -358,6 +364,24 @@ export default (Blockly) => {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var code = `myCarPro.stopServer()\n`;
+        return code
+    };
+
+
+    // 比赛
+    Blockly.Python[`${id}_initUDPClient`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var uid = Blockly.Python.valueToCode(block, "ID", Blockly.Python.ORDER_ATOMIC);
+        var addr = Blockly.Python.valueToCode(block, "ADDR", Blockly.Python.ORDER_ATOMIC);
+        var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.initComClient(${uid}, ${addr}, ${port})\n`;
+        return code
+    };
+    Blockly.Python[`${id}_startUDPClient`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var code = `myCarPro.startClient()\n`;
         return code
     };
 }
