@@ -866,7 +866,7 @@ export default function (Blockly) {
 
         var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
             Blockly.VARIABLE_CATEGORY_NAME);
-        return [`${GetFirstFieldNameByIndex(block, 0)}.count(${item})`,Blockly.Python.ORDER_ATOMIC]
+        return [`${GetFirstFieldNameByIndex(block, 0)}.index(${item})`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['data_showlist'] = function(block){
         return ''
