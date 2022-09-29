@@ -88,7 +88,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDPi Plus开发板 V2',
@@ -112,7 +112,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDPi 开发板',
@@ -136,7 +136,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDPi Plus开发板',
@@ -160,7 +160,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock 多功能拓展板',
@@ -186,7 +186,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     // {
     //     name: 'UDBlock 电机拓展板 V2',
@@ -216,7 +216,7 @@ export default [
     //             id="gui.extension.gdxfor.connectingMessage"
     //         />
     //     ),
-    //     helpLink: 'https://forum.udrobot.net/'
+    //     helpLink: '#'
     // },
     // {
     //     name: 'UDBlock 多功能拓展板 V2',
@@ -246,7 +246,7 @@ export default [
     //             id="gui.extension.gdxfor.connectingMessage"
     //         />
     //     ),
-    //     helpLink: 'https://forum.udrobot.net/'
+    //     helpLink: '#'
     // },
     {
         name: 'UDBlock 电机拓展板',
@@ -272,7 +272,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock IO拓展板',
@@ -298,7 +298,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDPi+最小系统板V1',
@@ -324,7 +324,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock 小车拓展板Pro',
@@ -350,7 +350,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock 小车拓展板',
@@ -376,7 +376,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock 双驱小车拓展板',
@@ -402,7 +402,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock 智能语音拓展板',
@@ -428,7 +428,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     {
         name: 'UDBlock 拓展类',
@@ -454,7 +454,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: 'https://forum.udrobot.net/'
+        helpLink: '#'
     },
     // {
     //     name: 'UDBlock MQTT拓展库',
@@ -484,7 +484,7 @@ export default [
     //             id="gui.extension.gdxfor.connectingMessage"
     //         />
     //     ),
-    //     helpLink: 'https://forum.udrobot.net/'
+    //     helpLink: '#'
     // },
     {
         name: 'micro:bit主板',
