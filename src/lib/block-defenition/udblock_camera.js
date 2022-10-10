@@ -1,6 +1,14 @@
 function loadCamaraDefinition(board=""){
     Blockly.Python[`${board}_initCamera`] = function (block) {
         Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
+        
+        var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
+        var code = `myCamara = Camera(${port})\n`;
+        return code;
+    };
+    Blockly.Python[`${board}_initCameraI2C`] = function (block) {
+        
+        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
     
         var code = `myCamara = Camera(udpi_i2c)\n`;
         return code;
