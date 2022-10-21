@@ -1,4 +1,5 @@
 export default (Blockly) => {
+    Blockly.GlobalBoardType = 'esp32';
     // 启动
     Blockly.Python['udblockUDPiPlusV2_espstart'] = function(block){
         Blockly.Python.definitions_['import_udrobot_basic'] = 'from udrobot.basic import *';

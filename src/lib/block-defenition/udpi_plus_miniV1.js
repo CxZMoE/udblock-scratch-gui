@@ -5,6 +5,7 @@ import loadCamaraDefinition from "./udblock_camera";
 import loadSensorDefinition from "./udblock_sensor";
 
 export default (Blockly) => {
+    Blockly.GlobalBoardType = 'esp32';
     // 启动
     Blockly.Python['udblockUDPiMiniV1_espstart'] = function(block){
         Blockly.Python.definitions_['import_udrobot_basic'] = 'from udrobot.basic import *';

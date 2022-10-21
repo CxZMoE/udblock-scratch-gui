@@ -59,8 +59,8 @@ import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
 import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 import initUDBlockUtils from '../lib/block-defenition/udblock-utils'
 import initUDPiPlusMiniBlocks from '../lib/block-defenition/udpi_plus_miniV1'
-
-
+import initRKPiBlocks from '../lib/block-defenition/rkpi'
+import initUDBlockEXTBRKMFBlocks from '../lib/block-defenition/udblockextb_rk_mf'
 
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
@@ -83,7 +83,7 @@ class Blocks extends React.Component {
         this._firstExtLoad = true;
 
         Blockly = VMScratchBlocks(props.vm);
-
+        Blockly.GlobalBoardType = 'esp32';
 
         // 本地化
         Blockly.ScratchMsgs.locales["zh-cn"] =
@@ -479,6 +479,8 @@ class Blocks extends React.Component {
             initUDBlockMQTTBlocks(Blockly)      // MQTT
             initUDBlockUtils(Blockly);          // 工具类
             initUDPiPlusMiniBlocks(Blockly);    // UDPi核心板
+            initRKPiBlocks(Blockly); // RKPi
+            initUDBlockEXTBRKMFBlocks(Blockly); // RK 多功能拓展板
         }
 
         // 回调函数

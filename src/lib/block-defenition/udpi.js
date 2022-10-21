@@ -1,6 +1,7 @@
 import BlockUtility from "scratch-vm/src/engine/block-utility"
 
 export default (Blockly) => {
+    Blockly.GlobalBoardType = 'esp32';
     // 启动
     Blockly.Python['udblockUDPi_espstart'] = function(block){
         Blockly.Python.definitions_['import_udrobot_basic'] = 'from udrobot.basic import *';
