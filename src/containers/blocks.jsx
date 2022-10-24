@@ -61,6 +61,7 @@ import initUDBlockUtils from '../lib/block-defenition/udblock-utils'
 import initUDPiPlusMiniBlocks from '../lib/block-defenition/udpi_plus_miniV1'
 import initRKPiBlocks from '../lib/block-defenition/rkpi'
 import initUDBlockEXTBRKMFBlocks from '../lib/block-defenition/udblockextb_rk_mf'
+import initUDBlockEXTBRKIOTBlocks from '../lib/block-defenition/udblockextb_rk_iot'
 
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
@@ -481,6 +482,7 @@ class Blocks extends React.Component {
             initUDPiPlusMiniBlocks(Blockly);    // UDPi核心板
             initRKPiBlocks(Blockly); // RKPi
             initUDBlockEXTBRKMFBlocks(Blockly); // RK 多功能拓展板
+            initUDBlockEXTBRKIOTBlocks(Blockly); // RK 语音拓展板
         }
 
         // 回调函数

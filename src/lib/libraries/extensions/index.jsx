@@ -62,6 +62,7 @@ import udpiMiniIconURL from './udblock/ESP32核心板.png';
 import udpiCarProIconURL from './udblock/四驱小车pro.png';
 import rkpiIconURL from './udblock/RKPi.png';
 import rkExtbMFIconURL from './udblock/RK多功能拓展版.png';
+import rkExtbIOTIconURL from './udblock/RK语音拓展版.png';
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
 import udpiInsetIconURL from './bitmeta.svg';
 
@@ -99,6 +100,32 @@ export default [
         insetIconURL: udpiInsetIconURL,
         description: (
             "支持外接6个RJ11设备以及自带2个电机和4个舵机接口，含有7个触摸按键，支持外接电源供电。"
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: '#'
+    },
+    {
+        name: 'RK智能语音拓展板',
+        extensionId: 'udblockEXTBRKIOT',
+        collaborator: 'UDRobot',
+        iconURL: rkExtbIOTIconURL,
+        insetIconURL: udpiInsetIconURL,
+        description: (
+            "支持外接4个RJ11设备，支持外接指纹模块和SD卡，支持在线、离线的语音识别以及在线语音听写，电池供电。"
         ),
         featured: true,
         disabled: false,
