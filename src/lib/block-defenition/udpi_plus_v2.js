@@ -69,6 +69,33 @@ export default (Blockly) => {
         }
         return code
     }
+    Blockly.Python['udblockUDPiPlusV2_whenButtonPressedIRQ'] = function (block) {
+        // console.log(Blockly.Xml.blockToDom(block))
+        // console.log(block.toString())
+        // console.log(block.nextConnection)
+
+        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
+        var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
+        // var functionName = Blockly.Python.provideFunction_(
+        //     `OnBtn${btn}PressedFunc`,
+        //     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(v):',
+        //         '  hcsr04 = HCSR04(trigger_pin=trig_pin, echo_pin=echo_pin)',
+        //         '  distance = hcsr04.distance_cm()',
+        //         '  return distance']);
+        var codeInit = `# 按钮${btn}点击事件\n`
+        codeInit += 'def ' + `OnBtn${btn}PressedFuncIRQ` + '(pin):\n'
+        codeInit += statements
+        Blockly.Python.definitions_[`btn_binding_${btn}`] = codeInit;
+
+        var code = ''
+        if (btn == 0){
+            code = `\nudpi_button.set_callback(btn='A', callback=OnBtn${btn}PressedFuncIRQ)\n`
+        }
+        if (btn == 2){
+            code = `\nudpi_button.set_callback(btn='B', callback=OnBtn${btn}PressedFuncIRQ)\n`
+        }
+        return code
+    }
     Blockly.Python['udblockUDPiPlusV2_menu_buttons'] = function (block) {
         var btn = block.getFieldValue("buttons");
         // console.log(btn)
