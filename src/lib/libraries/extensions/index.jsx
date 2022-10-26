@@ -60,6 +60,7 @@ import udpiExtbMFIconURLV2 from './udblock/udblock 多功能拓展版v2.png';
 import udpiExtbSMIconURLV2 from './udblock/udblock 电机拓展版v2.png';
 import udpiMiniIconURL from './udblock/ESP32核心板.png';
 import udpiCarProIconURL from './udblock/四驱小车pro.png';
+import rkNanoIconURL from './udblock/小凌派Nano.png';
 import rkpiIconURL from './udblock/RKPi.png';
 import rkExtbMFIconURL from './udblock/RK多功能拓展版.png';
 import rkExtbIOTIconURL from './udblock/RK语音拓展版.png';
@@ -75,6 +76,30 @@ export default [
         iconURL: rkpiIconURL,
         insetIconURL: udpiInsetIconURL,
         description: "基于RK2206定制的多功能主板",
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: '#'
+    },
+    {
+        name: 'RK2206 Nano',
+        extensionId: 'udblockRKNano',
+        collaborator: 'UDRobot',
+        iconURL: rkNanoIconURL,
+        insetIconURL: udpiInsetIconURL,
+        description: "小凌派Nano",
         featured: true,
         disabled: false,
         bluetoothRequired: true,
