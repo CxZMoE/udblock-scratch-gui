@@ -64,6 +64,7 @@ import rkNanoIconURL from './udblock/小凌派Nano.png';
 import rkpiIconURL from './udblock/RKPi.png';
 import rkExtbMFIconURL from './udblock/RK多功能拓展版.png';
 import rkExtbIOTIconURL from './udblock/RK语音拓展版.png';
+import utilToolClassIconURL from './udblock/拓展工具类.png';
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
 import udpiInsetIconURL from './lzdz.png';
 
@@ -537,7 +538,7 @@ export default [
         name: '拓展工具类',
         extensionId: 'udblockUtils',
         collaborator: '比特元科技',
-        iconURL: udpiExtbIOTIconURL,
+        iconURL: utilToolClassIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
             "工具类，目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。"
