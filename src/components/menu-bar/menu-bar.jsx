@@ -781,7 +781,7 @@ class MenuBar extends React.Component {
                                                 />
                                             </MenuItem> */}
 
-                                            <MenuItem onClick={() => {
+                                            {/* <MenuItem onClick={() => {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
@@ -825,7 +825,7 @@ class MenuBar extends React.Component {
                                                     description="Menu bar item for turning on turbo mode"
                                                     id="gui.menuBar.factoryUpdate"
                                                 />
-                                            </MenuItem>
+                                            </MenuItem> */}
                                             <MenuItem onClick={() => {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
