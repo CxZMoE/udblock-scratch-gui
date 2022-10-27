@@ -65,7 +65,7 @@ import rkpiIconURL from './udblock/RKPi.png';
 import rkExtbMFIconURL from './udblock/RK多功能拓展版.png';
 import rkExtbIOTIconURL from './udblock/RK语音拓展版.png';
 // import udpiInsetIconURL from './udblock-udpi/udpi-small.svg';
-import udpiInsetIconURL from './bitmeta.svg';
+import udpiInsetIconURL from './lzdz.png';
 
 
 export default [
