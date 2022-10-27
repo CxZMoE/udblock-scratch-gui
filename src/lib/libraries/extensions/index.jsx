@@ -72,10 +72,10 @@ export default [
     {
         name: 'RKPi主板',
         extensionId: 'udblockRKPi',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: rkpiIconURL,
         insetIconURL: udpiInsetIconURL,
-        description: "基于RK2206定制的多功能主板",
+        description: "基于RK2206芯片组，使用开源鸿蒙系统开发，支持MicroPython编程。可与多种拓展板自由组合，尽情发挥创作的激情。",
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -96,10 +96,10 @@ export default [
     {
         name: 'RK2206 Nano',
         extensionId: 'udblockRKNano',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: rkNanoIconURL,
         insetIconURL: udpiInsetIconURL,
-        description: "小凌派Nano",
+        description: "基于RK2206芯片组，使用开源鸿蒙系统开发，支持MicroPython编程。可与多种拓展板自由组合，尽情发挥创作的激情。",
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -120,7 +120,7 @@ export default [
     {
         name: 'RK多功能拓展板',
         extensionId: 'udblockEXTBRKMF',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: rkExtbMFIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -146,7 +146,7 @@ export default [
     {
         name: 'RK智能语音拓展板',
         extensionId: 'udblockEXTBRKIOT',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: rkExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -169,106 +169,106 @@ export default [
         ),
         helpLink: '#'
     },
+    // {
+    //     name: 'UDPi 开发板 V2',
+    //     extensionId: 'udblockUDPiV2',
+    //     collaborator: '比特元科技',
+    //     iconURL: udpiIconURLV2,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: "板载5x5 RGB 矩阵，可以连接多种外设。",
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: '#'
+    // },
+    // {
+    //     name: 'UDPi Plus开发板 V2',
+    //     extensionId: 'udblockUDPiPlusV2',
+    //     collaborator: '比特元科技',
+    //     iconURL: udpiplusIconURLV2,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: '#'
+    // },
+    // {
+    //     name: 'UDPi 开发板',
+    //     extensionId: 'udblockUDPi',
+    //     collaborator: '比特元科技',
+    //     iconURL: udpiIconURL,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: "板载5x5 RGB 矩阵，可以连接多种外设。",
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: '#'
+    // },
+    // {
+    //     name: 'UDPi Plus开发板',
+    //     extensionId: 'udblockUDPiPlus',
+    //     collaborator: '比特元科技',
+    //     iconURL: udpiplusIconURL,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: '#'
+    // },
     {
-        name: 'UDPi 开发板 V2',
-        extensionId: 'udblockUDPiV2',
-        collaborator: 'UDRobot',
-        iconURL: udpiIconURLV2,
-        insetIconURL: udpiInsetIconURL,
-        description: "板载5x5 RGB 矩阵，可以连接多种外设。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi Plus开发板 V2',
-        extensionId: 'udblockUDPiPlusV2',
-        collaborator: 'UDRobot',
-        iconURL: udpiplusIconURLV2,
-        insetIconURL: udpiInsetIconURL,
-        description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi 开发板',
-        extensionId: 'udblockUDPi',
-        collaborator: 'UDRobot',
-        iconURL: udpiIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: "板载5x5 RGB 矩阵，可以连接多种外设。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi Plus开发板',
-        extensionId: 'udblockUDPiPlus',
-        collaborator: 'UDRobot',
-        iconURL: udpiplusIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 多功能拓展板',
+        name: '多功能拓展板',
         extensionId: 'udblockEXTBMF',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbMFIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -292,9 +292,9 @@ export default [
         helpLink: '#'
     },
     // {
-    //     name: 'UDBlock 电机拓展板 V2',
+    //     name: '电机拓展板 V2',
     //     extensionId: 'udblockEXTBSMV2',
-    //     collaborator: 'UDRobot',
+    //     collaborator: '比特元科技',
     //     iconURL: udpiExtbSMIconURLV2,
     //     insetIconURL: udpiInsetIconURL,
     //     description: (
@@ -322,9 +322,9 @@ export default [
     //     helpLink: '#'
     // },
     // {
-    //     name: 'UDBlock 多功能拓展板 V2',
+    //     name: '多功能拓展板 V2',
     //     extensionId: 'udblockEXTBMFV2',
-    //     collaborator: 'UDRobot',
+    //     collaborator: '比特元科技',
     //     iconURL: udpiExtbMFIconURLV2,
     //     insetIconURL: udpiInsetIconURL,
     //     description: (
@@ -352,9 +352,9 @@ export default [
     //     helpLink: '#'
     // },
     {
-        name: 'UDBlock 电机拓展板',
+        name: '电机拓展板',
         extensionId: 'udblockEXTBSM',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbSMIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -378,9 +378,9 @@ export default [
         helpLink: '#'
     },
     {
-        name: 'UDBlock IO拓展板',
+        name: 'IO拓展板',
         extensionId: 'udblockEXTBIO',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbIOIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -403,36 +403,36 @@ export default [
         ),
         helpLink: '#'
     },
+    // {
+    //     name: 'UDPi+最小系统板V1',
+    //     extensionId: 'udblockUDPiMiniV1',
+    //     collaborator: '比特元科技',
+    //     // iconURL: udpiplusIconURLV2,
+    //     // insetIconURL: udpiInsetIconURL,
+    //     iconURL: udpiMiniIconURL,
+    //     insetIconURL: udpiInsetIconURL,
+    //     description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板，支持外接8个RJ11设备，支持外接电源供电。",
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: '#'
+    // },
     {
-        name: 'UDPi+最小系统板V1',
-        extensionId: 'udblockUDPiMiniV1',
-        collaborator: 'UDRobot',
-        // iconURL: udpiplusIconURLV2,
-        // insetIconURL: udpiInsetIconURL,
-        iconURL: udpiMiniIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板，支持外接8个RJ11设备，支持外接电源供电。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 小车拓展板Pro',
+        name: '小车拓展板Pro',
         extensionId: 'udblockEXTBCarPro',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiCarProIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -456,9 +456,9 @@ export default [
         helpLink: '#'
     },
     {
-        name: 'UDBlock 小车拓展板',
+        name: '小车拓展板',
         extensionId: 'udblockEXTBCar',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbCarIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -482,9 +482,9 @@ export default [
         helpLink: '#'
     },
     {
-        name: 'UDBlock 双驱小车拓展板',
+        name: '双驱小车拓展板',
         extensionId: 'udblockEXTBCar2D',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbCar2WDIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -508,9 +508,9 @@ export default [
         helpLink: '#'
     },
     {
-        name: 'UDBlock 智能语音拓展板',
+        name: '智能语音拓展板',
         extensionId: 'udblockEXTBIOT',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -534,9 +534,9 @@ export default [
         helpLink: '#'
     },
     {
-        name: 'UDBlock 拓展类',
+        name: '拓展工具类',
         extensionId: 'udblockUtils',
-        collaborator: 'UDRobot',
+        collaborator: '比特元科技',
         iconURL: udpiExtbIOTIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
@@ -560,9 +560,9 @@ export default [
         helpLink: '#'
     },
     // {
-    //     name: 'UDBlock MQTT拓展库',
+    //     name: 'MQTT拓展库',
     //     extensionId: 'udblockMQTT',
-    //     collaborator: 'UDRobot',
+    //     collaborator: '比特元科技',
     //     iconURL: udpiExtbSMIconURL,
     //     insetIconURL: udpiInsetIconURL,
     //     description: (
@@ -589,302 +589,302 @@ export default [
     //     ),
     //     helpLink: '#'
     // },
-    {
-        name: 'micro:bit主板',
-        extensionId: 'udblockMicrobit',
-        collaborator: 'micro:bit UDRobot',
-        iconURL: microbitIconURL,
-        insetIconURL: microbitInsetIconURL,
-        description: (
-            "Micro-Bit主板适配MicroPython"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: microbitConnectionIconURL,
-        connectionSmallIconURL: microbitConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their micro:bit."
-                id="gui.extension.microbit.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/microbit'
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Music"
-                description="Name for the 'Music' extension"
-                id="gui.extension.music.name"
-            />
-        ),
-        extensionId: 'music',
-        iconURL: musicIconURL,
-        insetIconURL: musicInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Play instruments and drums."
-                description="Description for the 'Music' extension"
-                id="gui.extension.music.description"
-            />
-        ),
-        featured: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Pen"
-                description="Name for the 'Pen' extension"
-                id="gui.extension.pen.name"
-            />
-        ),
-        extensionId: 'pen',
-        iconURL: penIconURL,
-        insetIconURL: penInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Draw with your sprites."
-                description="Description for the 'Pen' extension"
-                id="gui.extension.pen.description"
-            />
-        ),
-        featured: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Video Sensing"
-                description="Name for the 'Video Sensing' extension"
-                id="gui.extension.videosensing.name"
-            />
-        ),
-        extensionId: 'videoSensing',
-        iconURL: videoSensingIconURL,
-        insetIconURL: videoSensingInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Sense motion with the camera."
-                description="Description for the 'Video Sensing' extension"
-                id="gui.extension.videosensing.description"
-            />
-        ),
-        featured: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Text to Speech"
-                description="Name for the Text to Speech extension"
-                id="gui.extension.text2speech.name"
-            />
-        ),
-        extensionId: 'text2speech',
-        collaborator: 'Amazon Web Services',
-        iconURL: text2speechIconURL,
-        insetIconURL: text2speechInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Make your projects talk."
-                description="Description for the Text to speech extension"
-                id="gui.extension.text2speech.description"
-            />
-        ),
-        featured: true,
-        internetConnectionRequired: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Translate"
-                description="Name for the Translate extension"
-                id="gui.extension.translate.name"
-            />
-        ),
-        extensionId: 'translate',
-        collaborator: 'Google',
-        iconURL: translateIconURL,
-        insetIconURL: translateInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Translate text into many languages."
-                description="Description for the Translate extension"
-                id="gui.extension.translate.description"
-            />
-        ),
-        featured: true,
-        internetConnectionRequired: true
-    },
-    {
-        name: 'Makey Makey',
-        extensionId: 'makeymakey',
-        collaborator: 'JoyLabz',
-        iconURL: makeymakeyIconURL,
-        insetIconURL: makeymakeyInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Make anything into a key."
-                description="Description for the 'Makey Makey' extension"
-                id="gui.extension.makeymakey.description"
-            />
-        ),
-        featured: true
-    },
-    {
-        name: 'micro:bit',
-        extensionId: 'microbit',
-        collaborator: 'micro:bit',
-        iconURL: microbitIconURL,
-        insetIconURL: microbitInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Connect your projects with the world."
-                description="Description for the 'micro:bit' extension"
-                id="gui.extension.microbit.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: microbitConnectionIconURL,
-        connectionSmallIconURL: microbitConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their micro:bit."
-                id="gui.extension.microbit.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/microbit'
-    },
-    {
-        name: 'LEGO MINDSTORMS EV3',
-        extensionId: 'ev3',
-        collaborator: 'LEGO',
-        iconURL: ev3IconURL,
-        insetIconURL: ev3InsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Build interactive robots and more."
-                description="Description for the 'LEGO MINDSTORMS EV3' extension"
-                id="gui.extension.ev3.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: ev3ConnectionIconURL,
-        connectionSmallIconURL: ev3ConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting. Make sure the pin on your EV3 is set to 1234."
-                description="Message to help people connect to their EV3. Must note the PIN should be 1234."
-                id="gui.extension.ev3.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/ev3'
-    },
-    {
-        name: 'LEGO BOOST',
-        extensionId: 'boost',
-        collaborator: 'LEGO',
-        iconURL: boostIconURL,
-        insetIconURL: boostInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Bring robotic creations to life."
-                description="Description for the 'LEGO BOOST' extension"
-                id="gui.extension.boost.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: true,
-        connectionIconURL: boostConnectionIconURL,
-        connectionSmallIconURL: boostConnectionSmallIconURL,
-        connectionTipIconURL: boostConnectionTipIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their BOOST."
-                id="gui.extension.boost.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/boost'
-    },
-    {
-        name: 'LEGO Education WeDo 2.0',
-        extensionId: 'wedo2',
-        collaborator: 'LEGO',
-        iconURL: wedo2IconURL,
-        insetIconURL: wedo2InsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Build with motors and sensors."
-                description="Description for the 'LEGO WeDo 2.0' extension"
-                id="gui.extension.wedo2.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: true,
-        connectionIconURL: wedo2ConnectionIconURL,
-        connectionSmallIconURL: wedo2ConnectionSmallIconURL,
-        connectionTipIconURL: wedo2ConnectionTipIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their WeDo."
-                id="gui.extension.wedo2.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/wedo'
-    },
-    {
-        name: 'Go Direct Force & Acceleration',
-        extensionId: 'gdxfor',
-        collaborator: 'Vernier',
-        iconURL: gdxforIconURL,
-        insetIconURL: gdxforInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Sense push, pull, motion, and spin."
-                description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-                id="gui.extension.gdxfor.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/vernier'
-    },
+    // {
+    //     name: 'micro:bit主板',
+    //     extensionId: 'udblockMicrobit',
+    //     collaborator: 'micro:bit 比特元科技',
+    //     iconURL: microbitIconURL,
+    //     insetIconURL: microbitInsetIconURL,
+    //     description: (
+    //         "Micro-Bit主板适配MicroPython"
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: false,
+    //     useAutoScan: false,
+    //     connectionIconURL: microbitConnectionIconURL,
+    //     connectionSmallIconURL: microbitConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their micro:bit."
+    //             id="gui.extension.microbit.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/microbit'
+    // },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Music"
+    //             description="Name for the 'Music' extension"
+    //             id="gui.extension.music.name"
+    //         />
+    //     ),
+    //     extensionId: 'music',
+    //     iconURL: musicIconURL,
+    //     insetIconURL: musicInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Play instruments and drums."
+    //             description="Description for the 'Music' extension"
+    //             id="gui.extension.music.description"
+    //         />
+    //     ),
+    //     featured: true
+    // },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Pen"
+    //             description="Name for the 'Pen' extension"
+    //             id="gui.extension.pen.name"
+    //         />
+    //     ),
+    //     extensionId: 'pen',
+    //     iconURL: penIconURL,
+    //     insetIconURL: penInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Draw with your sprites."
+    //             description="Description for the 'Pen' extension"
+    //             id="gui.extension.pen.description"
+    //         />
+    //     ),
+    //     featured: true
+    // },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Video Sensing"
+    //             description="Name for the 'Video Sensing' extension"
+    //             id="gui.extension.videosensing.name"
+    //         />
+    //     ),
+    //     extensionId: 'videoSensing',
+    //     iconURL: videoSensingIconURL,
+    //     insetIconURL: videoSensingInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Sense motion with the camera."
+    //             description="Description for the 'Video Sensing' extension"
+    //             id="gui.extension.videosensing.description"
+    //         />
+    //     ),
+    //     featured: true
+    // },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Text to Speech"
+    //             description="Name for the Text to Speech extension"
+    //             id="gui.extension.text2speech.name"
+    //         />
+    //     ),
+    //     extensionId: 'text2speech',
+    //     collaborator: 'Amazon Web Services',
+    //     iconURL: text2speechIconURL,
+    //     insetIconURL: text2speechInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Make your projects talk."
+    //             description="Description for the Text to speech extension"
+    //             id="gui.extension.text2speech.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     internetConnectionRequired: true
+    // },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Translate"
+    //             description="Name for the Translate extension"
+    //             id="gui.extension.translate.name"
+    //         />
+    //     ),
+    //     extensionId: 'translate',
+    //     collaborator: 'Google',
+    //     iconURL: translateIconURL,
+    //     insetIconURL: translateInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Translate text into many languages."
+    //             description="Description for the Translate extension"
+    //             id="gui.extension.translate.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     internetConnectionRequired: true
+    // },
+    // {
+    //     name: 'Makey Makey',
+    //     extensionId: 'makeymakey',
+    //     collaborator: 'JoyLabz',
+    //     iconURL: makeymakeyIconURL,
+    //     insetIconURL: makeymakeyInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Make anything into a key."
+    //             description="Description for the 'Makey Makey' extension"
+    //             id="gui.extension.makeymakey.description"
+    //         />
+    //     ),
+    //     featured: true
+    // },
+    // {
+    //     name: 'micro:bit',
+    //     extensionId: 'microbit',
+    //     collaborator: 'micro:bit',
+    //     iconURL: microbitIconURL,
+    //     insetIconURL: microbitInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Connect your projects with the world."
+    //             description="Description for the 'micro:bit' extension"
+    //             id="gui.extension.microbit.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     connectionIconURL: microbitConnectionIconURL,
+    //     connectionSmallIconURL: microbitConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their micro:bit."
+    //             id="gui.extension.microbit.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/microbit'
+    // },
+    // {
+    //     name: 'LEGO MINDSTORMS EV3',
+    //     extensionId: 'ev3',
+    //     collaborator: 'LEGO',
+    //     iconURL: ev3IconURL,
+    //     insetIconURL: ev3InsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Build interactive robots and more."
+    //             description="Description for the 'LEGO MINDSTORMS EV3' extension"
+    //             id="gui.extension.ev3.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     connectionIconURL: ev3ConnectionIconURL,
+    //     connectionSmallIconURL: ev3ConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting. Make sure the pin on your EV3 is set to 1234."
+    //             description="Message to help people connect to their EV3. Must note the PIN should be 1234."
+    //             id="gui.extension.ev3.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/ev3'
+    // },
+    // {
+    //     name: 'LEGO BOOST',
+    //     extensionId: 'boost',
+    //     collaborator: 'LEGO',
+    //     iconURL: boostIconURL,
+    //     insetIconURL: boostInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Bring robotic creations to life."
+    //             description="Description for the 'LEGO BOOST' extension"
+    //             id="gui.extension.boost.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: true,
+    //     connectionIconURL: boostConnectionIconURL,
+    //     connectionSmallIconURL: boostConnectionSmallIconURL,
+    //     connectionTipIconURL: boostConnectionTipIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their BOOST."
+    //             id="gui.extension.boost.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/boost'
+    // },
+    // {
+    //     name: 'LEGO Education WeDo 2.0',
+    //     extensionId: 'wedo2',
+    //     collaborator: 'LEGO',
+    //     iconURL: wedo2IconURL,
+    //     insetIconURL: wedo2InsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Build with motors and sensors."
+    //             description="Description for the 'LEGO WeDo 2.0' extension"
+    //             id="gui.extension.wedo2.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: true,
+    //     connectionIconURL: wedo2ConnectionIconURL,
+    //     connectionSmallIconURL: wedo2ConnectionSmallIconURL,
+    //     connectionTipIconURL: wedo2ConnectionTipIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their WeDo."
+    //             id="gui.extension.wedo2.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/wedo'
+    // },
+    // {
+    //     name: 'Go Direct Force & Acceleration',
+    //     extensionId: 'gdxfor',
+    //     collaborator: 'Vernier',
+    //     iconURL: gdxforIconURL,
+    //     insetIconURL: gdxforInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Sense push, pull, motion, and spin."
+    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
+    //             id="gui.extension.gdxfor.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     internetConnectionRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     connectionIconURL: gdxforConnectionIconURL,
+    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their force and acceleration sensor."
+    //             id="gui.extension.gdxfor.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/vernier'
+    // },
 
 ];
