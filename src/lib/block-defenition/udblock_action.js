@@ -329,12 +329,13 @@ export default (board = "") => {
                 }
                 output.push(linePixel)
             }
-            // console.log(output)
+            console.log(output)
 
             var output2 = []
             // R
             for (var i = 0; i < output.length; i++) {
                 var linePixel = output[i]
+                console.log(linePixel)
                 var lineHex = 0x00
                 // console.log(linePixel)
                 for (var j = 0; j < linePixel.length; j++) {

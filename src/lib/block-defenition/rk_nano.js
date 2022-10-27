@@ -1,34 +1,35 @@
 export default (Blockly) => {
-    Blockly.GlobalBoardType = 'esp32';
+    // Blockly.GlobalBoardType = 'rk';
+    // EXTB_LIST.bt = 'rk'
     // 启动
-    Blockly.Python['udblockUDPiV2_espstart'] = function (block) {
-        Blockly.Python.definitions_['import_udrobot_basic'] = 'from udrobot.basic import *';
+    Blockly.Python['udblockRKNano_rknanostart'] = function (block) {
+        Blockly.Python.definitions_['import_rkpi_basic'] = 'from udrobot.udpi import *';
         return '';
     }
     // 打印
-    Blockly.Python['udblockUDPiV2_print'] = function (block) {
+    Blockly.Python['udblockRKNano_print'] = function (block) {
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC)
         return 'print(' + text + ')\n';
     }
     // 系统资源
-    Blockly.Python['udblockUDPiV2_getStartTime'] = function (block) {
+    Blockly.Python['udblockRKNano_getStartTime'] = function (block) {
         return ["time.ticks_ms()", Blockly.Python.ORDER_ATOMIC]
     }
-    Blockly.Python['udblockUDPiV2_delay_ms'] = function (block) {
+    Blockly.Python['udblockRKNano_delay_ms'] = function (block) {
         var time = Blockly.Python.valueToCode(block, "TIME", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(time) < 0) {
             time = 0;
         }
         return `time.sleep_ms(${time})\n`
     }
-    Blockly.Python['udblockUDPiV2_delay_us'] = function (block) {
+    Blockly.Python['udblockRKNano_delay_us'] = function (block) {
         var time = Blockly.Python.valueToCode(block, "TIME", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(time) < 0) {
             time = 0;
         }
         return `time.sleep_us(${time})\n`
     }
-    Blockly.Python['udblockUDPiV2_delay_s'] = function (block) {
+    Blockly.Python['udblockRKNano_delay_s'] = function (block) {
         var time = Blockly.Python.valueToCode(block, "TIME", Blockly.Python.ORDER_ATOMIC)
         if (parseInt(time) < 0) {
             time = 0;
@@ -38,7 +39,7 @@ export default (Blockly) => {
 
 
     // 当主板按钮按下时
-    Blockly.Python['udblockUDPiV2_whenButtonPressed'] = function (block) {
+    Blockly.Python['udblockRKNano_whenButtonPressed'] = function (block) {
         // console.log(Blockly.Xml.blockToDom(block))
         // console.log(block.toString())
         // console.log(block.nextConnection)
@@ -57,42 +58,10 @@ export default (Blockly) => {
         Blockly.Python.definitions_[`btn_binding_${btn}`] = codeInit;
 
         var code = ''
-        if (btn == 0) {
-            code = `\nudpi_button.set_callback_no_irq(btn='A', callback=OnBtn${btn}PressedFunc)\n`
-        }
-        if (btn == 2) {
-            code = `\nudpi_button.set_callback_no_irq(btn='B', callback=OnBtn${btn}PressedFunc)\n`
-        }
+        code = `\nudpi_button.set_callback_no_irq(btn=${btn}, callback=OnBtn${btn}PressedFunc)\n`
         return code
     }
-    Blockly.Python['udblockUDPiV2_whenButtonPressedIRQ'] = function (block) {
-        // console.log(Blockly.Xml.blockToDom(block))
-        // console.log(block.toString())
-        // console.log(block.nextConnection)
-
-        var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
-        var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
-        // var functionName = Blockly.Python.provideFunction_(
-        //     `OnBtn${btn}PressedFunc`,
-        //     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(v):',
-        //         '  hcsr04 = HCSR04(trigger_pin=trig_pin, echo_pin=echo_pin)',
-        //         '  distance = hcsr04.distance_cm()',
-        //         '  return distance']);
-        var codeInit = `# 按钮${btn}点击事件\n`
-        codeInit += 'def ' + `OnBtn${btn}PressedFuncIRQ` + '(pin):\n'
-        codeInit += statements
-        Blockly.Python.definitions_[`btn_binding_${btn}`] = codeInit;
-
-        var code = ''
-        if (btn == 0){
-            code = `\nudpi_button.set_callback(btn='A', callback=OnBtn${btn}PressedFuncIRQ)\n`
-        }
-        if (btn == 2){
-            code = `\nudpi_button.set_callback(btn='B', callback=OnBtn${btn}PressedFuncIRQ)\n`
-        }
-        return code
-    }
-    Blockly.Python['udblockUDPiV2_menu_buttons'] = function (block) {
+    Blockly.Python['udblockRKNano_menu_buttons'] = function (block) {
         var btn = block.getFieldValue("buttons");
         // console.log(btn)
         return [`${btn}`, Blockly.Python.ORDER_ATOMIC]
@@ -100,32 +69,32 @@ export default (Blockly) => {
 
 
     // // 读取环境光传感器
-    // Blockly.Python["udblockUDPiV2_readAmbientLightSensor"] = function (block) {
+    // Blockly.Python["udblockRKNano_readAmbientLightSensor"] = function (block) {
     //     
     //     var code = `udpi_sensor.GetAmbientLight(${39})`;
     //     return [code, Blockly.Python.ORDER_ATOMIC];
     // }
     // // 读取声音传感器
-    // Blockly.Python["udblockUDPiV2_readSoundSensor"] = function (block) {
+    // Blockly.Python["udblockRKNano_readSoundSensor"] = function (block) {
     //     
     //     var code = `udpi_sensor.GetMicrophone(${36})`;
     //     return [code, Blockly.Python.ORDER_ATOMIC];
     // }
     // // 读取陀螺仪传感器
-    // Blockly.Python["udblockUDPiV2_readGryoSensor"] = function (block) {
+    // Blockly.Python["udblockRKNano_readGryoSensor"] = function (block) {
     //     
     //     var code = `imu.ICM20602.ICM_Get_Gyroscope()`
     //     return [code, Blockly.Python.ORDER_ATOMIC]
     // }
     // // 读取加速度传感器
-    // Blockly.Python["udblockUDPiV2_readAccelSensor"] = function (block) {
+    // Blockly.Python["udblockRKNano_readAccelSensor"] = function (block) {
     //     
     //     var code = `imu.ICM20602.ICM_Get_Accelerometer()`
     //     return [code, Blockly.Python.ORDER_ATOMIC]
     // }
 
     // 控制启用主板RGB
-    Blockly.Python['udblockUDPiV2_openOnBoardRGB'] = function (block) {
+    Blockly.Python['udblockRKNano_openOnBoardRGB'] = function (block) {
 
         // 
         var rgb_pin = "17"
@@ -134,7 +103,7 @@ export default (Blockly) => {
     }
 
     // 控制启用禁用RGB
-    Blockly.Python['udblockUDPiV2_closeOnBoardRGB'] = function (block) {
+    Blockly.Python['udblockRKNano_closeOnBoardRGB'] = function (block) {
 
         // 
         // 修复WS2312B反转问题
@@ -143,12 +112,12 @@ export default (Blockly) => {
     }
 
     // 控制主板RGB显示颜色
-    Blockly.Python["udblockUDPiV2_setRGBDraw"] = function (block) {
+    Blockly.Python["udblockRKNano_setRGBDraw"] = function (block) {
 
         var rgb_board_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         return `rgb_board_light.clear((${rgb_board_color}))\n`
     }
-    Blockly.Python["udblockUDPiV2_setRGBLineDraw"] = function (block) {
+    Blockly.Python["udblockRKNano_setRGBLineDraw"] = function (block) {
 
         var line = Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)
         var rgb_board_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
@@ -176,7 +145,7 @@ for i in range(0, 6):
 `
         }
     }
-    Blockly.Python["udblockUDPiV2_setRGBLineSingleDraw"] = function (block) {
+    Blockly.Python["udblockRKNano_setRGBLineSingleDraw"] = function (block) {
 
 
         var rgb_board_index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
@@ -210,7 +179,7 @@ rgb_board_light.value(${start + (rgb_board_index - 1)}, ${rgb_board_color})\n
 `
         }
     }
-    Blockly.Python['udblockUDPiV2_setRGBLineSingleOnlyDraw'] = function (block) {
+    Blockly.Python['udblockRKNano_setRGBLineSingleOnlyDraw'] = function (block) {
 
         // 
         var rgb_board_index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC)
@@ -247,35 +216,35 @@ rgb_board_light.value(${start + (rgb_board_index-1)}, ${rgb_board_color})\n
         }
         return `rgb_board_light[${rgb_line}-1].switch_singal(${rgb_board_index}-1, ${rgb_board_reversed})\n`;
     }
-    Blockly.Python['udblockUDPiV2_getWiFiStatus'] = function () {
+    Blockly.Python['udblockRKNano_getWiFiStatus'] = function () {
 
         return ['udpi_wifi.is_connected()', Blockly.Python.ORDER_ATOMIC]
     }
-    Blockly.Python['udblockUDPiV2_closeConnectToWiFi'] = function (block) {
+    Blockly.Python['udblockRKNano_closeConnectToWiFi'] = function (block) {
 
         var code = `udpi_wifi.disconnect()\n`;
         return code;
     }
-    Blockly.Python['udblockUDPiV2_setConnectToWiFi'] = function (block) {
+    Blockly.Python['udblockRKNano_setConnectToWiFi'] = function (block) {
 
         var ssid = Blockly.Python.valueToCode(block, 'SSID', Blockly.Python.ORDER_ATOMIC);
         var password = Blockly.Python.valueToCode(block, 'PSK', Blockly.Python.ORDER_ATOMIC);
         var code = `udpi_wifi.connect(${ssid}, ${password})\n`;
         return code;
     };
-    Blockly.Python['udblockUDPiV2_openWiFiAP'] = function (block) {
+    Blockly.Python['udblockRKNano_openWiFiAP'] = function (block) {
 
         var ssid = Blockly.Python.valueToCode(block, 'SSID', Blockly.Python.ORDER_ATOMIC);
         var psk = Blockly.Python.valueToCode(block, 'PSK', Blockly.Python.ORDER_ATOMIC);
         var code = `udpi_wifi.set_mode_ap(${ssid}, ${psk}, 13)\n`
         return code;
     }
-    Blockly.Python['udblockUDPiV2_udpClientSent'] = function (block) {
+    Blockly.Python['udblockRKNano_udpClientSent'] = function (block) {
 
         var msg = Blockly.Python.valueToCode(block, 'MSG', Blockly.Python.ORDER_ATOMIC);
         return `udpi_wifi.broadcast(${msg})\n`
     }
-    Blockly.Python['udblockUDPiV2_udpClientReceiveEvent'] = function (block) {
+    Blockly.Python['udblockRKNano_udpClientReceiveEvent'] = function (block) {
 
         //var msg = Blockly.Python.valueToCode(block, 'MSG', Blockly.Python.ORDER_ATOMIC);
         var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
@@ -289,14 +258,14 @@ rgb_board_light.value(${start + (rgb_board_index-1)}, ${rgb_board_color})\n
         var code = `udpi_wifi.start_udp_server(${functionName})\n`;
         return code;
     }
-    Blockly.Python['udblockUDPiV2_udpClientReceivedText'] = function (block) {
+    Blockly.Python['udblockRKNano_udpClientReceivedText'] = function (block) {
 
         var code = `udp_msg`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
 
     // 控制主板蜂鸣器播放
-    Blockly.Python['udblockUDPiV2_setBuzzerPlay'] = function (block) {
+    Blockly.Python['udblockRKNano_setBuzzerPlay'] = function (block) {
 
 
         var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC).replaceAll("'", "")
@@ -305,7 +274,7 @@ rgb_board_light.value(${start + (rgb_board_index-1)}, ${rgb_board_color})\n
         var code = `udpi_buzzer.play(udpi_buzzer.${sound},${mode})\n`;
         return code;
     };
-    Blockly.Python['udblockUDPiV2_setBuzzerPlayMidi'] = function (block) {
+    Blockly.Python['udblockRKNano_setBuzzerPlayMidi'] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
 
         var sound = Blockly.Python.valueToCode(block, 'SOUND', Blockly.Python.ORDER_ATOMIC)
@@ -314,17 +283,17 @@ rgb_board_light.value(${start + (rgb_board_index-1)}, ${rgb_board_color})\n
         }
         return `udpi_buzzer.play_midi(${sound})\n`;
     };
-    Blockly.Python['udblockUDPiV2_menu_buzzerSounds'] = function (block) {
+    Blockly.Python['udblockRKNano_menu_buzzerSounds'] = function (block) {
         var code = Blockly.Python.quote_(block.getFieldValue("buzzerSounds"));
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
-    Blockly.Python['udblockUDPiV2_menu_buzzerPitches'] = function (block) {
+    Blockly.Python['udblockRKNano_menu_buzzerPitches'] = function (block) {
         var code = Blockly.Python.quote_(block.getFieldValue("buzzerPitches"));
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
 
 
-    Blockly.Python['udblockUDPiV2_setBuzzerStop'] = function (block) {
+    Blockly.Python['udblockRKNano_setBuzzerStop'] = function (block) {
 
 
         var code = `udpi_buzzer.stop()\n`;

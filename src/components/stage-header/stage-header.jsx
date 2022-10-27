@@ -68,7 +68,7 @@ const StageHeaderComponent = function (props) {
         const stageButton = showBranding ? (
             <div className={styles.embedScratchLogo}>
                 <a
-                    href="https://forum.udrobot.net/"
+                    href="#"
                     rel="noopener noreferrer"
                     target="_blank"
                 >

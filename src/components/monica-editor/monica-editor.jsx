@@ -40,7 +40,7 @@ class MonicaEditor extends React.Component {
                 // console.log("加载Monaco编辑器")
                 const wrapper = document.getElementById("monaco-editor-dom");
                 const properties = {
-                    value: "# UDRobot MicroPython Code",
+                    value: "# PocketProgamming MicroPython Code",
                     language: "python",
                     minimap: {
                         enabled: false
@@ -168,7 +168,7 @@ class MonicaEditor extends React.Component {
                             maxHeight: "calc(50% - 20px)",
                         }}
                         commands={{
-                            blog: () => window.open("https://forum.udrobot.net/", "_blank"),
+                            blog: () => window.open("#", "_blank"),
                             popup: () => alert('Terminal Program'),
                             run: {
                                 method: (args, print, aa) => {

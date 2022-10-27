@@ -6,6 +6,13 @@ function loadCamaraDefinition(board=""){
         var code = `myCamara = Camera(${port})\n`;
         return code;
     };
+    Blockly.Python[`${board}_initCameraI2C`] = function (block) {
+        
+        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
+    
+        var code = `myCamara = Camera(udpi_i2c)\n`;
+        return code;
+    };
     Blockly.Python[`${board}_resetCamera`] = function (block) {
         Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
         var code = `myCamara.Reset()\n`;
@@ -228,9 +235,9 @@ function loadCamaraDefinition(board=""){
         var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
         var code = ''
         if (action == "START"){
-            code =`myCamara.start_mode_recognize()\n`;
+            code =`myCamara.start_selfobject()\n`;
         }else if (action == "SWITCH"){
-            code = `myCamara.switch_mode_recognize()\n`;
+            code = `myCamara.start_selfobject()\n`;
         }
 
         return code;
@@ -239,7 +246,7 @@ function loadCamaraDefinition(board=""){
     Blockly.Python[`${board}_doAISaveModeDectection`] = function (block) {
         Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
         var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
-        var code =`myCamara.save_mode_recognize(${name})\n`;
+        var code =`myCamara.save_selfobject(${name})\n`;
 
         return code;
     };
@@ -250,9 +257,9 @@ function loadCamaraDefinition(board=""){
         var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
         var code = ''
         if (action == "START"){
-            code =`myCamara.load_mode_recognize(${name})\n`;
+            code =`myCamara.load_selfobject(${name})\n`;
         }else if (action == "SWITCH"){
-            code = `myCamara.switch_load_mode_recognize(${name})\n`;
+            code = `myCamara.load_selfobject(${name})\n`;
         }
 
         return code;

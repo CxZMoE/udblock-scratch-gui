@@ -194,7 +194,8 @@ const GUIComponent = props => {
                     <Loader messageId="gui.loader.creating" />
                 ) : null}
                 {isRendererSupported ? null : (
-                    <WebGlModal isRtl={isRtl} />
+                    // <WebGlModal isRtl={isRtl} />
+                    null
                 )}
                 {tipsLibraryVisible ? (
                     <TipsLibrary />
