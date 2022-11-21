@@ -107,6 +107,13 @@ export default (Blockly) => {
         var code = `${text}`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_diyLineCommand`] = function (block) {
+        Blockly.Python.definitions_[`import_json`] = 'import json';
+        var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC);
+        text = String(text).substring(1,String(text).length-1)
+        var code = `${text}\n`;
+        return code
+    }
     Blockly.Python[`${board}_jsonInitObj`] = function (block) {
         Blockly.Python.definitions_[`import_json`] = 'import json';
         var obj = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
