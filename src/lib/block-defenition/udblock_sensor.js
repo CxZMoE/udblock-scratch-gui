@@ -116,7 +116,7 @@ function loadSensorDefinition(board = "") {
     Blockly.Python[`${board}_readRouteFindingSensor`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
-        var code = `udpi_sensor.GetRouteFinder(${pin})`;
+        var code = `udpi_sensor.GetRouteFinder(${parseInt(pin)})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
     Blockly.Python[`${board}_readFlameSensor`] = function (block) {

@@ -384,4 +384,24 @@ export default (Blockly) => {
         var code = `myCarPro.startClient()\n`;
         return code
     };
+    Blockly.Python[`${id}_startArmUp`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var code = `myCarPro.armUp()\n`;
+        return code
+    };
+    Blockly.Python[`${id}_startArmDown`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var code = `myCarPro.armDown()\n`;
+        return code
+    };
+    Blockly.Python[`${id}_sendMsg`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var msg = Blockly.Python.valueToCode(block, "MSG", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.client.send(${msg})\n`;
+        return code
+    };
+
 }
