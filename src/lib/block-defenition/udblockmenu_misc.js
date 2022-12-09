@@ -88,6 +88,43 @@ function loadMiscMenu(board=""){
     Blockly.Python[`${board}_menu_motor_module_servo_menu`] = function (block) {
         return [block.getFieldValue("motor_module_servo_menu"), Blockly.Python.ORDER_ATOMIC]
     }
+
+    // 摄像头菜单
+    Blockly.Python[`${board}_menu_kcamera_modes`] = function (block) {
+        return [block.getFieldValue("kcamera_modes"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 物体识别菜单
+    Blockly.Python[`${board}_menu_kcamera_obj_results`] = function (block) {
+        return [block.getFieldValue("kcamera_obj_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 分类识别菜单
+    Blockly.Python[`${board}_menu_kcamera_classifier_results`] = function (block) {
+        return [block.getFieldValue("kcamera_classifier_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 人脸识别菜单
+    Blockly.Python[`${board}_menu_kcamera_face_results`] = function (block) {
+        return [block.getFieldValue("kcamera_face_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 二维码识别菜单
+    Blockly.Python[`${board}_menu_kcamera_qrcode_results`] = function (block) {
+        return [block.getFieldValue("kcamera_qrcode_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 条形码识别菜单
+    Blockly.Python[`${board}_menu_kcamera_barcode_results`] = function (block) {
+        return [block.getFieldValue("kcamera_barcode_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 标签识别菜单
+    Blockly.Python[`${board}_menu_kcamera_april_results`] = function (block) {
+        return [block.getFieldValue("kcamera_april_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 颜色识别菜单
+    Blockly.Python[`${board}_menu_kcamera_color_results`] = function (block) {
+        return [block.getFieldValue("kcamera_color_results"), Blockly.Python.ORDER_ATOMIC]
+    }
+    // 循迹识别菜单
+     Blockly.Python[`${board}_menu_kcamera_route_results`] = function (block) {
+        return [block.getFieldValue("kcamera_route_results"), Blockly.Python.ORDER_ATOMIC]
+    }
 }
 
 

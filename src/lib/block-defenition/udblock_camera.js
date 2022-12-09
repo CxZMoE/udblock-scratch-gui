@@ -1,297 +1,87 @@
 function loadCamaraDefinition(board=""){
-    Blockly.Python[`${board}_initCamera`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC)
-        var code = `myCamara = Camera(${port})\n`;
-        return code;
-    };
     Blockly.Python[`${board}_initCameraI2C`] = function (block) {
-        
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-    
-        var code = `myCamara = Camera(udpi_i2c)\n`;
-        return code;
-    };
-    Blockly.Python[`${board}_resetCamera`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = `myCamara.Reset()\n`;
-        return code;
-    };
-    Blockly.Python[`${board}_doFaceDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_face()\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_face()\n`;
-        }
-
-        return code;
-    };
-    Blockly.Python[`${board}_doObjectDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_object()\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_object()\n`;
-        }
-
-        return code;
-    };
-    // Blockly.Python[`${board}_doModeObjectDectection`] = function (block) {
-    //     Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-    //     var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-    //     var code = ''
-    //     if (action == "START"){
-    //         code =`myCamara.start_selfobject()\n`;
-    //     }else if (action == "SWITCH"){
-    //         code = `myCamara.switch_selfobject()\n`;
-    //     }
-
-    //     return code;
-    // };
-    
-    Blockly.Python[`${board}_doImageDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var method = Blockly.Python.valueToCode(block, "IMGMETHOD", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_image('${method}')\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_image('${method}')\n`;
-        }
-
-        return code;
-    };
-    Blockly.Python[`${board}_doQrcodeDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_qrcode()\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_qrcode()\n`;
-        }
-
-        return code;
-    };
-    Blockly.Python[`${board}_doColorDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_color('${color}')\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_color('${color}')\n`;
-        }
-
-        return code;
-    };
-    Blockly.Python[`${board}_doColorDectectionMannual`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_color(${color})\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_color(${color})\n`;
-        }
-
-        return code;
-    };
-    Blockly.Python[`${board}_doCross`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.doCross()\n`;
-
-        return code
-    };
-    Blockly.Python[`${board}_getColorDectectionResult`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var result = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        code = `myCamara.GetColorPosition()[${result}]`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_getFaceDectectionResult`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.GetIsFace()`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_getQrcodeString`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.GetQrcodeStr()`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_getObjectDectectionResult`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var code = ''
-        code = `myCamara.GetObjectResult()`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_getModeObjectDectectionResult`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.GetSelfLearningResult()`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_getCrossCount`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var result = Blockly.Python.valueToCode(block, "FVALUE", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        code = `myCamara.GetCrossCount(${result})`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_getCrossPixel`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var result = Blockly.Python.valueToCode(block, "FVALUE", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        code = `myCamara.GetIsCrossing(${result})`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    };
-    Blockly.Python[`${board}_addFace`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        code = `myCamara.AddFace(${name})\n`;
-
-        return code;
-    };
-    Blockly.Python[`${board}_delFace`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        
-        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        code = `myCamara.DelFace(${name})\n`;
-
-        return code;
-    };
-    Blockly.Python[`${board}_delAllFace`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-            
-        var code = ''
-        code = `myCamara.DelAllFace()\n`;
-
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var code = `myCamera = Camera(udpi_i2c)\n`;
         return code;
     };
     Blockly.Python[`${board}_switchMode`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var mode = Blockly.Python.valueToCode(block, "MODE", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        code = `myCamara.ChangeMode("${mode}")\n`;
-
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var mode = Blockly.Python.valueToCode(block, "MODE", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCamera.SwitchMode('${mode}', 'start', None)\n`;
         return code;
     };
-    // AI颜色识别
-    Blockly.Python[`${board}_doAIColorDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_ai_color()\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_ai_color()\n`;
-        }
-
-        return code;
-    };
-    Blockly.Python[`${board}_getAIColorDectectionResultColor`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.GetAIColorResult()`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
+    /* 物体识别 */
+    Blockly.Python[`${board}_getObjResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('obj', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
     };
 
-    // AI自学习物体识别
-    Blockly.Python[`${board}_doAIModeDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_selfobject()\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.start_selfobject()\n`;
-        }
-
-        return code;
+    /* 分类识别 */
+    Blockly.Python[`${board}_enterClassifierTraining`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        return `myCamera.UpdateClassName(${name})\n`;
     };
-    // 保存模式
-    Blockly.Python[`${board}_doAISaveModeDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
-        var code =`myCamara.save_selfobject(${name})\n`;
-
-        return code;
+    Blockly.Python[`${board}_loadClassifier`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        return `myCamera.LoadClassName(${name})\n`;
     };
-    // 加载模式
-    Blockly.Python[`${board}_doAILoadModeDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.load_selfobject(${name})\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.load_selfobject(${name})\n`;
-        }
-
-        return code;
-    };
-    // 结果
-    Blockly.Python[`${board}_getAIModeDetectionResult`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.GetSelfLearningResult()`;
-
-        return [code, Blockly.Python.ORDER_ATOMIC];
+    Blockly.Python[`${board}_getClassifierResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('self_learning', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
     };
 
-    // 口罩识别 
-    Blockly.Python[`${board}_doMaskDectection`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var action = Blockly.Python.valueToCode(block, "ACTION", Blockly.Python.ORDER_ATOMIC)
-        var code = ''
-        if (action == "START"){
-            code =`myCamara.start_mask()\n`;
-        }else if (action == "SWITCH"){
-            code = `myCamara.switch_mask()\n`;
-        }
-
-        return code;
+    /* 人脸识别 */
+    Blockly.Python[`${board}_getFaceResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('face', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
     };
-    Blockly.Python[`${board}_getMaskResult`] = function (block) {
-        Blockly.Python.definitions_['import_carmera'] = 'from udrobot.sensor.camera.camera import Camera';
-        var code = ''
-        code = `myCamara.GetMaskResult()`;
+    Blockly.Python[`${board}_addFaceByName`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var name = Blockly.Python.valueToCode(block, "NAME", Blockly.Python.ORDER_ATOMIC);
+        return `myCamera.AddFaceId(${name})\n`;
+    };
+    Blockly.Python[`${board}_delFaceSample`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        return `myCamera.DelFaceSample()\n`;
+    };
 
-        return [code, Blockly.Python.ORDER_ATOMIC];
+    /* 二维码识别 */
+    Blockly.Python[`${board}_getQRCodeResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('qrcode', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
+    };
+    /* 条形码识别 */
+    Blockly.Python[`${board}_getBarCodeResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('barcode', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    /* 标签识别 */
+    Blockly.Python[`${board}_getAprilTagResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('april_tag', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    /* 颜色识别 */
+    Blockly.Python[`${board}_getColorResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('color', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    /* 循迹识别 */
+    Blockly.Python[`${board}_getRouteResult`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
+        return [`myCamera.GetItem('route', '${result_type}')`, Blockly.Python.ORDER_ATOMIC];
     };
 }
 

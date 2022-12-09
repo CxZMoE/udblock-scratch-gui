@@ -39,27 +39,37 @@ export default (Blockly) => {
 
 
     // 当主板按钮按下时
-    Blockly.Python['udblockRKNano_whenButtonPressed'] = function (block) {
+    // Blockly.Python['udblockRKNano_whenButtonPressed'] = function (block) {
+    //     // console.log(Blockly.Xml.blockToDom(block))
+    //     // console.log(block.toString())
+    //     // console.log(block.nextConnection)
+
+    //     var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
+    //     var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
+    //     // var functionName = Blockly.Python.provideFunction_(
+    //     //     `OnBtn${btn}PressedFunc`,
+    //     //     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(v):',
+    //     //         '  hcsr04 = HCSR04(trigger_pin=trig_pin, echo_pin=echo_pin)',
+    //     //         '  distance = hcsr04.distance_cm()',
+    //     //         '  return distance']);
+    //     var codeInit = `# 按钮${btn}点击事件\n`
+    //     codeInit += 'def ' + `OnBtn${btn}PressedFunc` + '():\n'
+    //     codeInit += statements
+    //     Blockly.Python.definitions_[`btn_binding_${btn}`] = codeInit;
+
+    //     var code = ''
+    //     code = `\nudpi_button.set_callback_no_irq(btn=${btn}, callback=OnBtn${btn}PressedFunc)\n`
+    //     return code
+    // }
+    Blockly.Python['udblockRKNano_getButtonValue'] = function (block) {
         // console.log(Blockly.Xml.blockToDom(block))
         // console.log(block.toString())
         // console.log(block.nextConnection)
 
         var btn = Blockly.Python.valueToCode(block, "BTN", Blockly.Python.ORDER_ATOMIC)
-        var statements = Blockly.Python.statementToCode(block, 'SUBSTACK')
-        // var functionName = Blockly.Python.provideFunction_(
-        //     `OnBtn${btn}PressedFunc`,
-        //     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(v):',
-        //         '  hcsr04 = HCSR04(trigger_pin=trig_pin, echo_pin=echo_pin)',
-        //         '  distance = hcsr04.distance_cm()',
-        //         '  return distance']);
-        var codeInit = `# 按钮${btn}点击事件\n`
-        codeInit += 'def ' + `OnBtn${btn}PressedFunc` + '():\n'
-        codeInit += statements
-        Blockly.Python.definitions_[`btn_binding_${btn}`] = codeInit;
-
         var code = ''
-        code = `\nudpi_button.set_callback_no_irq(btn=${btn}, callback=OnBtn${btn}PressedFunc)\n`
-        return code
+        code = `(udpi_button.button(${btn}))`
+        return [code, Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python['udblockRKNano_menu_buttons'] = function (block) {
         var btn = block.getFieldValue("buttons");

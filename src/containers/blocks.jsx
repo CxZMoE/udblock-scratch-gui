@@ -513,7 +513,7 @@ class Blocks extends React.Component {
         let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
         Blockly.Python._content = codeSplit.join("")
         //console.log(codeText)
-        this.props.updatePyCode('# UDRobot MicroPython Code\n' + Blockly.Python._content)
+        this.props.updatePyCode('# Bitmeta MicroPython Code\n' + Blockly.Python._content)
         //console.log(this.props.pycode)
 
         if (this.props.editor != undefined) {
