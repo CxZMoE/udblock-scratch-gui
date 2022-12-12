@@ -41,24 +41,9 @@ import initArduinoGenerator from '../lib/block-generators/arduino'
 
 // 方块定义文件
 import initDefaultBlocks from '../lib/block-defenition/default'
-import initUDPiBlocks from '../lib/block-defenition/udpi'
-import initUDPiPlusBlocks from '../lib/block-defenition/udpi_plus'
-import initUDPiV2Blocks from '../lib/block-defenition/udpi_v2'
-import initUDPiPlusV2Blocks from '../lib/block-defenition/udpi_plus_v2'
-import initUDBlockEXTBMFBlocks from '../lib/block-defenition/udblockextb_mf'
-import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
-import initUDBlockEXTBMFV2Blocks from '../lib/block-defenition/udblockextb_mf_v2'
-import initUDBlockEXTBSMV2Blocks from '../lib/block-defenition/udblockextb_sm_v2'
-import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
-import initUDBlockCarProBlocks from '../lib/block-defenition/udblockextb_carpro'
-import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
-import initUDBlockCar2DBlocks from '../lib/block-defenition/udblockextb_car_2d'
-import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
-import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
 import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 import initUDBlockUtils from '../lib/block-defenition/udblock-utils'
-import initUDPiPlusMiniBlocks from '../lib/block-defenition/udpi_plus_miniV1'
 import initRKPiBlocks from '../lib/block-defenition/rkpi'
 import initRKNanoBlocks from '../lib/block-defenition/rk_nano'
 import initUDBlockEXTBRKMFBlocks from '../lib/block-defenition/udblockextb_rk_mf'
@@ -463,28 +448,12 @@ class Blocks extends React.Component {
         // 初始化默认方块
         {
             initDefaultBlocks(Blockly); // 默认Blockly方块
-            initUDPiBlocks(Blockly);            // UDPi
-            initUDPiPlusBlocks(Blockly);        // UDPi Plus
-            initUDPiV2Blocks(Blockly);          // UDPi V2
-            initUDPiPlusV2Blocks(Blockly);      // UDPi Plus V2
-            initUDBlockEXTBMFBlocks(Blockly);   // 多功能拓展板
-            initUDBlockEXTBSMBlocks(Blockly);   // 电机拓展板
-            initUDBlockEXTBMFV2Blocks(Blockly); // 多功能拓展板V2
-            initUDBlockEXTBSMV2Blocks(Blockly); // 电机拓展板V2
-            initUDBlockEXTBIOBlocks(Blockly);   // IO拓展板
-            initUDBlockCarBlocks(Blockly);      // 四驱小车拓展板[旧]
-            initUDBlockCarProBlocks(Blockly);   // 四驱小车拓展板Pro
-            initUDBlockCar2DBlocks(Blockly);    // 双驱小车拓展板
-            initUDBlockCamerabBlocks(Blockly);  // 摄像头模组
-            initUDBlockIOTBlocks(Blockly);      // 智能语音拓展板
-            initUDBlockMicrobitBlocks(Blockly); // Microbit适配
+
             initUDBlockMQTTBlocks(Blockly)      // MQTT
             initUDBlockUtils(Blockly);          // 工具类
-            initUDPiPlusMiniBlocks(Blockly);    // UDPi核心板
-            initRKPiBlocks(Blockly); // RKPi
             initRKNanoBlocks(Blockly); // RK2206 Nano
-            initUDBlockEXTBRKMFBlocks(Blockly); // RK 多功能拓展板
-            initUDBlockEXTBRKIOTBlocks(Blockly); // RK 语音拓展板
+            initUDBlockEXTBRKMFBlocks(Blockly); // RK多功能拓展板
+            initUDBlockEXTBRKIOTBlocks(Blockly); // RK语音拓展板
         }
 
         // 回调函数
