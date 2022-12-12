@@ -100,7 +100,7 @@ class GUI extends React.Component {
                 currentVersion = version
                 networkVersion = currentVersion
                 // 获取网络版本
-                fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_sw.json').then(res => {
+                fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_lzdz.json').then(res => {
                     var data = res.json()
                     return data
                 }).then(data => {
@@ -109,9 +109,11 @@ class GUI extends React.Component {
                     if (currentVersion == networkVersion) {
                         //console.log('版本不需要更新')
                         this.props.makeHidePrompt(true)
-                    } else if (data.beta){  // 显示BETA更新提示图标
+                        
+                    } else{  // 显示BETA更新提示图标
                         //console.log('版本需要更新')
                         this.props.makeShowPrompt(true)
+                        document.getElementById('update-btn').innerText = `发现更新 v${data.version}`
                     }
                 })
             })

@@ -479,8 +479,8 @@ class Blocks extends React.Component {
             Blockly.Python._content += '\nwhile True:\n' +
                 '  for c in btn_callbacks:c()\n'
         }
-        let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
-        Blockly.Python._content = codeSplit.join("")
+        // let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
+        // Blockly.Python._content = codeSplit.join("")
         //console.log(codeText)
         this.props.updatePyCode('# Bitmeta MicroPython Code\n' + Blockly.Python._content)
         //console.log(this.props.pycode)

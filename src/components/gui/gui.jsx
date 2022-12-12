@@ -379,12 +379,12 @@ const GUIComponent = props => {
                                         <Watermark />
                                     </Box> */}
                                     </TabPanel>
-                                    <TabPanel className={tabClassNames.tabPanel}>
+                                    {/* <TabPanel className={tabClassNames.tabPanel}>
                                         {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
                                     </TabPanel>
                                     <TabPanel className={tabClassNames.tabPanel}>
                                         {soundsTabVisible ? <SoundTab vm={vm} /> : null}
-                                    </TabPanel>
+                                    </TabPanel> */}
                                 </Tabs>
                                 {backpackVisible && editorMode == "default" ? (
                                 <Backpack host={backpackHost} />
