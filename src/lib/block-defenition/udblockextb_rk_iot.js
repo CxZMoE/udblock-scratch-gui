@@ -1,4 +1,4 @@
-import { extb_rk_iot } from "../../../../udblock-scratch-vm/src/util/extb-definitions";
+import { extb_rk_iot } from "scratch-vm/src/util/extb-definitions";
 import loadMiscMenu from "./udblockmenu_misc";
 import loadActionDefinition from "./udblock_action";
 import loadCamaraDefinition from "./udblock_camera";

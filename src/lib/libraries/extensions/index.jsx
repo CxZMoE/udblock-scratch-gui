@@ -45,7 +45,7 @@ export default [
         iconURL: rkExtbMFIconURL,
         insetIconURL: udpiInsetIconURL,
         description: (
-            "支持外接6个RJ11设备以及自带2个电机和4个舵机接口，含有7个触摸按键，支持外接电源供电。"
+            "支持外接6个RJ11设备以及自带4个电机和4个舵机接口，支持外接电源供电。"
         ),
         featured: true,
         disabled: false,

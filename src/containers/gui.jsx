@@ -49,10 +49,12 @@ class GUI extends React.Component {
     constructor(props) {
         super(props)
         Blockly = VMScratchBlocks(props.vm);
+        
     }
 
 
     componentDidMount() {
+        document.body.style.zoom = '90%'
         document.body.style.overflowY = "hidden"
         document.body.style.overflowX = "hidden"
         setIsScratchDesktop(this.props.isScratchDesktop);

@@ -1,5 +1,5 @@
 import { c } from "bowser";
-import { extb_mf } from "../../../../udblock-scratch-vm/src/util/extb-definitions";
+import { extb_mf } from "scratch-vm/src/util/extb-definitions";
 import loadMiscMenu from "./udblockmenu_misc";
 import loadActionDefinition from "./udblock_action";
 import loadCamaraDefinition from "./udblock_camera";

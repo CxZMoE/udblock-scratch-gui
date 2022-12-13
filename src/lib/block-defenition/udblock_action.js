@@ -1,4 +1,4 @@
-import { extb_mf } from "../../../../udblock-scratch-vm/src/util/extb-definitions";
+import { extb_mf } from "scratch-vm/src/util/extb-definitions";
 
 export default (board = "") => {
     /* 执行器开始 */

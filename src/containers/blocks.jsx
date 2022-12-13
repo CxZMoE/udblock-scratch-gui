@@ -40,11 +40,11 @@ import initPythonGenerator from '../lib/block-generators/python'
 import initArduinoGenerator from '../lib/block-generators/arduino'
 
 // 方块定义文件
+// 'http://127.0.0.1:12888/board_definition/default.js'
 import initDefaultBlocks from '../lib/block-defenition/default'
-import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
+
 import initUDBlockMQTTBlocks from '../lib/block-defenition/udblock_mqtt'
 import initUDBlockUtils from '../lib/block-defenition/udblock-utils'
-import initRKPiBlocks from '../lib/block-defenition/rkpi'
 import initRKNanoBlocks from '../lib/block-defenition/rk_nano'
 import initUDBlockEXTBRKMFBlocks from '../lib/block-defenition/udblockextb_rk_mf'
 import initUDBlockEXTBRKIOTBlocks from '../lib/block-defenition/udblockextb_rk_iot'
@@ -447,13 +447,13 @@ class Blocks extends React.Component {
         initArduinoGenerator();
         // 初始化默认方块
         {
-            initDefaultBlocks(Blockly); // 默认Blockly方块
+            initDefaultBlocks(Blockly);             // 默认Blockly方块
 
-            initUDBlockMQTTBlocks(Blockly)      // MQTT
-            initUDBlockUtils(Blockly);          // 工具类
-            initRKNanoBlocks(Blockly); // RK2206 Nano
-            initUDBlockEXTBRKMFBlocks(Blockly); // RK多功能拓展板
-            initUDBlockEXTBRKIOTBlocks(Blockly); // RK语音拓展板
+            initUDBlockMQTTBlocks(Blockly)          // MQTT
+            initUDBlockUtils(Blockly);              // 工具类
+            initRKNanoBlocks(Blockly);              // RK2206 Nano
+            initUDBlockEXTBRKMFBlocks(Blockly);     // RK多功能拓展板
+            initUDBlockEXTBRKIOTBlocks(Blockly);    // RK语音拓展板
         }
 
         // 回调函数

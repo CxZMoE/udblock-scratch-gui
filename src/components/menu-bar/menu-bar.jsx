@@ -689,7 +689,7 @@ class MenuBar extends React.Component {
                                         {this.restoreOptionMessage(deletedItem)}
                                     </MenuItem>
                                 )}</DeletionRestorer>
-                                <MenuSection>
+                                {/* <MenuSection>
                                     <TurboMode>{(toggleTurboMode, { turboMode }) => (
                                         <MenuItem onClick={toggleTurboMode}>
                                             {turboMode ? (
@@ -707,7 +707,7 @@ class MenuBar extends React.Component {
                                             )}
                                         </MenuItem>
                                     )}</TurboMode>
-                                </MenuSection>
+                                </MenuSection> */}
                             </MenuBarMenu>
                         </div>
                         {this.props.editorMode == "code" ? (
@@ -897,7 +897,7 @@ class MenuBar extends React.Component {
                                             place={this.props.isRtl ? 'left' : 'right'}
                                             onRequestClose={this.props.onRequestCloseSystem}
                                         >
-                                            <MenuSection>
+                                            {/* <MenuSection>
                                                 <MenuItem onClick={() => {
                                                     // console.log(this.props.pycode)
                                                     var terminal = this.props.terminal
@@ -917,7 +917,7 @@ class MenuBar extends React.Component {
                                                         id="gui.menuBar.checkUpdate"
                                                     />
                                                 </MenuItem>
-                                            </MenuSection>
+                                            </MenuSection> */}
                                             <MenuSection>
                                                 <MenuItem onClick={() => {
                                                     // console.log(this.props.pycode)
