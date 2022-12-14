@@ -248,13 +248,19 @@ class MenuBar extends React.Component {
 
     handleUpdate() {
         // 请求更新
-        fetch('http://127.0.0.1:12888/open', {
-            method: 'post', headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                url: 'https://forum.udrobot.net/thread/2'
+        fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_pocket_sw.json').then((res) => {
+            var data = res.json()
+            return data
+        }).then((data)=>{
+            document.getElementById('update-btn').innerText = `发现更新 v${data.version}`
+            fetch('http://127.0.0.1:12888/open', {
+                method: 'post', headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    url: data.url
+                })
             })
         }
         )
@@ -1080,7 +1086,7 @@ class MenuBar extends React.Component {
                             <MenuItem>
                                 <ModeButton
                                     id={"update-btn"}
-                                    title={"发现BETA更新"}
+                                    title={"发现更新"}
                                     className={classNames(
                                         styles.menuBarItem
                                     )}

@@ -18,6 +18,13 @@ function loadSensorDefinition(board = "") {
         var code = `udpi_sensor.GetMicrophone(${pin})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_readPyroelecticSensor`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);
+        var threhold = Blockly.Python.valueToCode(block, "THREHOLD", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_sensor.GetPyroelectricResult(${pin}, threhold=${threhold})`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
     Blockly.Python[`${board}_readSmartGrayscaleSensor`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var pin = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC);

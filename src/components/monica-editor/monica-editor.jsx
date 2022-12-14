@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { getStageDimensions } from '../../lib/screen-utils.js';
 
 // Monaco 编辑器 Loader
-import loader from "@monaco-editor/loader";
+import { loader } from "@monaco-editor/react";
 import { editorCreate, editorDelete } from "../../reducers/editor-ref";
 // 文件系统
 import pseudoFileSystemPlugin from 'terminal-in-react-pseudo-file-system-plugin';
@@ -36,15 +36,25 @@ class MonicaEditor extends React.Component {
     loadMonaco() {
         try {
             // console.log("加载编辑器")
+            loader.config({ paths: { vs: "http://127.0.0.1:12888/vs/"} });
+            // loader.config({
+            //     urls: {
+            //       monacoLoader: '/vs/loader.js',
+            //       monacoBase: '/vs'
+            //     },
+            //   });
             loader.init().then(monaco => {
                 // console.log("加载Monaco编辑器")
                 const wrapper = document.getElementById("monaco-editor-dom");
                 const properties = {
-                    value: "# PocketProgamming MicroPython Code",
+                    value: "# Bitmeta MicroPython Code",
                     language: "python",
                     minimap: {
-                        enabled: false
-                    }
+                        enabled: true
+                    },
+                    fontSize: 12,
+                    // lineNumbers: 'off',
+                    theme: 'vs-light'
                 }
                 var editor = monaco.editor.create(wrapper, properties);
                 this.props.onEditorCreate(editor);
@@ -72,7 +82,7 @@ class MonicaEditor extends React.Component {
 
 
     componentDidMount() {
-        //this.loadMonaco();
+        this.loadMonaco();
 
     }
 
@@ -114,7 +124,7 @@ class MonicaEditor extends React.Component {
 
                     >
 
-                        <AceEditor
+                        {/* <AceEditor
                             mode="python"
                             theme="xcode"
                             onChange={(newText)=>{
@@ -125,20 +135,18 @@ class MonicaEditor extends React.Component {
                                 if (this.props.updatePyCode){
                                     this.props.updatePyCode(newText)
                                 }
-                                
-
                             }}
                             name="ace_editor"
                             editorProps={{ $blockScrolling: true }}
                             value={this.props.pycode}
                             height={'100%'}
                             width={'100%'}
-                            // setOptions={{
-                            //     enableBasicAutocompletion: true,
-                            //     enableLiveAutocompletion: true,
-                            //     enableSnippets: true
-                            // }}
-                        />
+                            setOptions={{
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true,
+                                enableSnippets: true
+                            }}
+                        /> */}
                     </div>
                 </Box>
 
