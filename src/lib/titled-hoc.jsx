@@ -47,7 +47,7 @@ const TitledHOC = function (WrappedComponent) {
             let newTitle = requestedTitle;
             if (newTitle === null || typeof newTitle === 'undefined') {
                 //newTitle = this.props.intl.formatMessage(messages.defaultProjectTitle);
-                newTitle = "新UDBlock工程"
+                newTitle = "新工程"
             }
             this.props.onChangedProjectTitle(newTitle);
             return newTitle;
@@ -110,5 +110,5 @@ const TitledHOC = function (WrappedComponent) {
 };
 
 export {
-    TitledHOC as default
+    TitledHOC as default,
 };

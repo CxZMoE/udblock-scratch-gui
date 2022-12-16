@@ -23,11 +23,42 @@ const messages = defineMessages({
         id: 'gui.library.allTag',
         defaultMessage: 'All',
         description: 'Label for library tag to revert to all items after filtering by tag.'
+    },
+    motherBoardLabel: {
+        defaultMessage: '主板',
+        description: 'Prompt for unoffical extension url',
+        id: 'gui.extensionLibrary.mother_board'
+    },
+    extendBoardLabel: {
+        defaultMessage: '拓展板',
+        description: 'Prompt for unoffical extension url',
+        id: 'gui.extensionLibrary.extend_board'
+    },
+    sensorLabel: {
+        defaultMessage: '传感器',
+        description: 'Prompt for unoffical extension url',
+        id: 'gui.extensionLibrary.sensor'
+    },
+    actorLabel: {
+        defaultMessage: '执行器',
+        description: 'Prompt for unoffical extension url',
+        id: 'gui.extensionLibrary.actor'
+    },
+    toolLabel: {
+        defaultMessage: '工具',
+        description: 'tool tag',
+        id: 'gui.extensionLibrary.tooltag'
     }
 });
 
 const ALL_TAG = {tag: 'all', intlLabel: messages.allTag};
-const tagListPrefix = [ALL_TAG];
+const MOTHERBOARD_TAG = {tag: '主板', intlLabel: messages.motherBoardLabel};
+const EXTEND_BOARD_TAG = {tag: '拓展板', intlLabel: messages.extendBoardLabel};
+const SENSOR_TAG = {tag: '传感器', intlLabel: messages.sensorLabel};
+const ACTOR_TAG = {tag: '执行器', intlLabel: messages.actorLabel};
+const TOOL_TAG = {tag: '工具', intlLabel: messages.toolLabel};
+const MyTags = [MOTHERBOARD_TAG, EXTEND_BOARD_TAG, SENSOR_TAG, ACTOR_TAG, TOOL_TAG];
+const tagListPrefix = [ALL_TAG].concat(MyTags);
 
 class LibraryComponent extends React.Component {
     constructor (props) {
@@ -65,7 +96,16 @@ class LibraryComponent extends React.Component {
     }
     handleSelect (id) {
         this.handleClose();
-        this.props.onItemSelected(this.getFilteredData()[id]);
+        let extData = this.getFilteredData()[id];
+        // console.log(extData);
+        // let tags = extData.tags;
+        // let extensionId = extData.extensionId;
+        
+        // console.log(tags);
+        // MyTags.filter((tag)=>{
+        //     return tag.tag == '传感器'
+        // });
+        this.props.onItemSelected(extData);
     }
     handleClose () {
         this.props.onRequestClose();

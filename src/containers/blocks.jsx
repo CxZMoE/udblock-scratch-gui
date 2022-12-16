@@ -47,8 +47,6 @@ import initUDPiV2Blocks from '../lib/block-defenition/udpi_v2'
 import initUDPiPlusV2Blocks from '../lib/block-defenition/udpi_plus_v2'
 import initUDBlockEXTBMFBlocks from '../lib/block-defenition/udblockextb_mf'
 import initUDBlockEXTBSMBlocks from '../lib/block-defenition/udblockextb_sm'
-import initUDBlockEXTBMFV2Blocks from '../lib/block-defenition/udblockextb_mf_v2'
-import initUDBlockEXTBSMV2Blocks from '../lib/block-defenition/udblockextb_sm_v2'
 import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
 import initUDBlockCarProBlocks from '../lib/block-defenition/udblockextb_carpro'
 import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
@@ -462,15 +460,13 @@ class Blocks extends React.Component {
         initArduinoGenerator();
         // 初始化默认方块
         {
-            initDefaultBlocks(Blockly); // 默认Blockly方块
+            initDefaultBlocks(Blockly);         // 默认Blockly方块
             initUDPiBlocks(Blockly);            // UDPi
             initUDPiPlusBlocks(Blockly);        // UDPi Plus
             initUDPiV2Blocks(Blockly);          // UDPi V2
             initUDPiPlusV2Blocks(Blockly);      // UDPi Plus V2
             initUDBlockEXTBMFBlocks(Blockly);   // 多功能拓展板
             initUDBlockEXTBSMBlocks(Blockly);   // 电机拓展板
-            initUDBlockEXTBMFV2Blocks(Blockly); // 多功能拓展板V2
-            initUDBlockEXTBSMV2Blocks(Blockly); // 电机拓展板V2
             initUDBlockEXTBIOBlocks(Blockly);   // IO拓展板
             initUDBlockCarBlocks(Blockly);      // 四驱小车拓展板[旧]
             initUDBlockCarProBlocks(Blockly);   // 四驱小车拓展板Pro
@@ -481,10 +477,6 @@ class Blocks extends React.Component {
             initUDBlockMQTTBlocks(Blockly)      // MQTT
             initUDBlockUtils(Blockly);          // 工具类
             initUDPiPlusMiniBlocks(Blockly);    // UDPi核心板
-            // initRKPiBlocks(Blockly); // RKPi
-            // initRKNanoBlocks(Blockly); // RK2206 Nano
-            // initUDBlockEXTBRKMFBlocks(Blockly); // RK 多功能拓展板
-            // initUDBlockEXTBRKIOTBlocks(Blockly); // RK 语音拓展板
         }
 
         // 回调函数
@@ -510,8 +502,8 @@ class Blocks extends React.Component {
             Blockly.Python._content += '\nwhile True:\n' +
                 '  for c in btn_callbacks:c()\n'
         }
-        let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
-        Blockly.Python._content = codeSplit.join("")
+        // let codeSplit = Blockly.Python._content.split("_E6_88_91_E7_9A_84_E5_8F_98_E9_87_8F = None");
+        // Blockly.Python._content = codeSplit.join("")
         //console.log(codeText)
         this.props.updatePyCode('# UDRobot MicroPython Code\n' + Blockly.Python._content)
         //console.log(this.props.pycode)

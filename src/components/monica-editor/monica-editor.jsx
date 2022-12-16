@@ -82,7 +82,7 @@ class MonicaEditor extends React.Component {
 
 
     componentDidMount() {
-        this.loadMonaco();
+        // this.loadMonaco();
 
     }
 
@@ -124,7 +124,7 @@ class MonicaEditor extends React.Component {
 
                     >
 
-                        {/* <AceEditor
+                        <AceEditor
                             mode="python"
                             theme="xcode"
                             onChange={(newText)=>{
@@ -146,7 +146,7 @@ class MonicaEditor extends React.Component {
                                 enableLiveAutocompletion: true,
                                 enableSnippets: true
                             }}
-                        /> */}
+                        />
                     </div>
                 </Box>
 

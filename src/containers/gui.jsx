@@ -43,6 +43,7 @@ import VMScratchBlocks from '../lib/blocks';
 
 
 import { makeShowPrompt, makeHidePrompt } from '../reducers/popup'
+import {setProjectTitle} from '../reducers/project-title';
 
 class GUI extends React.Component {
 
@@ -120,6 +121,46 @@ class GUI extends React.Component {
                 })
             })
         }, 2000)
+        this.loadFile();
+    }  
+    loadFile () { 
+        var x_fname = "新工程"
+        fetch('http://127.0.0.1:9098/mime').then(res=>{
+            if (res.status == 200){
+                res.blob().then((bb)=>{
+                    if (bb == null){
+                        return;
+                    }
+                    const filename = 'myfilename.sb3';
+                    // console.log(bb)
+                    var data = new File([bb], filename)
+                    var fileReader = new FileReader();
+                    fileReader.readAsArrayBuffer(data);
+                    fileReader.onloadend = (ev) => {
+                        // console.log(fileReader.result)
+                        this.props.vm.loadProject(fileReader.result).then(()=>{
+                            fetch('http://127.0.0.1:9098/mime/name').then(res=>{
+                                return res.text()
+                            }).then((value)=>{
+                                // console.log('value')
+                                // console.log(value)
+                                const matches = value.match(/^(.*)\.(sb|bmproj)[23]?$/);
+                                if (matches) {
+                                    x_fname = matches[1].substring(0, 100); // truncate project title to max 100 chars
+                                }
+                                // console.log(x_fname)
+                                this.props.onSetProjectTitle(x_fname);
+                            })
+                        })
+                    }
+                    
+                })
+            }else{
+                return null
+            }
+            
+        })
+        
     }
     componentDidUpdate(prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -162,6 +203,7 @@ class GUI extends React.Component {
             showPrompt,
             onShowPrompt,
             onHidePrompt,
+            onSetProjectTitle,
             ...componentProps
         } = this.props;
 
@@ -203,7 +245,8 @@ GUI.propTypes = {
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
-    editor: PropTypes.any
+    editor: PropTypes.any,
+    onSetProjectTitle: PropTypes.func
 };
 
 GUI.defaultProps = {
@@ -257,6 +300,7 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
     makeShowPrompt: () => dispatch(makeShowPrompt()),
     makeHidePrompt: () => dispatch(makeHidePrompt()),
+    onSetProjectTitle: title => dispatch(setProjectTitle(title)),
 });
 
 const ConnectedGUI = injectIntl(connect(

@@ -286,7 +286,7 @@ class MenuBar extends React.Component {
         document.body.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 's') {
                 this.props.vm.saveProjectSb3().then(content => {
-                    downloadBlob(this.props.projectTitle + '.sb3', content);
+                    downloadBlob(this.props.projectTitle + '.bmproj', content);
                 });
             }
 

@@ -70,553 +70,81 @@ import utilToolClassIconURL from './udblock/工具类.png';
 import udpiInsetIconURL from './bitmeta.svg';
 
 
+function NewExtensionConfig(name, id, tags, description, iconUrl,collaborator="UDRobot"){
+    return {
+        name: name,
+        tags: tags,
+        extensionId: `${id}`,
+        collaborator: 'UDRobot',
+        iconURL: iconUrl,
+        insetIconURL: udpiInsetIconURL,
+        description: (
+            description
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: gdxforConnectionIconURL,
+        connectionSmallIconURL: gdxforConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their force and acceleration sensor."
+                id="gui.extension.gdxfor.connectingMessage"
+            />
+        ),
+        helpLink: '#'
+    }
+}
+
 export default [
-    // {
-    //     name: 'RKPi主板',
-    //     extensionId: 'udblockRKPi',
-    //     collaborator: 'UDRobot',
-    //     iconURL: rkpiIconURL,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: "基于RK2206定制的多功能主板",
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    // {
-    //     name: 'RK2206 Nano',
-    //     extensionId: 'udblockRKNano',
-    //     collaborator: 'UDRobot',
-    //     iconURL: rkNanoIconURL,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: "小凌派Nano",
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    // {
-    //     name: 'RK多功能拓展板',
-    //     extensionId: 'udblockEXTBRKMF',
-    //     collaborator: 'UDRobot',
-    //     iconURL: rkExtbMFIconURL,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: (
-    //         "支持外接6个RJ11设备以及自带2个电机和4个舵机接口，含有7个触摸按键，支持外接电源供电。"
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    // {
-    //     name: 'RK智能语音拓展板',
-    //     extensionId: 'udblockEXTBRKIOT',
-    //     collaborator: 'UDRobot',
-    //     iconURL: rkExtbIOTIconURL,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: (
-    //         "支持外接4个RJ11设备，支持外接指纹模块和SD卡，支持在线、离线的语音识别以及在线语音听写，电池供电。"
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    {
-        name: 'UDPi 开发板 V2',
-        extensionId: 'udblockUDPiV2',
-        collaborator: 'UDRobot',
-        iconURL: udpiIconURLV2,
-        insetIconURL: udpiInsetIconURL,
-        description: "板载5x5 RGB 矩阵，可以连接多种外设。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi Plus开发板 V2',
-        extensionId: 'udblockUDPiPlusV2',
-        collaborator: 'UDRobot',
-        iconURL: udpiplusIconURLV2,
-        insetIconURL: udpiInsetIconURL,
-        description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi 开发板',
-        extensionId: 'udblockUDPi',
-        collaborator: 'UDRobot',
-        iconURL: udpiIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: "板载5x5 RGB 矩阵，可以连接多种外设。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi Plus开发板',
-        extensionId: 'udblockUDPiPlus',
-        collaborator: 'UDRobot',
-        iconURL: udpiplusIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 多功能拓展板',
-        extensionId: 'udblockEXTBMF',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbMFIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "支持外接6个RJ11设备以及自带2个电机和4个舵机接口，含有7个触摸按键，支持外接电源供电。"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    // {
-    //     name: 'UDBlock 电机拓展板 V2',
-    //     extensionId: 'udblockEXTBSMV2',
-    //     collaborator: 'UDRobot',
-    //     iconURL: udpiExtbSMIconURLV2,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: (
-    //         <FormattedMessage
-    //             defaultMessage="Sense push, pull, motion, and spin."
-    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-    //             id="gui.extension.gdxfor.description"
-    //         />
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    // {
-    //     name: 'UDBlock 多功能拓展板 V2',
-    //     extensionId: 'udblockEXTBMFV2',
-    //     collaborator: 'UDRobot',
-    //     iconURL: udpiExtbMFIconURLV2,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: (
-    //         <FormattedMessage
-    //             defaultMessage="Sense push, pull, motion, and spin."
-    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-    //             id="gui.extension.gdxfor.description"
-    //         />
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    {
-        name: 'UDBlock 电机拓展板',
-        extensionId: 'udblockEXTBSM',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbSMIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "RJ11和外接电机特别优化的拓展版，支持外接供电"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock IO拓展板',
-        extensionId: 'udblockEXTBIO',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbIOIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "支持外接8个RJ11设备，支持外接电源供电。"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDPi+最小系统板V1',
-        extensionId: 'udblockUDPiMiniV1',
-        collaborator: 'UDRobot',
-        // iconURL: udpiplusIconURLV2,
-        // insetIconURL: udpiInsetIconURL,
-        iconURL: udpiMiniIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: "集了UDPI基本功能和拓展版特性的为一体的最小系统板，支持外接8个RJ11设备，支持外接电源供电。",
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 小车拓展板Pro',
-        extensionId: 'udblockEXTBCarPro',
-        collaborator: 'UDRobot',
-        iconURL: udpiCarProIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "四驱小车拓展版升级版，集成多种精密传感器，可以精确的控制移动的距离和速度。支持遥控控制，电池供电"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 小车拓展板',
-        extensionId: 'udblockEXTBCar',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbCarIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "四驱小车拓展版，支持外接6个RJ11设备，以及遥控控制，电池供电。"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 双驱小车拓展板',
-        extensionId: 'udblockEXTBCar2D',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbCar2WDIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "双驱小车拓展版，支持外接6个RJ11设备，2个电机，以及遥控控制，电池供电。"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 智能语音拓展板',
-        extensionId: 'udblockEXTBIOT',
-        collaborator: 'UDRobot',
-        iconURL: udpiExtbIOTIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "支持外接4个RJ11设备，支持外接指纹模块和SD卡，支持在线、离线的语音识别以及在线语音听写，电池供电。"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    {
-        name: 'UDBlock 拓展类',
-        extensionId: 'udblockUtils',
-        collaborator: 'UDRobot',
-        iconURL: utilToolClassIconURL,
-        insetIconURL: udpiInsetIconURL,
-        description: (
-            "工具类，目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: gdxforConnectionIconURL,
-        connectionSmallIconURL: gdxforConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their force and acceleration sensor."
-                id="gui.extension.gdxfor.connectingMessage"
-            />
-        ),
-        helpLink: '#'
-    },
-    // {
-    //     name: 'UDBlock MQTT拓展库',
-    //     extensionId: 'udblockMQTT',
-    //     collaborator: 'UDRobot',
-    //     iconURL: udpiExtbSMIconURL,
-    //     insetIconURL: udpiInsetIconURL,
-    //     description: (
-    //         <FormattedMessage
-    //             defaultMessage="Sense push, pull, motion, and spin."
-    //             description="Description for the Vernier Go Direct Force and Acceleration sensor extension"
-    //             id="gui.extension.gdxfor.description"
-    //         />
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: false,
-    //     useAutoScan: false,
-    //     connectionIconURL: gdxforConnectionIconURL,
-    //     connectionSmallIconURL: gdxforConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their force and acceleration sensor."
-    //             id="gui.extension.gdxfor.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: '#'
-    // },
-    {
-        name: 'micro:bit主板',
-        extensionId: 'udblockMicrobit',
-        collaborator: 'micro:bit UDRobot',
-        iconURL: microbitIconURL,
-        insetIconURL: microbitInsetIconURL,
-        description: (
-            "Micro-Bit主板适配MicroPython"
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: false,
-        useAutoScan: false,
-        connectionIconURL: microbitConnectionIconURL,
-        connectionSmallIconURL: microbitConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their micro:bit."
-                id="gui.extension.microbit.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/microbit'
-    },
+    NewExtensionConfig('UDPi 主板 V2', 'udblockUDPiV2', ["主板"], "板载5x5 RGB 矩阵，可以连接多种外设。", udpiIconURLV2),
+    NewExtensionConfig('UDPi Plus 主板 V2', 'udblockUDPiPlusV2', ["主板"], "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。", udpiplusIconURLV2),
+    NewExtensionConfig('UDPi 主板', 'udblockUDPi', ["主板"], "板载5x5 RGB 矩阵，可以连接多种外设。", udpiIconURL),
+    NewExtensionConfig('UDPi Plus 主板', 'udblockUDPiPlus', ["主板"], "一个集成了1.3寸的OLED屏幕、多种传感器、执行器的AI智慧型主板。", udpiplusIconURL),
+    NewExtensionConfig('UDBlock 多功能拓展板', 'udblockEXTBMF', ["拓展板"], "支持外接6个RJ11设备以及自带2个电机和4个舵机接口，含有7个触摸按键，支持外接电源供电。", udpiExtbMFIconURL),
+    NewExtensionConfig('UDBlock 电机拓展板', 'udpiExtbSMIconURL', ["拓展板"], "RJ11和外接电机特别优化的拓展版，支持外接供电", udpiExtbSMIconURL),
+    NewExtensionConfig('UDBlock IO拓展板', 'udblockEXTBIO', ["拓展板"], "支持外接8个RJ11设备，支持外接电源供电。", udpiExtbIOIconURL),
+    NewExtensionConfig('UDPi+最小系统板V1', 'udblockUDPiMiniV1', ["主板"], "集了UDPI基本功能和拓展版特性的为一体的最小系统板，支持外接8个RJ11设备，支持外接电源供电。", udpiMiniIconURL),
+    NewExtensionConfig('UDBlock 小车拓展板Pro', 'udblockEXTBCarPro', ["拓展板"], "四驱小车拓展版升级版，集成多种精密传感器，可以精确的控制移动的距离和速度。支持遥控控制，电池供电", udpiCarProIconURL),
+    NewExtensionConfig('UDBlock 小车拓展板', 'udblockEXTBCar', ["拓展板"], "四驱小车拓展版，支持外接6个RJ11设备，以及遥控控制，电池供电。", udpiExtbCarIconURL),
+    NewExtensionConfig('UDBlock 双驱小车拓展板', 'udblockEXTBCar2D', ["拓展板"], "双驱小车拓展版，支持外接6个RJ11设备，2个电机，以及遥控控制，电池供电。", udpiExtbCar2WDIconURL),
+    NewExtensionConfig('UDBlock 智能语音拓展板','smart_speech', ["拓展板"], "支持外接4个RJ11设备，支持外接指纹模块和SD卡，支持在线、离线的语音识别以及在线语音听写，电池供电。", udpiExtbIOTIconURL),
+    NewExtensionConfig('UDBlock 拓展类', 'utils', ["工具"], "工具类，目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。", utilToolClassIconURL),
+    NewExtensionConfig('micro:bit主板', 'udblockMicrobit', ["主板"], "Micro-Bit主板支持MicroPython编程", microbitIconURL),
+
+    // 传感器
+    NewExtensionConfig('雨滴传感器', 'raindrop_sensor', ["传感器"], "用于检测雨滴，或者水珠的出现。", utilToolClassIconURL),
+    NewExtensionConfig('声音传感器', 'sound_sensor', ["传感器"], "检测声音的大小以及变化，返回声音大小的模拟量(0~4095)", utilToolClassIconURL),
+    NewExtensionConfig('热释电传感器', 'rypoelectric_sensor', ["传感器"], "检测人体和生物的靠近，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('智能灰度传感器', 'smart_grayscale_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('颜色识别传感器', 'color_detect_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('环境光传感器', 'light_amp_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('超声波传感器', 'sonic_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('巡线传感器', 'route_finding_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('火焰传感器', 'flame_detect_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('模拟灰度传感器', 'simulate_grayscale_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('烟雾传感器', 'smoke_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('风速传感器', 'wind_speed_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('土壤湿度传感器', 'dirt_humidity_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('防水温度传感器', 'waterproove_temp_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('DHT11传感器', 'dht11_sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('四路红外巡线传感器', 'four_channel_route_finderr', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('八按键模块', 'keyboard_module_8', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+
+    // 执行器
+    NewExtensionConfig('I2C电机模块', 'i2c_motor_module', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('四位数码管', 'digital_tube', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('RGB灯带(15灯珠)', 'rgb_stripe_15', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('步进电机模块', 'stepper_motor_module', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('继电器模块(单路)', 'replay_module_single_channel', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('继电器模块(双路)', 'relay_module_dual_channel', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('I2C表情面板', 'i2c_face_panel', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('OLED显示模组(128x64)', 'i2c_oled_ssd1306_128_64', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('比比摄像头', 'bibi_cam_k210', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
     // {
     //     name: (
     //         <FormattedMessage
