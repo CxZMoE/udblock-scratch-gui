@@ -306,9 +306,11 @@ class MenuBar extends React.Component {
         const readyToReplaceProject = this.props.confirmReadyToReplaceProject(
             this.props.intl.formatMessage(sharedMessages.replaceProjectWarning)
         );
+
         this.props.onRequestCloseFile();
         if (readyToReplaceProject) {
             this.props.onClickNew(this.props.canSave && this.props.canCreateNew);
+            fetch("http://127.0.0.1:9098/reload")
         }
         this.props.onRequestCloseFile();
     }
@@ -452,7 +454,24 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
-
+    // 重新打开窗口并加载项目
+    openProject(){
+        // create <input> element and add it to DOM
+        var inputElement = document.createElement('input');
+        inputElement.accept = '.bmproj,.sb,.sb2,.sb3';
+        inputElement.style = 'display: none;';
+        inputElement.type = 'file';
+        inputElement.onchange = (e)=>{
+            console.log(e.target.files)
+            let fname = e.target.files[0].path;
+            console.log(fname)
+            let buffer = Buffer.from(fname)
+            fetch(`http://127.0.0.1:9098/reload?name=${buffer.toString('base64')}`)
+        }; // connects to step 3
+        document.body.appendChild(inputElement);
+        // simulate a click to open file chooser dialog
+        inputElement.click();
+    }
 
     render() {
 
@@ -643,7 +662,7 @@ class MenuBar extends React.Component {
                                     )}
                                     <MenuSection>
                                         <MenuItem
-                                            onClick={this.props.onStartSelectingFileUpload}
+                                            onClick={this.openProject}
                                         >
                                             {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)}
                                         </MenuItem>
