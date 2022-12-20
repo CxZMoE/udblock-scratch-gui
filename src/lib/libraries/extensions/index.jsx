@@ -134,6 +134,7 @@ export default [
     NewExtensionConfig('DHT11传感器', 'dht11Sensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
     NewExtensionConfig('四路红外巡线传感器', 'foutChanRouteFinderSensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
     NewExtensionConfig('八路按键模块', 'eightChnKeyboardSensor', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    NewExtensionConfig('比比智慧摄像头', 'bibiCamK210', ["传感器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
 
     // 执行器
     NewExtensionConfig('I2C电机模块', 'i2cMotorModule', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
@@ -144,7 +145,7 @@ export default [
     NewExtensionConfig('继电器模块(双路)', 'relayTwoChn', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
     NewExtensionConfig('I2C表情面板', 'i2cFacePanel', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
     NewExtensionConfig('OLED显示模组(128x64)', 'oledModuleSSD1306Of128M64', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
-    NewExtensionConfig('比比智慧摄像头', 'bibiCamK210', ["执行器"], "支持学习和检测对象的灰度值，返回数字量(0/1)", utilToolClassIconURL),
+    
 
     // 工具类
     NewExtensionConfig('UDBlock 拓展类', 'udblockUtils', ["工具"], "工具类，目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。", utilToolClassIconURL),
