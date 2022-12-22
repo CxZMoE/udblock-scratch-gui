@@ -18,7 +18,10 @@ const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
-        contentBase: path.resolve(__dirname, 'build'),
+        contentBase: [
+            path.resolve(__dirname, 'build'),
+            path.resolve(__dirname, 'src/lib')
+        ],
         host: '0.0.0.0',
         port: process.env.PORT || 8601
     },
@@ -33,13 +36,14 @@ const base = {
     },
     module: {
         rules: [{
-            test: /\.jsx?$/,
+            test: /\.(jsx|js)?$/,
             loader: 'babel-loader',
             include: [
                 path.resolve(__dirname, 'src'),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
                 /node_modules[\\/]pify/,
-                /node_modules[\\/]@vernier[\\/]godirect/
+                /node_modules[\\/]@vernier[\\/]godirect/,
+                /src[\\/]lib[\\/]ace[\\/]src/
             ],
             options: {
                 // Explicitly disable babelrc so we don't catch various config
@@ -165,6 +169,10 @@ module.exports = [
                 to: 'static'
             }]),
             new CopyWebpackPlugin([{
+                from: 'src/lib/ace/src',
+                to: 'static'
+            }]),
+            new CopyWebpackPlugin([{
                 from: 'node_modules/scratch-blocks/media',
                 to: 'static/blocks-media'
             }]),
@@ -209,6 +217,10 @@ module.exports = [
                 ])
             },
             plugins: base.plugins.concat([
+                new CopyWebpackPlugin([{
+                    from: 'src/lib/ace/src',
+                    to: 'static/ace'
+                }]),
                 new CopyWebpackPlugin([{
                     from: 'node_modules/scratch-blocks/media',
                     to: 'static/blocks-media'

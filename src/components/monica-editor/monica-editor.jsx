@@ -18,7 +18,9 @@ const FileSystemPlugin = pseudoFileSystemPlugin();
 // TerminalJS
 import Terminal from '../terminal/terminal.jsx'
 import AceEditor from "react-ace";
+import * as ace from 'ace-builds/src-min-noconflict/ace'
 
+import 'ace-builds/src-noconflict/ext-language_tools'
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-xcode";
 
@@ -29,7 +31,9 @@ import VMScratchBlocks from '../../lib/blocks';
 class MonicaEditor extends React.Component {
     constructor(props) {
         super(props)
-
+        ace.config.set('basePath', '/assets/ui/');
+        ace.config.set('modePath', '');
+        ace.config.set('themePath', '');
     }
     //
 

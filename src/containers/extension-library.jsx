@@ -44,7 +44,7 @@ class ExtensionLibrary extends React.PureComponent {
         this.props.vm.emitWorkspaceUpdate();
         
         
-        console.log(this.props.vm)
+        // console.log(this.props.vm)
         // 防止重复添加同样的板子
         if (id && !item.disabled) {
             if (this.props.vm.extensionManager.isExtensionLoaded(url)) {
