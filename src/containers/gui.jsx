@@ -54,7 +54,7 @@ class GUI extends React.Component {
 
 
     componentDidMount() {
-        document.body.style.zoom = '90%'
+        // document.body.style.zoom = '90%'
         document.body.style.overflowY = "hidden"
         document.body.style.overflowX = "hidden"
         setIsScratchDesktop(this.props.isScratchDesktop);
