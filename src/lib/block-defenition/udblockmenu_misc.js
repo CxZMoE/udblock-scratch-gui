@@ -5,6 +5,18 @@ function loadMiscMenu(board=""){
     Blockly.Python[`${board}_menu_RJMenuDup`] = function (block) {
         return [block.getFieldValue("RJMenuDup"), Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_menu_RJADCMenu`] = function (block) {
+        return [block.getFieldValue("RJADCMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_menu_RJADCMenuFull`] = function (block) {
+        return [block.getFieldValue("RJADCMenuFull"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_menu_RJDigiMenu`] = function (block) {
+        return [block.getFieldValue("RJDigiMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_menu_RJI2CMenu`] = function (block) {
+        return [block.getFieldValue("RJI2CMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
     Blockly.Python[`${board}_menu_dblRelayPinYellow`] = function (block) {
         return [block.getFieldValue("dblRelayPinYellow"), Blockly.Python.ORDER_ATOMIC]
     }
@@ -45,15 +57,6 @@ function loadMiscMenu(board=""){
     }
     Blockly.Python[`${board}_menu_dataTypeMenu`] = function (block) {
         return [block.getFieldValue("dataTypeMenu"), Blockly.Python.ORDER_ATOMIC]
-    }
-    Blockly.Python[`${board}_menu_RJADCMenu`] = function (block) {
-        return [block.getFieldValue("RJADCMenu"), Blockly.Python.ORDER_ATOMIC]
-    }
-    Blockly.Python[`${board}_menu_RJADCMenuFull`] = function (block) {
-        return [block.getFieldValue("RJADCMenuFull"), Blockly.Python.ORDER_ATOMIC]
-    }
-    Blockly.Python[`${board}_menu_RJDigiMenu`] = function (block) {
-        return [block.getFieldValue("RJDigiMenu"), Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python[`${board}_menu_colorDetectMenu`] = function (block) {
         return [block.getFieldValue("colorDetectMenu"), Blockly.Python.ORDER_ATOMIC]
