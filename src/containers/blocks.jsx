@@ -51,6 +51,7 @@ import initUDBlockEXTBIOBlocks from '../lib/block-defenition/udblockextb_io'
 import initUDBlockCarProBlocks from '../lib/block-defenition/udblockextb_carpro'
 import initUDBlockCarBlocks from '../lib/block-defenition/udblockextb_car'
 import initUDBlockCar2DBlocks from '../lib/block-defenition/udblockextb_car_2d'
+import initUDBlockCar2DNewBlocks from '../lib/block-defenition/udblockextb_car_2d_new'
 import initUDBlockCamerabBlocks from '../lib/block-defenition/udblockcamerab'
 import initUDBlockIOTBlocks from '../lib/block-defenition/udblockextb_iot'
 import initUDBlockMicrobitBlocks from '../lib/block-defenition/udblock_microbit'
@@ -471,6 +472,7 @@ class Blocks extends React.Component {
             initUDBlockCarBlocks(Blockly);      // 四驱小车拓展板[旧]
             initUDBlockCarProBlocks(Blockly);   // 四驱小车拓展板Pro
             initUDBlockCar2DBlocks(Blockly);    // 双驱小车拓展板
+            initUDBlockCar2DNewBlocks(Blockly);    // 双驱小车拓展板
             initUDBlockCamerabBlocks(Blockly);  // 摄像头模组
             initUDBlockIOTBlocks(Blockly);      // 智能语音拓展板
             initUDBlockMicrobitBlocks(Blockly); // Microbit适配

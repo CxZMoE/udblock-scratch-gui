@@ -53,6 +53,7 @@ import udpiExtbSMIconURL from './udblock/udblock 电机拓展版.png';
 import udpiExtbIOIconURL from './udblock/udblock IO拓展版.png';
 import udpiExtbCarIconURL from './udblock/四驱小车主板.png';
 import udpiExtbCar2WDIconURL from './udblock/双驱小车主板.png';
+import udpiExtbCar2WDNewIconURL from './udblock/四点半双驱小车主板.png';
 import udpiExtbIOTIconURL from './udblock/语音拓展版.png';
 import udpiIconURLV2 from './udblock/udpi 开发板v2.png';
 import udpiplusIconURLV2 from './udblock/udpi plus开发板v2.png';
@@ -115,6 +116,7 @@ export default [
     NewExtensionConfig('UDBlock 小车拓展板Pro', 'udblockEXTBCarPro', ["拓展板"], "四驱小车拓展版升级版，集成多种精密传感器，可以精确的控制移动的距离和速度。支持遥控控制，电池供电", udpiCarProIconURL),
     NewExtensionConfig('UDBlock 小车拓展板', 'udblockEXTBCar', ["拓展板"], "四驱小车拓展版，支持外接6个RJ11设备，以及遥控控制，电池供电。", udpiExtbCarIconURL),
     NewExtensionConfig('UDBlock 双驱小车拓展板', 'udblockEXTBCar2D', ["拓展板"], "双驱小车拓展版，支持外接6个RJ11设备，2个电机，以及遥控控制，电池供电。", udpiExtbCar2WDIconURL),
+    NewExtensionConfig('四点半双驱小车拓展板', 'udblockEXTBCar2DNew', ["拓展板"], "双驱小车拓展版，支持外接6个RJ11设备，2个电机，以及遥控控制，电池供电。", udpiExtbCar2WDNewIconURL),
     NewExtensionConfig('UDBlock 智能语音拓展板','smart_speech', ["拓展板"], "支持外接4个RJ11设备，支持外接指纹模块和SD卡，支持在线、离线的语音识别以及在线语音听写，电池供电。", udpiExtbIOTIconURL),
     NewExtensionConfig('micro:bit主板', 'udblockMicrobit', ["主板"], "Micro-Bit主板支持MicroPython编程", microbitIconURL),
 

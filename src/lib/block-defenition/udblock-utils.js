@@ -191,7 +191,7 @@ export default (Blockly) => {
         //         '  hcsr04 = HCSR04(trigger_pin=trig_pin, echo_pin=echo_pin)`,
         //         '  distance = hcsr04.distance_cm()`,
         //         '  return distance`]);
-        var codeInit = `# MQTT客户端回调\n`
+        var codeInit = `# 线程${thread_name}\n`
         var thread_callback_name = `${thread_name}_callback`
         codeInit += 'def ' + thread_callback_name + '():\n'
         codeInit += statements
