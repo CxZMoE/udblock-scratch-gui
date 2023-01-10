@@ -2,8 +2,8 @@ function loadCamaraDefinition(board=""){
     Blockly.Python[`${board}_initCameraI2C`] = function (block) {
         Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
         var pins = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",");
-        Blockly.Python.definitions_['import_camera_i2c'] = `cam_i2c = I2C(1,scl=Pin(${pins[1]}),sda=Pin(${pins[0]}),freq=100000)`;
-        var code = `myCamera = Camera(cam_i2c)\n`;
+        // Blockly.Python.definitions_['import_camera_i2c'] = `cam_i2c = I2C(1,scl=Pin(${pins[1]}),sda=Pin(${pins[0]}),freq=100000)`;
+        var code = `myCamera = Camera(udpi_i2c)\n`;
         
         return code;
     };
@@ -170,18 +170,16 @@ function loadCamaraDefinition(board=""){
     };
 
     /* 颜色识别 */
+    Blockly.Python[`${board}_startColorOpt`] = function (block) {
+        Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
+        var color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCamera.SwitchMode('color', 'start', '${color}')\n`
+        return code;
+    };
     Blockly.Python[`${board}_getColorResult`] = function (block) {
         Blockly.Python.definitions_['import_camera'] = 'from udrobot.sensor.camera.camera import Camera';
         var result_type = Blockly.Python.valueToCode(block, "RESULT", Blockly.Python.ORDER_ATOMIC);
-        var code
-        switch (result_type) {
-            case "rgb":
-                code = `myCamera.GetColorRGB()`
-                break
-            case "color":
-                code = `myCamera.GetColorGuess()`
-                break
-        }
+        var code = `(myCamera.GetItem("color", "${result_type}") or 0)`
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
 
