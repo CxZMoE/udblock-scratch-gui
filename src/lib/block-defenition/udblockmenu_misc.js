@@ -58,6 +58,12 @@ function loadMiscMenu(board=""){
     Blockly.Python[`${board}_menu_dataTypeMenu`] = function (block) {
         return [block.getFieldValue("dataTypeMenu"), Blockly.Python.ORDER_ATOMIC]
     }
+    Blockly.Python[`${board}_menu_carAxisMenu`] = function (block) {
+        return [block.getFieldValue("carAxisMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
+    Blockly.Python[`${board}_menu_carAxisStatusMenu`] = function (block) {
+        return [block.getFieldValue("carAxisStatusMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
     Blockly.Python[`${board}_menu_colorDetectMenu`] = function (block) {
         return [block.getFieldValue("colorDetectMenu"), Blockly.Python.ORDER_ATOMIC]
     }

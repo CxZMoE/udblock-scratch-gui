@@ -169,6 +169,14 @@ export default (Blockly) => {
         var code = `myCarPro.GetMovementData('${axis}')[${dtype}]`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
+    Blockly.Python[`${id}_getRunningStatus`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        var axis = Blockly.Python.valueToCode(block, "AXIS", Blockly.Python.ORDER_ATOMIC);
+        var status = Blockly.Python.valueToCode(block, "STATUS", Blockly.Python.ORDER_ATOMIC);
+        var code = `(myCarPro.GetRunningStatus()[${axis}]==${status})`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
     Blockly.Python[`${id}_getAccelData`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
