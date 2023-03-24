@@ -119,45 +119,6 @@ export default (Blockly) => {
     }
 
 
-    // 读取环境光传感器
-    Blockly.Python[`${id}_readAmbientLightSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
-        var code = `udpi_sensor.GetAmbientLight(${39})`;
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    }
-    // 读取声音传感器
-    Blockly.Python[`${id}_readSoundSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
-        var code = `udpi_sensor.GetMicrophone(${36})`;
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    }
-    // 读取陀螺仪传感器
-    Blockly.Python[`${id}_readGryoSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
-        var code = `udpi_sensor.ICM_Get_Gyroscope()`
-        return [code, Blockly.Python.ORDER_ATOMIC]
-    }
-    // 读取加速度传感器
-    Blockly.Python[`${id}_readAccelSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
-        var code = `udpi_sensor.ICM_Get_Accelerometer()`
-        return [code, Blockly.Python.ORDER_ATOMIC]
-    }
-
-    // 读取手势传感器
-    Blockly.Python[`${id}_readGestureSensor`] = function (block) {
-        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
-
-        Blockly.Python[`udblockUDPiMiniV1_menu_gesture_sensor`] = function (block) {
-            var imageMethod = block.getFieldValue("gesture_sensor");
-            return [`${imageMethod}`, Blockly.Python.ORDER_ATOMIC]
-        }
-
-        var direction = Blockly.Python.valueToCode(block, 'GESTURE', Blockly.Python.ORDER_ATOMIC);
-        var code = `(udpi_sensor.GetGestureSensor() == '${direction}')`;
-        return [code, Blockly.Python.ORDER_ATOMIC];
-    }
-
     // 控制启用主板RGB
     Blockly.Python[`${id}_openOnBoardRGB`] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
@@ -495,6 +456,14 @@ export default (Blockly) => {
         var code = `car2WDNew.turn(${speedLeft}, ${speedRight})\n`;
         return code
     };
+    
+    Blockly.Python[`${id}_getCar2DSonic`] = function (block) {
+        Blockly.Python.definitions_['import_car_2wd_new'] = 'from drivers.motor import Car2D';
+        Blockly.Python.definitions_['get_car_2wd_new'] = 'car2WDNew = Car2D()';
+        var code = `udpi_sensor.GetSonicDistance(17,24)`;
+        return [code, Blockly.Python.ORDER_ATOMIC]
+    };
+
     Blockly.Python[`${id}_getRedLeft`] = function (block) {
         Blockly.Python.definitions_['import_car_2wd_new'] = 'from drivers.motor import Car2D';
         Blockly.Python.definitions_['get_car_2wd_new'] = 'car2WDNew = Car2D()';

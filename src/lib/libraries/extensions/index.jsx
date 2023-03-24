@@ -112,7 +112,7 @@ export default [
     NewExtensionConfig('UDBlock 多功能拓展板', 'udblockEXTBMF', ["拓展板"], "支持外接6个RJ11设备以及自带2个电机和4个舵机接口, 含有7个触摸按键, 支持外接电源供电。", udpiExtbMFIconURL),
     NewExtensionConfig('UDBlock 电机拓展板', 'udblockEXTBSM', ["拓展板"], "RJ11和外接电机特别优化的拓展版, 支持外接供电", udpiExtbSMIconURL),
     NewExtensionConfig('UDBlock IO拓展板', 'udblockEXTBIO', ["拓展板"], "支持外接8个RJ11设备, 支持外接电源供电。", udpiExtbIOIconURL),
-    NewExtensionConfig('UDPi+最小系统板V1', 'udblockUDPiMiniV1', ["主板"], "集了UDPI基本功能和拓展版特性的为一体的最小系统板, 支持外接8个RJ11设备, 支持外接电源供电。", udpiMiniIconURL),
+    NewExtensionConfig('UDPi+最小系统板V1', 'udblockUDPiMiniV1', ["拓展板"], "集了UDPI基本功能和拓展版特性的为一体的最小系统板, 支持外接8个RJ11设备, 支持外接电源供电。", udpiMiniIconURL),
     NewExtensionConfig('UDBlock 小车拓展板Pro', 'udblockEXTBCarPro', ["拓展板"], "四驱小车拓展版升级版, 集成多种精密传感器, 可以精确的控制移动的距离和速度。支持遥控控制, 电池供电", udpiCarProIconURL),
     NewExtensionConfig('UDBlock 小车拓展板', 'udblockEXTBCar', ["拓展板"], "四驱小车拓展版, 支持外接6个RJ11设备, 以及遥控控制, 电池供电。", udpiExtbCarIconURL),
     NewExtensionConfig('UDBlock 双驱小车拓展板', 'udblockEXTBCar2D', ["拓展板"], "双驱小车拓展版, 支持外接6个RJ11设备, 2个电机, 以及遥控控制, 电池供电。", udpiExtbCar2WDIconURL),

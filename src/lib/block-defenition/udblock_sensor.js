@@ -1,4 +1,5 @@
 function loadSensorDefinition(board = "") {
+    console.log(board)
     // 读取风速传感器
     Blockly.Python[`${board}_readWindSensor`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';

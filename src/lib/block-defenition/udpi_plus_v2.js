@@ -104,7 +104,7 @@ export default (Blockly) => {
 
 
     // 读取环境光传感器
-    Blockly.Python["udblockUDPiPlusV2_readAmbientLightSensor"] = function (block) {
+    Blockly.Python["udblockUDPiPlusV2_readOBAmbientLightSensor"] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
         var code = `udpi_sensor.GetAmbientLight(${39})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
