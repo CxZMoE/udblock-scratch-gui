@@ -1,4 +1,10 @@
 function loadSensorDefinition(board = "") {
+    Blockly.Python[`${board}_getSTTModule`] = function (block) {
+        Blockly.Python.definitions_['import_driver_stt_vc02'] = 'from drivers.stt_vc02 import STT_MODULE';
+        Blockly.Python.definitions_['use_sttmodule_stt_vc02'] = 'sttModule_vc02 = STT_MODULE()';
+        var code = `sttModule_vc02.get_cmd()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    }
     // 读取风速传感器
     Blockly.Python[`${board}_readWindSensor`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
