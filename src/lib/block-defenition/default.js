@@ -1011,7 +1011,7 @@ export default function (Blockly) {
     Blockly.Python.ControlForeverStack = ["while True:"];
     Blockly.Python.ControlCallbackStack = [];
     Blockly.Python['control_forever'] = function (block) {
-        Blockly.Python.definitions_['enable_watchdog'] = 'from machine impoer WDT;global_wdt=WDT(timeout=10000)'
+        Blockly.Python.definitions_['enable_watchdog'] = 'from machine import WDT;global_wdt=WDT(timeout=10000)'
         Blockly.Python.ControlForeverStack = ['while True:', '  global_wdt.feed()']
         // 检测程序是否有循环
         // console.log(block)
