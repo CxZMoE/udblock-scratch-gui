@@ -11,6 +11,13 @@ export default (Blockly) => {
         return 'print(' + text + ')\n';
     }
     // 系统资源
+    Blockly.Python['udblockUDPiV2_feedWDT'] = function(block){
+        var timeout = Blockly.Python.valueToCode(block, "TIMEOUT", Blockly.Python.ORDER_ATOMIC) || 20
+        Blockly.Python.definitions_['enable_watchdog'] = `from machine import WDT;global_wdt=WDT(timeout=${timeout})`;
+        Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
+        
+        return `global_wdt.feed()\n`
+    }
     Blockly.Python['udblockUDPiV2_getStartTime'] = function (block) {
         return ["time.ticks_ms()", Blockly.Python.ORDER_ATOMIC]
     }
