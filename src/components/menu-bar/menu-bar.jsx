@@ -279,7 +279,7 @@ class MenuBar extends React.Component {
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress);
-        // document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
+        document.getElementById("MPython-btn").addEventListener("click", this.handleEditorModeSelect)
         document.getElementById("editorShow-btn").addEventListener("click", this.handleEditorHide)
 
         this.props.editorToggleCode();
@@ -1115,7 +1115,7 @@ class MenuBar extends React.Component {
                         </MenuSection>
                     ) : ([])
                 }
-                {/* {modeButton} */}
+                {modeButton}
                 {showHideButton}
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}

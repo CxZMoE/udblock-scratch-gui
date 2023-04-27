@@ -57,7 +57,7 @@ const EXTEND_BOARD_TAG = {tag: '拓展板', intlLabel: messages.extendBoardLabel
 const SENSOR_TAG = {tag: '传感器', intlLabel: messages.sensorLabel};
 const ACTOR_TAG = {tag: '执行器', intlLabel: messages.actorLabel};
 const TOOL_TAG = {tag: '工具', intlLabel: messages.toolLabel};
-const MyTags = [EXTEND_BOARD_TAG, MOTHERBOARD_TAG, SENSOR_TAG, ACTOR_TAG, TOOL_TAG];
+const MyTags = [ALL_TAG, EXTEND_BOARD_TAG, MOTHERBOARD_TAG, SENSOR_TAG, ACTOR_TAG, TOOL_TAG];
 const tagListPrefix = [].concat(MyTags);
 
 class LibraryComponent extends React.Component {
