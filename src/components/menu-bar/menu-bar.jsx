@@ -217,15 +217,12 @@ class MenuBar extends React.Component {
         switch (this.props.editorMode) {
             case "code":
                 this.props.editorToggleDefault();
-                this.handleClickNew();
+                this.props.vm.refreshWorkspace()
 
                 break;
             case "default":
                 this.props.editorToggleCode();
-                this.handleClickNew();
-                break;
-            default:
-                this.props.editorToggleDefault();
+                this.props.vm.refreshWorkspace()
                 break;
         }
 

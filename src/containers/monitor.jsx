@@ -64,14 +64,22 @@ class Monitor extends React.Component {
         // Otherwise, auto-position the monitor.
         if (isNum(this.props.x) && isNum(this.props.y) &&
             !this.props.monitorLayout.savedMonitorPositions[this.props.id]) {
+                console.log('vm provided')
             rect = {
                 upperStart: {x: this.props.x, y: this.props.y},
                 lowerEnd: {x: this.props.x + this.element.offsetWidth, y: this.props.y + this.element.offsetHeight}
             };
             this.props.addMonitorRect(this.props.id, rect, true /* savePosition */);
         } else { // Newly created user monitor
+            console.log('not vm provided')
             rect = getInitialPosition(
                 this.props.monitorLayout, this.props.id, this.element.offsetWidth, this.element.offsetHeight);
+            console.log(this.props.monitorLayout)
+            console.log('id: ' + this.props.id)
+            console.log('w: ' + this.element.offsetWidth)
+            console.log('h: ' + this.element.offsetHeight)
+            console.log(this.element)
+
             this.props.addMonitorRect(this.props.id, rect);
             this.props.vm.runtime.requestUpdateMonitor(Map({
                 id: this.props.id,

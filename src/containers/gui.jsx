@@ -44,6 +44,7 @@ import VMScratchBlocks from '../lib/blocks';
 
 import { makeShowPrompt, makeHidePrompt } from '../reducers/popup'
 import {setProjectTitle} from '../reducers/project-title';
+import { editorToggleCode, editorToggleDefault } from '../reducers/editor.js';
 
 class GUI extends React.Component {
 
@@ -143,7 +144,7 @@ class GUI extends React.Component {
                                 return res.text()
                             }).then((value)=>{
                                 // console.log('value')
-                                // console.log(value)
+                                // alert(value)
                                 const matches = value.match(/^(.*)\.(sb|bmproj)[23]?$/);
                                 if (matches) {
                                     x_fname = matches[1].substring(0, 100); // truncate project title to max 100 chars
@@ -155,6 +156,8 @@ class GUI extends React.Component {
                     }
                     
                 })
+            }else if(res.status == 404){
+                return null
             }else{
                 return null
             }

@@ -89,9 +89,10 @@ export default (Blockly) => {
     Blockly.Python[`${board}_jsonLoads`] = function (block) {
         Blockly.Python.definitions_[`import_json`] = 'import json';
         var str = Blockly.Python.valueToCode(block, "STR", Blockly.Python.ORDER_ATOMIC);
-        
-        var code = `(json.loads(${str}))`;
-        return [code, Blockly.Python.ORDER_ATOMIC]
+        var obj = Blockly.Python.valueToCode(block, "OBJ", Blockly.Python.ORDER_ATOMIC);
+        obj = String(obj).replaceAll("'","");
+        var code = `${obj} = json.loads(${str})\n`;
+        return code
     }
     Blockly.Python[`${board}_jsonDumps`] = function (block) {
         Blockly.Python.definitions_[`import_json`] = 'import json';
@@ -173,11 +174,11 @@ export default (Blockly) => {
     }
     Blockly.Python[`${board}_mqttValueTopic`] = function (block) {
         Blockly.Python.definitions_[`import_mqttclient`] = 'from tools.mqtt import MQTTClient';
-        return [`(topic)`,Blockly.Python.ORDER_ATOMIC]
+        return [`(topic.decode())`,Blockly.Python.ORDER_ATOMIC]
     }
     Blockly.Python[`${board}_mqttValueMsg`] = function (block) {
         Blockly.Python.definitions_[`import_mqttclient`] = 'from tools.mqtt import MQTTClient';
-        return [`(msg)`,Blockly.Python.ORDER_ATOMIC]
+        return [`(msg.decode())`,Blockly.Python.ORDER_ATOMIC]
     }
 
     // 线程

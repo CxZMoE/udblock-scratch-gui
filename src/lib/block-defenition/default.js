@@ -744,7 +744,7 @@ export default function (Blockly) {
         //     Blockly.VARIABLE_CATEGORY_NAME);
         // console.log(block)
         
-        return [GetFirstFieldNameByIndex(block), Blockly.Python.ORDER_ATOMIC];
+        return ['uv_'+GetFirstFieldNameByIndex(block), Blockly.Python.ORDER_ATOMIC];
     };
 
     Blockly.Python['data_setvariableto'] = function (block) {
@@ -754,7 +754,7 @@ export default function (Blockly) {
         // var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
         //     Blockly.VARIABLE_CATEGORY_NAME);
 
-        return GetFirstFieldNameByIndex(block, 1) + ' = ' + argument0 + '\n';
+        return 'uv_'+GetFirstFieldNameByIndex(block, 1) + ' = ' + argument0 + '\n';
     };
     Blockly.Python['data_changevariableby'] = function (block) {
         // Variable setter.
@@ -763,7 +763,7 @@ export default function (Blockly) {
         // var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
         //     Blockly.VARIABLE_CATEGORY_NAME);
 
-        return GetFirstFieldNameByIndex(block, 1) + ' += ' + argument0 + '\n';
+        return 'uv_'+GetFirstFieldNameByIndex(block, 1) + ' += ' + argument0 + '\n';
     };
     Blockly.Python['data_hidevariable'] = function (block) {
         // Variable setter.
@@ -773,7 +773,7 @@ export default function (Blockly) {
         // Variable setter.
         // var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
         //     Blockly.VARIABLE_CATEGORY_NAME);
-        return `global ${GetFirstFieldNameByIndex(block, 1)}\n`;
+        return `global uv_${GetFirstFieldNameByIndex(block, 1)}\n`;
     };
 
     Blockly.Python['data_listcontents'] = function(block){

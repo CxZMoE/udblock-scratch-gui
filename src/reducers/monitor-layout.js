@@ -29,6 +29,7 @@ const _addMonitorRect = function (state, action) {
         log.error(`Can't add monitor, monitor with id ${action.monitorId} already exists.`);
         return state;
     }
+    console.log(action)
     if (!_verifyRect(action.upperStart, action.lowerEnd)) {
         log.error(`Monitor rectangle not formatted correctly`);
         return state;
@@ -113,6 +114,7 @@ const _resizeMonitorRect = function (state, action) {
 };
 
 const _removeMonitorRect = function (state, action) {
+    console.log(state.monitors)
     if (!state.monitors.hasOwnProperty(action.monitorId)) {
         log.error(`Can't remove monitor, monitor with id ${action.monitorId} does not exist.`);
         return state;
