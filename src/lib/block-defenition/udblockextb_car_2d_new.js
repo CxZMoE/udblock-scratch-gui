@@ -123,7 +123,7 @@ export default (Blockly) => {
     Blockly.Python[`${id}_openOnBoardRGB`] = function (block) {
         Blockly.Python.definitions_['import_udrobot'] = 'from udrobot.basic import *';
        
-        return `udpi_rgb = RGB(${17}, ${6})\n`;
+        return `udpi_rgb = RGB(${17}, ${8})\n`;
     }
 
     // 控制启用禁用RGB
@@ -460,7 +460,7 @@ export default (Blockly) => {
     Blockly.Python[`${id}_getCar2DSonic`] = function (block) {
         Blockly.Python.definitions_['import_car_2wd_new'] = 'from drivers.motor import Car2D';
         Blockly.Python.definitions_['get_car_2wd_new'] = 'car2WDNew = Car2D()';
-        var code = `udpi_sensor.GetSonicDistance(17,24)`;
+        var code = `udpi_sensor.GetSonicDistance(12,36)`;
         return [code, Blockly.Python.ORDER_ATOMIC]
     };
 
