@@ -121,6 +121,7 @@ export default [
     NewExtensionConfig('micro:bit主板', 'udblockMicrobit', ["主板"], "Micro-Bit主板支持MicroPython编程", microbitIconURL),
 
     // 传感器
+    NewExtensionConfig('离线语音转文本传感器', 'offlineSTTSensor', ["传感器"], "离线语音转文本传感器", udblockSensorIconURL),
     NewExtensionConfig('NFC传感器', 'nfcSensor', ["传感器"], "NFC射频卡读取和写入", udblockSensorIconURL),
     NewExtensionConfig('雨滴传感器', 'raindropSensor', ["传感器"], "用于检测雨滴, 或者水珠的出现。", udblockSensorIconURL),
     NewExtensionConfig('声音传感器', 'soundSensor', ["传感器"], "检测声音的大小以及变化, 返回声音大小的模拟量(0~4095)", udblockSensorIconURL),
@@ -142,6 +143,7 @@ export default [
     NewExtensionConfig('比比智慧摄像头', 'bibiCamK210', ["传感器"], "支持物体识别, 物体分类, 颜色识别, 标签识别, 二维码识别, 条形码识别, 巡线识别等功能", udblockSensorIconURL),
 
     // 执行器
+    NewExtensionConfig('离线文本转语音模组', 'offlineTTSModule', ["执行器"], "离线语音转文本传感器", udblockSensorIconURL),
     NewExtensionConfig('I2C电机模块', 'i2cMotorModule', ["执行器"], "控制电机和舵机, 使用I2C通讯", udblockActorIconURL),
     NewExtensionConfig('四位数码管', 'digitalTube', ["执行器"], "支持4位数字的显示, 使用I2C通讯", udblockActorIconURL),
     NewExtensionConfig('RGB灯带(15灯珠)', 'rgbStript15', ["执行器"], "有15个灯珠的灯带,支持16777216种颜色", udblockActorIconURL),

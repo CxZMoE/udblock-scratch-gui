@@ -2,6 +2,13 @@ import { extb_mf } from "../../../../udblock-scratch-vm/src/util/extb-definition
 
 export default (board = "") => {
     /* 执行器开始 */
+    Blockly.Python[`${board}_ttsModuleSay`] = function (block) {
+        Blockly.Python.definitions_['import_driver_csk4002'] = 'from drivers.csk4002 import TTS_MODULE';
+        var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",");
+        Blockly.Python.definitions_['use_ttsmodule_csk4002'] = `ttsModule_csk = TTS_MODULE(${port})`;
+        var text = Blockly.Python.valueToCode(block, 'TEXT', Blockly.Python.ORDER_ATOMIC);
+        return `ttsModule_csk.say(${text})\n`;
+    }
     // 电机模块
     Blockly.Python[`${board}_motorModuleMotorClock`] = function (block) {
         Blockly.Python.definitions_['import_driver_motormodule'] = 'from drivers.motor_v2 import MotorModule';
