@@ -166,7 +166,7 @@ export default (Blockly) => {
         //         '  distance = hcsr04.distance_cm()`,
         //         '  return distance`]);
         var codeInit = `# MQTT客户端回调\n`
-        codeInit += 'def ' + `myMQTTCallback` + '(topic, msg, retained, duplicate):\n'
+        codeInit += 'def ' + `myMQTTCallback` + '(topic, msg):\n'
         codeInit += statements
         Blockly.Python.definitions_[`mqtt_bind_callback`] = codeInit;
         var code = `mqttClient.set_callback(myMQTTCallback)\n`

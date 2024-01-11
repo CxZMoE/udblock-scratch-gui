@@ -158,6 +158,68 @@ export default (Blockly) => {
         var rgb_board_color = Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
         return `rgb_board_light.clear((${rgb_board_color}))\n`
     }
+    Blockly.Python[`udblockUDPiV2_drawRGBPanel`] = function (block) {
+        try{
+            var color = JSON.parse(Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
+            .replace(/\(/g, '[')
+            .replace(/\)/g, ']')
+        )
+        }catch{
+            return '';
+        }
+        var getPixelArray = function (box) {
+            //// console.log(box.length)
+            // console.log(box)
+            box = String(box)
+            box = box.substring(1, box.length - 1)
+            var linePixel = []
+            for (var i = 0; i < 6; i++) {
+                
+                for (var j = i * 6; j < i * 6 + 6; j++) {
+                    if (String(box[j]).indexOf("1") > -1) {
+                        linePixel.push([color[0], color[1], color[2]])
+                    } else {
+                        linePixel.push([0, 0, 0])
+                    }
+                }
+            }
+
+            console.log(linePixel);
+            var arrayStr = `${JSON.stringify(linePixel)}`
+            //// console.log(arrayStr)
+            return arrayStr
+        }
+
+//         line = 6 - (line -1)
+
+//         var start = (line - 1) * 6;
+//         if (line % 2 != 0) {
+//             // 奇数行反转
+//             return `
+// for i in range(0, 6):
+//   rgb_board_light.value(${start}+i, ${rgb_board_color})\n
+// `
+//         } else {
+//             // 偶数行正序
+//             return `
+// for i in range(0, 6):
+//   rgb_board_light.value(${start}+i, ${rgb_board_color})\n
+// `
+//         }
+        var action = Blockly.Python.valueToCode(block, "FACE", Blockly.Python.ORDER_ATOMIC);
+        // console.log(action)
+        var color_array = getPixelArray(action);
+//         return `
+// udpi_rgb_refresh_colors = ${color_array}
+// for i in range(len(udpi_rgb_refresh_colors)):
+//     line = (i//6)
+//     offset = i if (line%2!=0) else ((line+1)*6-(i%6)-1)
+//     rgb_board_light.np[35-offset] = tuple(udpi_rgb_refresh_colors[i])
+// rgb_board_light.np.write()
+
+//         `;
+        return `rgb_board_light.show_buffer(${color_array})\n`;
+    }
     Blockly.Python["udblockUDPiV2_setRGBLineDraw"] = function (block) {
 
         var line = Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)

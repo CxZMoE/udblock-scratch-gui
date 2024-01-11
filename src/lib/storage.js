@@ -1,7 +1,6 @@
 import ScratchStorage from 'scratch-storage';
 
 import defaultProject from './default-project';
-
 /**
  * Wrapper for ScratchStorage which adds default web sources.
  * @todo make this more configurable
@@ -31,6 +30,12 @@ class Storage extends ScratchStorage {
             [this.AssetType.Sound],
             asset => `static/extension-assets/scratch3_music/${asset.assetId}.${asset.dataFormat}`
         );
+        this.addWebStore(
+            [this.AssetType.Sprite],
+            this.getProjectGetConfig.bind(this),
+            this.getProjectCreateConfig.bind(this),
+            this.getProjectUpdateConfig.bind(this)
+        )
     }
     setProjectHost (projectHost) {
         this.projectHost = projectHost;

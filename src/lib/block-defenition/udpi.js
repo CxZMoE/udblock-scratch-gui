@@ -149,6 +149,43 @@ export default (Blockly) => {
         return `${code}]\n`
     }
 
+    Blockly.Python[`udblockUDPi_drawRGBPanel`] = function (block) {
+        try{
+            var color = JSON.parse(Blockly.Python.valueToCode(block, "COLOR", Blockly.Python.ORDER_ATOMIC)
+            .replace(/\(/g, '[')
+            .replace(/\)/g, ']')
+        )
+        }catch{
+            return '';
+        }
+        var getPixelArray = function (box) {
+            //// console.log(box.length)
+            // console.log(box)
+            box = String(box)
+            box = box.substring(1, box.length - 1)
+            var linePixel = []
+            for (var i = 0; i < 5; i++) {
+                
+                for (var j = i * 5; j < i * 5 + 5; j++) {
+                    if (String(box[j]).indexOf("1") > -1) {
+                        linePixel.push([color[0], color[1], color[2]])
+                    } else {
+                        linePixel.push([0, 0, 0])
+                    }
+                }
+            }
+            console.log(linePixel);
+            //// console.log(arrayStr)
+            return JSON.stringify(linePixel)
+        }
+
+        var action = Blockly.Python.valueToCode(block, "FACE", Blockly.Python.ORDER_ATOMIC);
+        var color_array = getPixelArray(action);
+        return `uv_color_array_udpi = ${color_array}
+for i in range(len(rgb_board_light)):
+    rgb_board_light[i].show_buffer(uv_color_array_udpi[i*5:i*5+5])\n`;
+    }
+
     // 控制启用禁用RGB
     Blockly.Python['udblockUDPi_closeOnBoardRGB'] = function (block) {
         

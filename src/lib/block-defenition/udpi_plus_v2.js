@@ -305,7 +305,7 @@ export default (Blockly) => {
 
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 
-        var code = `udpi_screen.text(str(${text}), ${line}, 0)\n`;
+        var code = `udpi_screen.text(str(${text.replaceAll("\\","")}), ${line}, 0)\n`;
         return code
     }
     Blockly.Python["udblockUDPiPlusV2_displayDrawLabel"] = function(block){

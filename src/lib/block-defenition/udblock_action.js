@@ -398,11 +398,11 @@ export default (board = "") => {
     // 主板显示屏
     Blockly.Python[`${board}_displayWrite`] = function (block) {
         Blockly.Python.definitions_['make_oled'] = 'oled_module = OLED(3)';
-        var line = Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)
+        var line = parseInt(Blockly.Python.valueToCode(block, "LINE", Blockly.Python.ORDER_ATOMIC)) * 16 || 0
 
         var text = Blockly.Python.valueToCode(block, "TEXT", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 
-        var code = `oled_module.text(str(${text}), ${line}, 0)\n`;
+        var code = `oled_module.text(str(${text.replaceAll("\\","")}), ${line}, 0)\n`;
         return code
     }
     Blockly.Python[`${board}_displayDrawLabel`] = function (block) {
@@ -411,7 +411,7 @@ export default (board = "") => {
         var row = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_ATOMIC)
         var text = Blockly.Python.valueToCode(block, "STR", Blockly.Python.ORDER_ATOMIC) || "Hello,World"
 
-        var code = `oled_module.label( ${col}, ${row}, ${text})\n`;
+        var code = `oled_module.label(${col}, ${row}, ${text})\n`;
         return code
     }
     Blockly.Python[`${board}_displayDrawPoint`] = function (block) {

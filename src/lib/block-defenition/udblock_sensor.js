@@ -188,6 +188,20 @@ function loadSensorDefinition(board = "") {
         var code = `udpi_sensor.GetFourChannelInferredSensor(${status})`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    Blockly.Python[`${board}_readFourChannelInferredSensorValue`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        // var status = Blockly.Python.valueToCode(block, "STATUS", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_sensor.GetFourChannelInferredSensorValue()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_readFourChannelInferredSensorValueItem`] = function (block) {
+        Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
+        var status = Blockly.Python.valueToCode(block, "STATUS", Blockly.Python.ORDER_ATOMIC);
+        var code = `${status}`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    
+    
     Blockly.Python[`${board}_readFourChannelInferredSensorOffset`] = function (block) {
         Blockly.Python.definitions_['import_sensor'] = 'from udrobot.basic import *';
         var code = `udpi_sensor.GetFourChannelIFSensorOffset()`;
@@ -209,6 +223,54 @@ function loadSensorDefinition(board = "") {
         var code = `udpi_sensor.GetKeyboardModule()`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+
+    // 简易遥控传感器
+    Blockly.Python[`${board}_simpleRemoteInit`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var ssid = Blockly.Python.valueToCode(block, "SSID", Blockly.Python.ORDER_ATOMIC);
+        var psk = Blockly.Python.valueToCode(block, "PSK", Blockly.Python.ORDER_ATOMIC);
+        var code = `udpi_simple_remote.startServer(${ssid},${psk})\n`;
+        return code;
+    };
+
+    Blockly.Python[`${board}_simpleRemoteDeinit`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `udpi_simple_remote.stopServer()\n`;
+        return code;
+    };
+
+    Blockly.Python[`${board}_simpleRemoteUpPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.getButton(0))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_simpleRemoteDownPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.getButton(1))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_simpleRemoteLeftPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.getButton(2))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_simpleRemoteRightPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.getButton(3))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+   
+    Blockly.Python[`${board}_simpleRemoteLSPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.getButton(4))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}_simpleRemoteRSPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.getButton(5))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+
     
     // Blockly.Python[`${board}_initNFC`] = function (block) {
     //     Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
@@ -238,6 +300,14 @@ function loadSensorDefinition(board = "") {
         var code = `nfcSensor.ReadText()`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    
+    Blockly.Python[`${board}_readTextNoBlock`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
+        Blockly.Python.definitions_['import_init_nfc'] = 'nfcSensor = NFC()';
+        var code = `nfcSensor.ReadTextNoBlock()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    
     Blockly.Python[`${board}_writeText`] = function (block) {
         Blockly.Python.definitions_['import_sensor_nfc'] = 'from udrobot.sensor.nfc import NFC';
         Blockly.Python.definitions_['import_init_nfc'] = 'nfcSensor = NFC()';

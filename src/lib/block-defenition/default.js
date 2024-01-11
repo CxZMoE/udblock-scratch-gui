@@ -1558,6 +1558,12 @@ export default function (Blockly) {
         var code = Blockly.Python.quote_(block.getFieldValue('MATRIX'));
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
+    // Matrix UDPi
+    Blockly.Python['matrixudpi'] = function (block) {
+        // Text value.
+        var code = Blockly.Python.quote_(block.getFieldValue('MATRIX'));
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
     Blockly.Python['matrix'] = function (block) {
         // Text value.
         var code = Blockly.Python.quote_(block.getFieldValue('MATRIX'));
