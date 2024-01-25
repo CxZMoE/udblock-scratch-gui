@@ -5,8 +5,10 @@ export default (board = "") => {
     Blockly.Python[`${board}_ttsModuleSay`] = function (block) {
         Blockly.Python.definitions_['import_driver_csk4002'] = 'from drivers.csk4002 import TTS_MODULE';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",");
-        Blockly.Python.definitions_['use_ttsmodule_csk4002'] = `ttsModule_csk = TTS_MODULE(${port})`;
+        var port_id = Blockly.Python.valueToCode(block, "COMPORT", Blockly.Python.ORDER_ATOMIC);
+        Blockly.Python.definitions_['use_ttsmodule_csk4002'] = `ttsModule_csk = TTS_MODULE(${port}, ${port_id})`;
         var text = Blockly.Python.valueToCode(block, 'TEXT', Blockly.Python.ORDER_ATOMIC);
+        
         return `ttsModule_csk.say(${text})\n`;
     }
     // 电机模块
@@ -141,7 +143,6 @@ export default (board = "") => {
                 for (var j in extb_mf.RJ11[i].value) {
                     if (String(relay_pin) == extb_mf.RJ11[i].value[j]) {
                         fetch('http://127.0.0.1:3000/broadcast?msg=' + `${extb_mf.RJ11[i].name}口不支持继电器${channel == 0 ? '黄路' : '蓝路'}功能`)
-
                     }
                 }
             }

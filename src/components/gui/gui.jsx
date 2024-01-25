@@ -263,27 +263,6 @@ const GUIComponent = props => {
                     <Box className={styles.flexWrapper}>
                         {/* 正文 */}
                         {/* 软件更新提示 */}
-                        {/* {(showPrompt) ? (<ModalComponent
-                            fullScreen={false}
-
-                        >
-                            <PromptComponent
-                                showInput={false}
-                                title={"发现软件更新"}
-                                label={"是否进行更新？"}
-                                onOk={() => {
-                                    // 请求更新
-                                    fetch('http://127.0.0.1:12888/checkVersion').then((res) => {
-                                        var text = res.text()
-                                        return text
-                                    }).then((text) => {
-                                        console.log(text)
-                                        onHidePrompt(true)
-                                    })
-                                }}
-                                onCancel={a => { onHidePrompt(true) }}
-                            />
-                        </ModalComponent>) : ([])} */}
                         {editorMode == "code" ?
                             <Box className={(editorHide ? styles.editorWrapperCodeHide : styles.editorWrapperCode)}>
                                 <Tabs

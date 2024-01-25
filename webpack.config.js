@@ -103,6 +103,7 @@ if (!process.env.CI) {
 module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
+        target: 'web',
         entry: {
             'lib.min': ['react', 'react-dom'],
             'gui': './src/playground/index.jsx',
@@ -184,7 +185,10 @@ module.exports = [
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
-            }])
+            }]),
+            new webpack.ExternalsPlugin('commonjs', [
+                'electron'
+            ])
         ])
     })
 ].concat(

@@ -91,80 +91,70 @@ class GUI extends React.Component {
         })
 
         // 检测软件更新
+        window.current_software_version = ""
+        window.software_update_info = null;
+        window.electron.bindResSoftwareVersion((data)=>{
+            window.current_software_version = data
+            document.title = data;
+        })
         setInterval(() => {
-            var currentVersion = '';
+            window.electron.requestCheckSwVersion();
             var networkVersion = '';
-            fetch('http://127.0.0.1:12888/version').then((res) => {
-                var version = res.text()
-                return version
-            }).then((version) => {
-                //console.log("当前版本：" + version)
-                currentVersion = version
-                networkVersion = currentVersion
-                // 获取网络版本
-                fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_pocket_sw.json').then(res => {
-                    var data = res.json()
-                    return data
-                }).then(data => {
-                    networkVersion = data.version;
-                    //console.log("网络版本: " + networkVersion)
-                    if (currentVersion == networkVersion) {
-                        //console.log('版本不需要更新')
-                        this.props.makeHidePrompt(true)
-                    } else {  // 显示BETA更新提示图标
-                        //console.log('版本需要更新')
-                        this.props.makeShowPrompt(true)
-                        let titleItem = document.getElementById('update-btn');
-                        if (titleItem != undefined) {
-                            titleItem.innerText = `发现更新 v${data.version}`;
-                        } 
-                    }
-                })
+            var currentVersion = window.current_software_version;
+            if (currentVersion == "") {
+                return;
+            }
+            fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_pocket_sw.json').then(res => {
+                var data = res.json()
+                return data
+            }).then(data => {
+                window.software_update_info = data;
+                // console.log(data)
+                networkVersion = data.version;
+                // console.log("网络版本: " + networkVersion)
+                if (currentVersion == networkVersion) {
+                    // console.log('版本不需要更新')
+                    this.props.makeHidePrompt(true)
+                } else {  // 显示BETA更新提示图标
+                    // console.log('版本需要更新')
+                    this.props.makeShowPrompt(true)
+                    let titleItem = document.getElementById('update-btn');
+                    if (titleItem != undefined) {
+                        titleItem.innerText = `发现更新 v${data.version}`;
+                    } 
+                }
             })
         }, 2000)
-        this.loadFile();
-    }  
-    loadFile () { 
-        var x_fname = "新工程"
-        fetch('http://127.0.0.1:9098/mime').then(res=>{
-            if (res.status == 200){
-                res.blob().then((bb)=>{
-                    if (bb == null){
-                        return;
-                    }
-                    const filename = 'myfilename.sb3';
-                    // console.log(bb)
-                    var data = new File([bb], filename)
-                    var fileReader = new FileReader();
-                    fileReader.readAsArrayBuffer(data);
-                    fileReader.onloadend = (ev) => {
-                        // console.log(fileReader.result)
-                        this.props.vm.loadProject(fileReader.result).then(()=>{
-                            fetch('http://127.0.0.1:9098/mime/name').then(res=>{
-                                return res.text()
-                            }).then((value)=>{
-                                // console.log('value')
-                                // alert(value)
-                                const matches = value.match(/^(.*)\.(sb|bmproj)[23]?$/);
-                                if (matches) {
-                                    x_fname = matches[1].substring(0, 100); // truncate project title to max 100 chars
-                                }
-                                // console.log(x_fname)
-                                this.props.onSetProjectTitle(x_fname);
-                            })
-                        })
-                    }
-                    
-                })
-            }else if(res.status == 404){
-                return null
-            }else{
-                return null
-            }
-            
-        })
         
-    }
+
+        window.electron.bindResProjectMimeName((projectName)=>{
+            console.log("project name:", projectName);
+            // const matches = projectName.match(/^(.*)\.(sb|bmproj)[23]?$/);
+            // if (matches) {
+            //     projectName = matches[1].substring(0, 100); // truncate project title to max 100 chars
+            // }
+            // console.log(x_fname)
+            this.props.onSetProjectTitle(projectName);
+        })
+        window.electron.bindResProjectMime((bb)=>{
+            if (bb == null){
+                return;
+            }
+            const filename = 'myfilename.sb3';
+            console.log(bb)
+            var data = new File([bb], filename)
+            var fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(data);
+            fileReader.onloadend = (ev) => {
+                console.log("result", fileReader.result)
+                this.props.vm.loadProject(fileReader.result).then(()=>{
+                    window.electron.requestProjectMimeName();
+                })
+            }
+        })
+
+        window.electron.requestProjectMime();
+    }  
     componentDidUpdate(prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
             this.props.onUpdateProjectId(this.props.projectId);

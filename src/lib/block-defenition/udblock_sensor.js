@@ -3,7 +3,8 @@ function loadSensorDefinition(board = "") {
     Blockly.Python[`${board}_getSTTModule`] = function (block) {
         Blockly.Python.definitions_['import_driver_stt_vc02'] = 'from drivers.stt_vc02 import STT_MODULE';
         var port = Blockly.Python.valueToCode(block, "PORT", Blockly.Python.ORDER_ATOMIC).split(",");
-        Blockly.Python.definitions_['use_sttmodule_stt_vc02'] = `sttModule_vc02 = STT_MODULE(${port})`;
+        var port_id = Blockly.Python.valueToCode(block, "COMPORT", Blockly.Python.ORDER_ATOMIC);
+        Blockly.Python.definitions_['use_sttmodule_stt_vc02'] = `sttModule_vc02 = STT_MODULE(${port}, ${port_id})`;
         var code = `sttModule_vc02.get_cmd()`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     }
@@ -268,6 +269,11 @@ function loadSensorDefinition(board = "") {
     Blockly.Python[`${board}_simpleRemoteRSPressed`] = function (block) {
         Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
         var code = `(udpi_simple_remote.getButton(5))`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+    Blockly.Python[`${board}simpleRemoteNoPressed`] = function (block) {
+        Blockly.Python.definitions_['import_sensor_simple_remote'] = 'from udrobot.sensor.sensor import SimpleRemote;udpi_simple_remote=SimpleRemote()';
+        var code = `(udpi_simple_remote.data==0)`;
         return [code, Blockly.Python.ORDER_ATOMIC];
     };
 

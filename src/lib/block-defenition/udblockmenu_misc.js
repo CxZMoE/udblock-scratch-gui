@@ -1,4 +1,7 @@
 function loadMiscMenu(board=""){
+    Blockly.Python[`${board}_menu_COMIDMenu`] = function (block) {
+        return [block.getFieldValue("COMIDMenu"), Blockly.Python.ORDER_ATOMIC]
+    }
     Blockly.Python[`${board}_menu_RJMenu`] = function (block) {
         return [block.getFieldValue("RJMenu"), Blockly.Python.ORDER_ATOMIC]
     }

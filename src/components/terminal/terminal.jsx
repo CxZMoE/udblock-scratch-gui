@@ -54,50 +54,51 @@ class TerminalComponent extends React.Component {
     }
 
     // 与服务端之间建立Websocket连接
-    onConnectWS(terminalJS) {
-        function connect(com) {
-            try {
-                var ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
-                // 为终端绑定一个Websocket对象
-                terminalJS.ws = ws
+    // onConnectWS(terminalJS) {
+    //     function connect(com) {
+    //         try {
+    //             var ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
+    //             // 为终端绑定一个Websocket对象
+    //             terminalJS.ws = ws
 
-                // 在Websocket连接建立的时候执行
-                ws.onopen = (e) => {
-                    // console.log("Websocket尝试使用串口:", com)
-                    Send(`closecom:${com}`)
-                    Send(`opencom:${com}`)
-                    setInterval(() => {
-                        Send(`keep-alive>>`)
-                    }, 2000);
-                }
-                ws.onmessage = wsOnMsg
-                // 在Websocket连接建立失败后执行
-                ws.onerror = function (ws, e) {
-                    // console.log("建立Websocket连接失败：" + String(e))
+    //             // 在Websocket连接建立的时候执行
+    //             ws.onopen = (e) => {
+    //                 // console.log("Websocket尝试使用串口:", com)
+    //                 Send(`closecom:${com}`)
+    //                 Send(`opencom:${com}`)
+    //                 setInterval(() => {
+    //                     Send(`keep-alive>>`)
+    //                 }, 2000);
+    //             }
+    //             ws.onmessage = wsOnMsg
+    //             // 在Websocket连接建立失败后执行
+    //             ws.onerror = function (ws, e) {
+    //                 // console.log("建立Websocket连接失败：" + String(e))
                     
-                    // ws.close()
-                }
+    //                 // ws.close()
+    //             }
 
-                // 在Websocket连接关闭后执行
-                ws.onclose = function (e) {
-                    // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    // console.log(e)
+    //             // 在Websocket连接关闭后执行
+    //             ws.onclose = function (e) {
+    //                 // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+    //                 // console.log(e)
 
-                    // Websocket连接必须保持在线，任何离线的情况都不应该发生
-                    // console.log("连接到WebSocket服务器失败，3秒后重新尝试连接。")
-                    setTimeout(() => {
-                        connect();
-                    }, 3000);
-                }
-            } catch (ex) {
-                // console.log(ex)
-            }
-        }
+    //                 // Websocket连接必须保持在线，任何离线的情况都不应该发生
+    //                 // console.log("连接到WebSocket服务器失败，3秒后重新尝试连接。")
+    //                 setTimeout(() => {
+    //                     connect();
+    //                 }, 3000);
+    //             }
+    //         } catch (ex) {
+    //             // console.log(ex)
+    //         }
+    //     }
 
-        connect(terminalJS.com);
-    }
+    //     connect(terminalJS.com);
+    // }
 
     Send(msg){
+        return
         try{
             var ws = terminalJS.ws
             ws.send(msg)
@@ -108,11 +109,16 @@ class TerminalComponent extends React.Component {
     }
     // 终端组件成功挂载后发生
     componentDidMount() {
+        navigator.serial.getPorts().then((ports) => {
+            // Initialize the list of available ports with `ports` on page load.
+            console.log("serial ports:", ports)
+        });
+
         this.terminalJS = new TerminalJS("UDTerminal-machine")
 
         terminalJS = this.terminalJS
         terminalJS.Send = this.Send
-        this.onConnectWS(terminalJS);
+        // this.onConnectWS(terminalJS);
         
         document.getElementById(this.state.target).appendChild(terminalJS.html);
 
@@ -141,85 +147,84 @@ class TerminalComponent extends React.Component {
         }
 
         // 定期刷新串口Option元素的内容
-        setInterval(() => {
+        window.electron.bindResSerialPortList((data)=>{
             var comState = this.state.com;  // 串口状态（串口号）
+            var portSelect = document.getElementById("portSelect")
+            portSelect.innerHTML = ""
 
-            // 请求获取当前设备的串口列表
+            // 解析返回的数据并且将可用串口添加到下拉选项中
+            var serialportList = data
+            for (var index in serialportList) {
+                // // 不是USB设备则过滤
+                // if (serialportList[index].isUSB == false) {
+                //     continue
+                // }
 
-                fetch(
-                    "http://127.0.0.1:12888/serialport"
-                ).then(res => {
-                    return res.json()
-                }).then((data) => {
-                    var portSelect = document.getElementById("portSelect")
-                    portSelect.innerHTML = ""
-    
-                    // 解析返回的数据并且将可用串口添加到下拉选项中
-                    var serialportList = data
-                    for (var index in serialportList) {
-                        // 不是USB设备则过滤
-                        if (serialportList[index].isUSB == false) {
-                            continue
-                        }
-    
-                        // 创建新的下拉选项
-                        var option = document.createElement("option");
-                        // 命名规范：${串口号} - [UDRobot ${序列号}]
-                        var portName = `${serialportList[index].name} - [UDRobot ${serialportList[index].sn}]`;
-                        option.text = portName; // 串口号
-                        option.value = serialportList[index].name; // 串口名字（串口号）
-    
-                        portSelect.appendChild(option)
-                    }
-    
-                    // 每次扫描串口后
-                    // 如果上次已经选中的串口还在列表中
-                    // 则需要选中上次选择的串口
-                    // 否则串口选择会乱套
-                    for (var i = 0; i < portSelect.children.length; i++) {
-                        // console.log(portSelect.children.item(i).innerText)
-                        //console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(i).value)
-                        // 找到历史选中串口
-                        if (portSelect.children.item(i).value == comState) {
-                            //console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
-                            portSelect.children.item(i).selected = true;
-                            selectPort(portSelect.children.item(i).value);
-                            return;
-                        }
-    
-                    }
-    
-                    // 没有找到，或者只有一个串口设备
-                    if (portSelect.children.length > 0) {
-                        if ((portSelect.children.length == 1 || comState == null) && portSelect.children.item(0).value != null) {
-                            //console.log(`选中默认串口: ${portSelect.children.item(0).value}`);
-                            portSelect.children.item(0).selected = true;
-                            selectPort(portSelect.children.item(0).value);
-                        }
-                    }
-    
-    
-                    // 没有串口设备，则清空选中的串口
-                    if (portSelect.children.length == 0) {
-                        selectPort("")
-                        document.getElementById("serialOpenBtn").innerText = "打开"
-                    }
-                })
+                // 创建新的下拉选项
+                var option = document.createElement("option");
+                // 命名规范：${串口号} - [UDRobot ${序列号}]
+                // var portName = `${serialportList[index].path} - [UDRobot ${serialportList[index].serialNumber}]`;
+                var portName = serialportList[index].friendlyName;
+                option.text = portName; // 串口号
+                option.value = serialportList[index].path; // 串口名字（串口号）
 
-        }, 1000);
-
-        // 获取软件版本
-        var request = new XMLHttpRequest();
-
-        request.open("GET", "http://127.0.0.1:12888/version", true);
-        request.send();
-
-        request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) {
-                terminalJS.print("软件版本: " + request.responseText)
-                terminalJS.print("---------------------------")
+                portSelect.appendChild(option)
             }
-        }
+
+            // 每次扫描串口后
+            // 如果上次已经选中的串口还在列表中
+            // 则需要选中上次选择的串口
+            // 否则串口选择会乱套
+            let histryPortFound = false;
+            // console.log("1")
+            for (var i = 0; i < portSelect.children.length; i++) {
+                // console.log(portSelect.children.item(i).innerText)
+                // console.log("当前串口: " + comState + " 实际选中串口: " + portSelect.children.item(portSelect.selectedIndex).value)
+                // 找到历史选中串口
+                if (portSelect.children.item(i).value == comState) {
+                    // console.log(`选中历史串口: ${portSelect.children.item(i).value}`);
+                    histryPortFound = true;
+                    portSelect.children.item(i).selected = true;
+                    selectPort(portSelect.children.item(i).value);
+                    break;
+                }
+            }
+            // console.log("2")
+            if (histryPortFound == false) {
+                if (portSelect.children.length > 0){
+                    portSelect.children.item(0).selected = true;
+                    // selectPort(portSelect.children.item(0).value);
+                }
+            }
+
+
+            // 没有串口设备，则清空选中的串口
+            // console.log("3")
+            if (portSelect.children.length == 0) {
+                // console.log(serialportList)
+                // selectPort("")
+                portSelect.parentElement.style.visibility = "hidden"; 
+                portSelect.parentElement.style.width = "0"; 
+                document.getElementById("serialOpenBtn").innerText = "请连接设备"
+            }else{
+                // console.log("1,", serialportList)
+                portSelect.parentElement.style.visibility = "visible"; 
+                portSelect.parentElement.style.width = "auto"; 
+                if (document.getElementById("serialOpenBtn").innerText == "请连接设备") {
+                    document.getElementById("serialOpenBtn").innerText = "打开"
+                }
+            }
+        });
+        
+        window.electron.binResStatusOpenSerialPort((status)=>{
+            // console.log(status)
+            document.getElementById("serialOpenBtn").innerText = (status && status.status)? "关闭":"打开"
+        })
+
+        setInterval(() => {
+            // 请求获取当前设备的串口列表
+            window.electron.requestSerialPortList();
+        }, 1000);
 
 
         // [热键绑定] Ctrl + C 停止代码执行
@@ -235,49 +240,19 @@ class TerminalComponent extends React.Component {
         terminalJS.print("---------------------------")
 
         document.getElementById("serialOpenBtn").onclick = function (e) {
-            // 检查固件版本
-            // var http = require('http')
-            // http.get(`http://127.0.0.1:12888/check/firmware?com=${terminalJS.com}`, function (res) {
-            //     var str = ''
-            //     console.log(res)
-            //     res.on('data', function (chunk) {
-            //         console.log(chunk)
-            //         str += chunk
-            //     })
-            //     res.on('end', function () {
-            //         console.log(str)
-
-            //         console.log(terminalJS.ws.readyState)
-
-            //     })
-            // })
-
+            let portSelect = document.getElementById("portSelect");
+            if (portSelect.children.length == 0){
+                return;
+            }
+            let port = portSelect.children.item(portSelect.selectedIndex).value;
+            console.log(port);
+            selectPort(port);
             if (e.target.innerText == "打开") {
-                var FVERSION = "0.5.8"
-                // console.log("打开串口:", terminalJS.com)
-                if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                    terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
-                }
-                Send(`opencom:${terminalJS.com}`)
-                terminalJS.ws.onmessage = wsOnMsg
-
-                terminalJS.ws.onclose = function (e) {
-                    // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    // console.log(e)
-                }
-
-                e.target.innerText = "关闭"
+                window.electron.requestOpenSerialPort(port);
+                // e.target.innerText = "关闭"
             } else {
-                if (terminalJS.ws == undefined && terminalJS.ws.readyState == terminalJS.ws.CLOSED) {
-                    terminalJS.ws = new WebSocket("ws://127.0.0.1:12888/ws/client")
-                }
-                // console.log("关闭串口:", terminalJS.com)
-                Send(`closecom:${terminalJS.com}`)
-                e.target.innerText = "打开"
-                terminalJS.ws.onclose = function (e) {
-                    // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-                    // console.log(e)
-                }
+                window.electron.requestCloseSerialPort(port);
+                // e.target.innerText = "打开"
             }
 
 

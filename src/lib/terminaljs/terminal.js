@@ -80,7 +80,7 @@ var promptInput = function (terminalObj, message, PROMPT_TYPE, callback) {
 
 var terminalBeep = true
 var terminalLineLength = 0
-
+var mouse_down = false;
 class TerminalJS {
 
 	constructor(id) {
@@ -92,6 +92,13 @@ class TerminalJS {
 		}
 
 		this.html = document.createElement('div')
+		this.html.addEventListener('mousedown', (e, ev)=>{
+			mouse_down = true;
+		})
+		this.html.addEventListener('mouseup', (e, ev)=>{
+			mouse_down = false;
+		})
+
 		this.html.className = 'Terminal'
 		if (typeof (id) === 'string') { this.html.id = id }
 
@@ -118,7 +125,7 @@ class TerminalJS {
 				
 
 				// var count = 0
-				if (terminalLineLength > 500) {
+				if (terminalLineLength > 50) {
 					// var temp = output.childNodes.forEach(function(v,k,p){
 					// 	if (count < 250){
 					// 		v.remove()
@@ -126,10 +133,12 @@ class TerminalJS {
 					// 	}
 						
 					// })
-					output.innerHTML = ""
-					terminalLineLength = 0;
+					// output.innerHTML = ""
+					output.removeChild(output.children[0]);
+					// terminalLineLength = 0;
 				}
 				
+				if (!mouse_down)
 				s.scrollTop = s.scrollHeight
 				terminalLineLength += 1
 				resolve()

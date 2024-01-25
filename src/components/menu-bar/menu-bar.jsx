@@ -104,6 +104,17 @@ import {
 } from '../../reducers/editorhide'
 
 import { projectTitleInitialState } from '../../reducers/project-title';
+// import { electron } from 'webpack';
+
+// import {ipcRenderer} from 'electron'
+
+// 监听来自主进程的回应
+// console.log(window)
+// console.log(window.ipcRenderer)
+// ipcRenderer.on('message-from-main', (event, arg) => {
+//     console.log('msg from main:', arg)
+// });
+
 
 const ariaMessages = defineMessages({
     language: {
@@ -250,15 +261,17 @@ class MenuBar extends React.Component {
             return data
         }).then((data)=>{
             document.getElementById('update-btn').innerText = `发现更新 v${data.version}`
-            fetch('http://127.0.0.1:12888/open', {
-                method: 'post', headers: {
-                    'Accept': '*/*',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    url: data.url
-                })
-            })
+            // fetch('http://127.0.0.1:12888/open', {
+            //     method: 'post', headers: {
+            //         'Accept': '*/*',
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({
+            //         url: data.url
+            //     })
+            // })
+            window.electron.requestInstallSwUpdate(data);
+            // window.electron.requestStartUrl(data.url);
         }
         )
         //  fetch('http://127.0.0.1:12888/checkVersion').then((res) => {
@@ -289,6 +302,22 @@ class MenuBar extends React.Component {
 
         })
 
+        // electron context bridge
+        window.electron.bindIpc();
+        window.electron.bindTerminalPrint((data)=>{
+            if (this.props.terminal) {
+                this.props.terminal.print(data);
+            }
+        });
+        setInterval(() => {
+            window.electron.doThing();
+        }, 1000);
+
+        navigator.serial.getPorts().then((ports) => {
+            // Initialize the list of available ports with `ports` on page load.
+            console.log("ports:", ports);
+          });
+
     }
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
@@ -307,7 +336,8 @@ class MenuBar extends React.Component {
         this.props.onRequestCloseFile();
         if (readyToReplaceProject) {
             this.props.onClickNew(this.props.canSave && this.props.canCreateNew);
-            fetch("http://127.0.0.1:9098/reload")
+            // fetch("http://127.0.0.1:9098/reload")
+            window.electron.requestLoadNewProject("");
         }
         this.props.onRequestCloseFile();
     }
@@ -463,7 +493,8 @@ class MenuBar extends React.Component {
             let fname = e.target.files[0].path;
             console.log(fname)
             let buffer = Buffer.from(fname)
-            fetch(`http://127.0.0.1:9098/reload?name=${buffer.toString('base64')}`)
+            // fetch(`http://127.0.0.1:9098/reload?name=${buffer.toString('base64')}`)
+            window.electron.requestLoadNewProject(buffer.toString('base64'))
         }; // connects to step 3
         document.body.appendChild(inputElement);
         // simulate a click to open file chooser dialog
@@ -706,7 +737,7 @@ class MenuBar extends React.Component {
                                         {this.restoreOptionMessage(deletedItem)}
                                     </MenuItem>
                                 )}</DeletionRestorer>
-                                <MenuSection>
+                                {/* <MenuSection>
                                     <TurboMode>{(toggleTurboMode, { turboMode }) => (
                                         <MenuItem onClick={toggleTurboMode}>
                                             {turboMode ? (
@@ -724,7 +755,7 @@ class MenuBar extends React.Component {
                                             )}
                                         </MenuItem>
                                     )}</TurboMode>
-                                </MenuSection>
+                                </MenuSection> */}
                             </MenuBarMenu>
                         </div>
                         {this.props.editorMode == "code" ? (
@@ -753,22 +784,32 @@ class MenuBar extends React.Component {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
                                                 this.props.onRequestCloseTool()
-                                                terminal.Send(`closecom:${terminal.com}`)
-                                                document.getElementById("serialOpenBtn").innerText = "打开"
-                                                fetch(
-                                                    'http://127.0.0.1:12888/ampy/upload',
-                                                    {
-                                                        method: 'post',
-                                                        body: JSON.stringify({
-                                                            sourceCode: this.props.pycode,
-                                                            com: terminal.com
-                                                        })
-                                                    }
-                                                ).then((res) => res.text()).then((data) => {
-                                                    // console.log(data)
-                                                    terminal.Send(`opencom:${terminal.com}`)
-                                                    document.getElementById("serialOpenBtn").innerText = "关闭"
-                                                })
+                                                // terminal.Send(`closecom:${terminal.com}`)
+
+                                                
+                                                // document.getElementById("serialOpenBtn").innerText = "打开"
+                                                // fetch(
+                                                //     'http://127.0.0.1:12888/ampy/upload',
+                                                //     {
+                                                //         method: 'post',
+                                                //         body: JSON.stringify({
+                                                //             sourceCode: this.props.pycode,
+                                                //             com: terminal.com
+                                                //         })
+                                                //     }
+                                                // ).then((res) => res.text()).then((data) => {
+                                                //     // console.log(data)
+                                                //     terminal.Send(`opencom:${terminal.com}`)
+                                                //     document.getElementById("serialOpenBtn").innerText = "关闭"
+                                                // })
+                                                if (document.getElementById("serialOpenBtn").innerText == "关闭"){
+                                                    window.electron.requestUploadMpyCode(this.props.pycode);
+                                                }else{
+                                                    // console.log(window.electron.remote());
+                                                    window.electron.requestDialogAlert("请打开串口后再进行代码上传");
+                                                    terminal.print("[!] 请选择打开串口后再进行代码上传")
+                                                }
+                                                
 
                                             }}>
                                                 <FormattedMessage
@@ -806,18 +847,29 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-                                                if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
-                                                    //terminal.Send(`closecom:${terminal.com}`)
-                                                    terminal.Send(`opencom:${terminal.com}`)
-                                                    fetch(`http://127.0.0.1:12888/ampy/firmware?com=${terminal.com}`).then((res) => res.text()).then(data => {
-                                                        terminal.Send(`opencom:${terminal.com}`)
-                                                    })
-                                                    this.props.onRequestCloseTool()
+                                                if (document.getElementById("serialOpenBtn").innerText != "关闭") {
+                                                    terminal.print("[!] 请先打开要操作的串口");
+                                                }else{
+                                                    terminal.print("[!] 请根据右下角的提示进入[下载模式] 10秒后超时")
+                                                    window.electron.requestUpdateMpyFirmware(terminal.com);
+                                                    
                                                     this.props.terminal.print("开始更新主板固件");
-                                                } else {
-                                                    this.props.onRequestCloseTool()
-                                                    this.props.terminal.print("取消更新主板固件");
                                                 }
+                                                this.props.onRequestCloseTool()
+                                                // if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
+                                                //     //terminal.Send(`closecom:${terminal.com}`)
+                                                //     // terminal.Send(`opencom:${terminal.com}`)
+                                                //     // fetch(`http://127.0.0.1:12888/ampy/firmware?com=${terminal.com}`).then((res) => res.text()).then(data => {
+                                                //     //     terminal.Send(`opencom:${terminal.com}`)
+                                                //     // })
+
+                                                //     window.electron.requestUpdateMpyFirmware(terminal.com);
+                                                //     this.props.onRequestCloseTool()
+                                                //     this.props.terminal.print("开始更新主板固件");
+                                                // } else {
+                                                //     this.props.onRequestCloseTool()
+                                                //     this.props.terminal.print("取消更新主板固件");
+                                                // }
 
                                             }}>
                                                 <FormattedMessage
@@ -829,18 +881,14 @@ class MenuBar extends React.Component {
                                             <MenuItem onClick={() => {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
-                                                if (confirm("请根据右下角的提示进入[下载模式] 10秒后超时")) {
-                                                    terminal.Send(`opencom:${terminal.com}`)
-                                                    fetch(`http://127.0.0.1:12888/ampy/factory?com=${terminal.com}`).then((res) => res.text()).then(data => {
-                                                        terminal.Send(`opencom:${terminal.com}`)
-                                                    })
-                                                    this.props.onRequestCloseTool()
+                                                if (document.getElementById("serialOpenBtn").innerText != "关闭") {
+                                                    terminal.print("[!] 请先打开要操作的串口");
+                                                }else{
+                                                    terminal.print("[!] 请根据右下角的提示进入[下载模式] 10秒后超时")
+                                                    window.electron.requestEraseMpyFirmware(terminal.com)
                                                     this.props.terminal.print("开始恢复出厂设置");
-                                                } else {
-                                                    this.props.onRequestCloseTool()
-                                                    this.props.terminal.print("取消恢复出厂设置");
                                                 }
-
+                                                this.props.onRequestCloseTool()
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="恢复主板出厂设置"
@@ -848,7 +896,7 @@ class MenuBar extends React.Component {
                                                     id="gui.menuBar.factoryUpdate"
                                                 />
                                             </MenuItem>
-                                            <MenuItem onClick={() => {
+                                            {/* <MenuItem onClick={() => {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
@@ -864,24 +912,26 @@ class MenuBar extends React.Component {
                                                     description="Menu bar item for turning on turbo mode"
                                                     id="gui.menuBar.carfirmwareUpdate"
                                                 />
-                                            </MenuItem>
+                                            </MenuItem> */}
                                             <MenuItem onClick={() => {
                                                 // console.log(this.props.pycode)
                                                 var terminal = this.props.terminal
 
-                                                fetch('http://127.0.0.1:12888/installDriver').then((res) => res.text()).then((text) => {
-                                                    // console.log(text)
-                                                    if (response == "ok") {
-                                                        terminal.print("开始安装驱动");
-                                                    } else {
-                                                        terminal.print("安装驱动失败");
-                                                    }
+                                                // fetch('http://127.0.0.1:12888/installDriver').then((res) => res.text()).then((text) => {
+                                                //     // console.log(text)
+                                                //     if (response == "ok") {
+                                                //         terminal.print("开始安装驱动");
+                                                //     } else {
+                                                //         terminal.print("安装驱动失败");
+                                                //     }
 
-                                                    terminal.Send(`opencom:${terminal.com}`)
-                                                })
+                                                //     terminal.Send(`opencom:${terminal.com}`)
+                                                // })
+
+                                                window.electron.requestInstallDrivers();
 
                                                 this.props.onRequestCloseTool()
-                                                this.props.terminal.print("开始安装驱动");
+                                                // this.props.terminal.print("开始安装驱动");
                                             }}>
                                                 <FormattedMessage
                                                     defaultMessage="安装驱动"
@@ -920,10 +970,32 @@ class MenuBar extends React.Component {
                                                     var terminal = this.props.terminal
 
 
-                                                    fetch('http://127.0.0.1:12888/checkVersion').then(res => res.text()).then(response => {
-                                                        // console.log(response)
-                                                        terminal.print(response)
+                                                    // fetch('http://127.0.0.1:12888/checkVersion').then(res => res.text()).then(response => {
+                                                    //     // console.log(response)
+                                                    //     terminal.print(response)
+                                                    // })
+                                                    let currentVersion = window.current_software_version;
+                                                    fetch('https://udrobot-update.oss-cn-hangzhou.aliyuncs.com/version_control/version_pocket_sw.json').then(res => {
+                                                        var data = res.json()
+                                                        return data
+                                                    }).then(data => {
+                                                        window.software_update_info = data;
+                                                        let networkVersion = data.version;
+                                                        console.log("网络版本: " + networkVersion)
+                                                        if (currentVersion == networkVersion) {
+                                                            console.log('版本不需要更新')
+                                                            this.props.makeHidePrompt(true)
+                                                        } else {  // 显示BETA更新提示图标
+                                                            console.log('版本需要更新')
+                                                            window.electron.requestInstallSwUpdate(window.software_update_info);
+                                                            this.props.makeShowPrompt(true)
+                                                            let titleItem = document.getElementById('update-btn');
+                                                            if (titleItem != undefined) {
+                                                                titleItem.innerText = `发现更新 v${data.version}`;
+                                                            } 
+                                                        }
                                                     })
+                                                    
 
                                                     this.props.onRequestCloseSystem()
 
@@ -938,23 +1010,23 @@ class MenuBar extends React.Component {
                                             <MenuSection>
                                                 <MenuItem onClick={() => {
                                                     // console.log(this.props.pycode)
-                                                    var terminal = this.props.terminal
+                                                    // var terminal = this.props.terminal
 
 
-                                                    fetch(`http://127.0.0.1:12888/fwVersion?com=${terminal.com}`).then(res => res.text()).then(response => {
-                                                        var configVersion = response.split(":")[1] // 配置文件中的版本
-                                                        var boardVersion = response.split(":")[0]  // 主板返回的版本信息
-                                                        // console.log(`当前固件版本: ${boardVersion}`)
-                                                        // console.log(`最新固件版本: ${configVersion}`)
-                                                        terminal.print(`当前固件版本: ${boardVersion}`)
-                                                        terminal.print(`最新固件版本: ${configVersion}`)
-                                                        if (String(boardVersion).indexOf(String(configVersion)) < 0) {
-                                                            terminal.print("主板固件需要更新！")
-                                                        } else {
-                                                            terminal.print("主板固件已是最新！")
-                                                        }
-                                                    })
-
+                                                    // fetch(`http://127.0.0.1:12888/fwVersion?com=${terminal.com}`).then(res => res.text()).then(response => {
+                                                    //     var configVersion = response.split(":")[1] // 配置文件中的版本
+                                                    //     var boardVersion = response.split(":")[0]  // 主板返回的版本信息
+                                                    //     // console.log(`当前固件版本: ${boardVersion}`)
+                                                    //     // console.log(`最新固件版本: ${configVersion}`)
+                                                    //     terminal.print(`当前固件版本: ${boardVersion}`)
+                                                    //     terminal.print(`最新固件版本: ${configVersion}`)
+                                                    //     if (String(boardVersion).indexOf(String(configVersion)) < 0) {
+                                                    //         terminal.print("主板固件需要更新！")
+                                                    //     } else {
+                                                    //         terminal.print("主板固件已是最新！")
+                                                    //     }
+                                                    // })
+                                                    window.electron.requestCheckUdpiFwVersion();
                                                     this.props.onRequestCloseSystem()
 
                                                 }}>
@@ -1004,19 +1076,20 @@ class MenuBar extends React.Component {
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
-                        aria-label={"软件教程PDF"}
+                        aria-label={"使用手册"}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={() => {
                             // console.log(this.props.pycode)
-                            fetch(`http://127.0.0.1:9098/doc`).then((res) => res.text()).then(data => {})
-
+                            // fetch(`http://127.0.0.1:9098/doc`).then((res) => res.text()).then(data => {})
+                            console.log('open doc')
+                            window.electron.requestOpenSwDoc();
                         }}
                     >
                         <img
                             className={styles.helpIcon}
                             src={helpIcon}
                         />
-                        软件教程PDF
+                        使用手册
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     {this.props.canEditTitle ? (
