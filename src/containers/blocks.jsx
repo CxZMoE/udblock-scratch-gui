@@ -582,6 +582,20 @@ class Blocks extends React.Component {
         // this.props.vm.extensionManager.loadExtensionURL('udblockEXTBIOT');
 
         this.requestToolboxUpdate()
+
+
+        // 加载自定义拓展代码生成定义
+        window.electron.bindResCustomExtList((data)=>{
+            data.forEach((ext)=>{
+                let code_trans_def = ext.code_trans;
+                console.log('data:', ext);
+                console.log('code_trans_def:', code_trans_def);
+                eval(code_trans_def);
+            })
+        })
+        window.electron.requestCustomExtList();
+
+
     }
     shouldComponentUpdate(nextProps, nextState) {
         //console.log('shouldComponentUpdate')
@@ -1045,7 +1059,7 @@ class Blocks extends React.Component {
         this.handleExtensionAdded(categoryInfo);
     }
     handleCategorySelected(categoryId) {
-        const extension = extensionData.find(ext => ext.extensionId === categoryId);
+        const extension = extensionData().find(ext => ext.extensionId === categoryId);
         if (extension && extension.launchPeripheralConnectionFlow) {
             this.handleConnectionModalStart(categoryId);
         }

@@ -21,7 +21,7 @@ class ConnectionModal extends React.Component {
             'handleHelp'
         ]);
         this.state = {
-            extension: extensionData.find(ext => ext.extensionId === props.extensionId),
+            extension: extensionData().find(ext => ext.extensionId === props.extensionId),
             phase: props.vm.getPeripheralIsConnected(props.extensionId) ?
                 PHASES.connected : PHASES.scanning
         };

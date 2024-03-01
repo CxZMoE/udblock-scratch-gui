@@ -476,7 +476,8 @@ export default (Blockly) => {
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var ssid = Blockly.Python.valueToCode(block, "SSID", Blockly.Python.ORDER_ATOMIC);
         var psk = Blockly.Python.valueToCode(block, "PSK", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.startServer(${ssid},${psk})\n`;
+        var port = Blockly.Python.valueToCode(block, "SOCKET_PORT", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.startServer(${ssid},${psk},${port})\n`;
         return code
     };
     Blockly.Python[`${id}_stopServer`] = function (block) {
