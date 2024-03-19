@@ -154,7 +154,7 @@ class GUI extends React.Component {
         })
 
         window.electron.requestProjectMime();
-    }  
+    }
     componentDidUpdate(prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
             this.props.onUpdateProjectId(this.props.projectId);

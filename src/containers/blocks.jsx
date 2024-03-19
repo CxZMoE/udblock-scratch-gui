@@ -588,8 +588,8 @@ class Blocks extends React.Component {
         window.electron.bindResCustomExtList((data)=>{
             data.forEach((ext)=>{
                 let code_trans_def = ext.code_trans;
-                console.log('data:', ext);
-                console.log('code_trans_def:', code_trans_def);
+                // console.log('data:', ext);
+                // console.log('code_trans_def:', code_trans_def);
                 eval(code_trans_def);
             })
         })

@@ -108,12 +108,12 @@ function NewExtensionConfig(name, id, tags, description, iconUrl,collaborator="U
 
 
 
-console.log('extionloaded:', window.customExtensions);
+// console.log('extionloaded:', window.customExtensions);
 function GetExtensions() {
-    console.log('live:', window.customExtensions);
+    // console.log('live:', window.customExtensions);
     var customExtensions = []
     if (window.customExtensions){
-        console.log('window.customElements', window.customExtensions)
+        // console.log('window.customElements', window.customExtensions)
         Object.keys(window.customExtensions).forEach((k)=>{
             customExtensions.push(NewExtensionConfig(window.customExtensions[k].name, window.customExtensions[k].id, window.customExtensions[k].type, window.customExtensions[k].desc, window.customExtensions[k].big_icon));
         });
@@ -172,7 +172,7 @@ function GetExtensions() {
         
     
         // 工具类
-        NewExtensionConfig('UDBlock 拓展类', 'udblockUtils', ["工具"], "工具类, 目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。", utilToolClassIconURL),
+        NewExtensionConfig('UDBlock 拓展类', 'udblockUtils', ["工具","赛事"], "工具类, 目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。", utilToolClassIconURL),
         // NewExtensionConfig('自定义拓展', 'UDblockEXTCusTest', ["工具"], "工具类, 目前支持JSON格式文件处理、MQTT联网功能、I2C数据传输以及创建多线程。", utilToolClassIconURL),
         ...customExtensions,
         {

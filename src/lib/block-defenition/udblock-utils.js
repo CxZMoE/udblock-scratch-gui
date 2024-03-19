@@ -1,6 +1,19 @@
 export default (Blockly) => {
     var board = 'udblockUtils';
+    Blockly.Python[`${board}_getESPUniqueId`] = function (block) {
+        Blockly.Python.definitions_[`import_sensor`] = 'from udrobot.basic import *';
+        Blockly.Python.definitions_['import_func_get_unique_id'] = `
+def get_unique_id():
+  import machine
+  uid = 0
+  for i in machine.unique_id():
+    uid = uid + i*256
+  return str(uid)
+`
 
+        var code = `get_unique_id()`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    }
     // 菜单
     Blockly.Python[`${board}_getI2CFromMem`] = function (block) {
         Blockly.Python.definitions_[`import_sensor`] = 'from udrobot.basic import *';
