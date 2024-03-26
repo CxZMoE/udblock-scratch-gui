@@ -13,7 +13,6 @@ import MicIndicator from '../mic-indicator/mic-indicator.jsx';
 import { STAGE_DISPLAY_SIZES } from '../../lib/layout-constants.js';
 import { getStageDimensions } from '../../lib/screen-utils.js';
 import styles from './stage.css';
-import MonicaEditor from '../monica-editor/monica-editor.jsx';
 
 const StageComponent = props => {
     const {

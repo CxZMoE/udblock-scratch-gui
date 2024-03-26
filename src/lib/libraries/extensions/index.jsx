@@ -132,7 +132,7 @@ function GetExtensions() {
         NewExtensionConfig('UDBlock 小车拓展板Pro', 'udblockEXTBCarPro', ["拓展板","赛事"], "四驱小车拓展版升级版, 集成多种精密传感器, 可以精确的控制移动的距离和速度。支持遥控控制, 电池供电", udpiCarProIconURL),
         NewExtensionConfig('UDBlock 小车拓展板', 'udblockEXTBCar', ["拓展板"], "四驱小车拓展版, 支持外接6个RJ11设备, 以及遥控控制, 电池供电。", udpiExtbCarIconURL),
         NewExtensionConfig('UDBlock 双驱小车拓展板', 'udblockEXTBCar2D', ["拓展板"], "双驱小车拓展版, 支持外接6个RJ11设备, 2个电机, 以及遥控控制, 电池供电。", udpiExtbCar2WDIconURL),
-        NewExtensionConfig('新双驱小车拓展板', 'udblockEXTBCar2DNew', ["拓展板","赛事"], "双驱小车拓展版, 支持外接6个RJ11设备, 2个电机, 以及遥控控制, 电池供电。", udpiExtbCar2WDNewIconURL),
+        NewExtensionConfig('新双驱小车拓展板', 'udblockEXTBCar2DNew', ["拓展板"], "双驱小车拓展版, 支持外接6个RJ11设备, 2个电机, 以及遥控控制, 电池供电。", udpiExtbCar2WDNewIconURL),
         NewExtensionConfig('UDBlock 智能语音拓展板','udblockEXTBIOT', ["拓展板"], "支持外接4个RJ11设备, 支持外接指纹模块和SD卡, 支持在线、离线的语音识别以及在线语音听写, 电池供电。", udpiExtbIOTIconURL),
         NewExtensionConfig('micro:bit主板', 'udblockMicrobit', ["主板"], "Micro-Bit主板支持MicroPython编程", microbitIconURL),
     
@@ -146,7 +146,7 @@ function GetExtensions() {
         NewExtensionConfig('颜色识别传感器', 'colorDetectSensor', ["传感器"], "获取识别颜色的数值, 能预判颜色的种类(8种)", udblockSensorIconURL),
         NewExtensionConfig('环境光传感器', 'lightAmpSensor', ["传感器"], "获取环境光线的强度, 单位(流明)", udblockSensorIconURL),
         NewExtensionConfig('超声波传感器', 'sonicSensor', ["传感器","赛事"], "通过发射和接收超声波, 检测与物体的距离, 单位(厘米)", udblockSensorIconURL),
-        NewExtensionConfig('巡线传感器', 'routeFindingSensor', ["传感器","赛事"], "检测黑线, 输出0和1", udblockSensorIconURL),
+        NewExtensionConfig('巡线传感器', 'routeFindingSensor', ["传感器"], "检测黑线, 输出0和1", udblockSensorIconURL),
         NewExtensionConfig('火焰传感器', 'flameDetectSensor', ["传感器"], "检测环境中是否有火焰", udblockSensorIconURL),
         NewExtensionConfig('模拟灰度传感器', 'simGraySensor', ["传感器"], "检测目标灰度值", udblockSensorIconURL),
         NewExtensionConfig('烟雾传感器', 'smokeSensor', ["传感器"], "检测环境中是否有烟雾", udblockSensorIconURL),
@@ -156,12 +156,12 @@ function GetExtensions() {
         NewExtensionConfig('DHT11传感器', 'dht11Sensor', ["传感器"], "支持检测温湿度, 使用I2C通讯", udblockSensorIconURL),
         NewExtensionConfig('四路红外巡线传感器', 'foutChanRouteFinderSensor', ["传感器","赛事"], "支持4路的巡线功能", udblockSensorIconURL),
         NewExtensionConfig('八路按键模块', 'eightChnKeyboardSensor', ["传感器"], "八个按键", udblockSensorIconURL),
-        NewExtensionConfig('简易遥控传感器', 'simpleRemoteSensor', ["传感器","赛事"], " ", udblockSensorIconURL),
-        NewExtensionConfig('比比智慧摄像头', 'bibiCamK210', ["传感器","赛事"], "支持物体识别, 物体分类, 颜色识别, 标签识别, 二维码识别, 条形码识别, 巡线识别等功能", udblockSensorIconURL),
+        NewExtensionConfig('简易遥控传感器', 'simpleRemoteSensor', ["传感器"], " ", udblockSensorIconURL),
+        NewExtensionConfig('比比智慧摄像头', 'bibiCamK210', ["传感器"], "支持物体识别, 物体分类, 颜色识别, 标签识别, 二维码识别, 条形码识别, 巡线识别等功能", udblockSensorIconURL),
     
         // 执行器
         NewExtensionConfig('离线文本转语音模组', 'offlineTTSModule', ["执行器"], "离线文本转语音模组", udblockActorIconURL),
-        NewExtensionConfig('I2C电机模块', 'i2cMotorModule', ["执行器","赛事"], "控制电机和舵机, 使用I2C通讯", udblockActorIconURL),
+        NewExtensionConfig('I2C电机模块', 'i2cMotorModule', ["执行器"], "控制电机和舵机, 使用I2C通讯", udblockActorIconURL),
         NewExtensionConfig('四位数码管', 'digitalTube', ["执行器"], "支持4位数字的显示, 使用I2C通讯", udblockActorIconURL),
         NewExtensionConfig('RGB灯带(15灯珠)', 'rgbStript15', ["执行器"], "有15个灯珠的灯带,支持16777216种颜色", udblockActorIconURL),
         NewExtensionConfig('步进电机模块', 'stepperModule', ["执行器"], "控制步进电机模块", udblockActorIconURL),

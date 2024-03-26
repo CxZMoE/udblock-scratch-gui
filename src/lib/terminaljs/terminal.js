@@ -84,6 +84,7 @@ var mouse_down = false;
 class TerminalJS {
 
 	constructor(id) {
+		terminalLineLength = 0;
 		if (!terminalBeep) {
 			terminalBeep = document.createElement('audio')
 			var source = '<source src="http://www.erikosterberg.com/terminaljs/beep.'
@@ -125,7 +126,7 @@ class TerminalJS {
 				
 
 				// var count = 0
-				if (terminalLineLength > 50) {
+				if (terminalLineLength > 500) {
 					// var temp = output.childNodes.forEach(function(v,k,p){
 					// 	if (count < 250){
 					// 		v.remove()

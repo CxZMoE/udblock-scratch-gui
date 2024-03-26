@@ -213,7 +213,7 @@ export default (Blockly) => {
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var distance = Blockly.Python.valueToCode(block, "DIS", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.move('y', ${distance}, ${speed}, ${accel})\n`;
+        var code = `myCarPro.move('y', ${distance}, ${speed}, ${speed}*2)\n`;
         return code;
     };
     Blockly.Python[`${id}_moveBackSpdDis`] = function (block) {
@@ -347,8 +347,8 @@ export default (Blockly) => {
         var speed = Blockly.Python.valueToCode(block, "SPEED", Blockly.Python.ORDER_ATOMIC);
         var index = Blockly.Python.valueToCode(block, "INDEX", Blockly.Python.ORDER_ATOMIC);
         var degree = Blockly.Python.valueToCode(block, "DEGREE", Blockly.Python.ORDER_ATOMIC);
-        var accel = Blockly.Python.valueToCode(block, "ACCEL", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.SetServo(${index}, ${degree}, ${speed}, ${accel})\n`;
+        // var accel = Blockly.Python.valueToCode(block, "ACCEL", Blockly.Python.ORDER_ATOMIC);
+        var code = `myCarPro.SetServo(${index}, ${degree}, ${speed}, 5)\n`;
         return code
     };
     // 信息获取
@@ -600,9 +600,29 @@ export default (Blockly) => {
     Blockly.Python[`${id}_sendMsg`] = function (block) {
         Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
         Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        // var car_id = Blockly.Python.valueToCode(block, "CAR_ID", Blockly.Python.ORDER_ATOMIC);
         var msg = Blockly.Python.valueToCode(block, "MSG", Blockly.Python.ORDER_ATOMIC);
-        var code = `myCarPro.client.send(${msg})\n`;
+
+        // mqttClient = MQTTClient('CAR', '10.255.15.194', '1883', ' ', ' ')
+        // mqttClient.subscribe('mars/A1', qos=0)
+        // mqttClient.subscribe('mars/A1/status', qos=0)
+        // mqttClient.set_callback(myMQTTCallback)
+        // mqttClient.publish('mars/A1', (json.dumps(data)).encode('utf-8'), qos=0)
+        // mqttClient.check_msg()
+        var code = `myCarPro.sendComMsg(${msg})\n`;
         return code
     };
+
+    Blockly.Python[`${id}_whenRecvComStatus`] = function (block) {
+        Blockly.Python.definitions_['import_carpro'] = 'from udrobot.extend_board.car_pro import CarPro';
+        Blockly.Python.definitions_['get_carpro'] = 'myCarPro = CarPro()';
+        // var car_id = Blockly.Python.valueToCode(block, "CAR_ID", Blockly.Python.ORDER_ATOMIC);
+        var status = Blockly.Python.valueToCode(block, "STATUS", Blockly.Python.ORDER_ATOMIC);
+
+        return [`(myCarPro.getComStatus()=="${status}")`];
+    };
+
+
+    
 
 }

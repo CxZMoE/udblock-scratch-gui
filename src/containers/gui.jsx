@@ -94,6 +94,7 @@ class GUI extends React.Component {
         window.current_software_version = ""
         window.software_update_info = null;
         window.electron.bindResSoftwareVersion((data)=>{
+            console.log('当前软件版本:', data)
             window.current_software_version = data
             document.title = data;
         })
@@ -124,7 +125,7 @@ class GUI extends React.Component {
                     } 
                 }
             })
-        }, 2000)
+        }, 5000)
         
 
         window.electron.bindResProjectMimeName((projectName)=>{

@@ -26,6 +26,7 @@ function wsOnMsg(e)  {
     // }
 }
 var Send = undefined
+var comInterval = null;
 class TerminalComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -107,6 +108,11 @@ class TerminalComponent extends React.Component {
             this.onConnectWS(terminalJS)
         }
     }
+
+    componentWillUnmount(){
+        clearInterval(comInterval);
+        comInterval = null;
+    }
     // 终端组件成功挂载后发生
     componentDidMount() {
         navigator.serial.getPorts().then((ports) => {
@@ -120,6 +126,7 @@ class TerminalComponent extends React.Component {
         terminalJS.Send = this.Send
         // this.onConnectWS(terminalJS);
         
+        document.getElementById(this.state.target).innerHTML = "";
         document.getElementById(this.state.target).appendChild(terminalJS.html);
 
         // 打开软件后在终端里面显示的内容
@@ -148,8 +155,12 @@ class TerminalComponent extends React.Component {
 
         // 定期刷新串口Option元素的内容
         window.electron.bindResSerialPortList((data)=>{
+            
             var comState = this.state.com;  // 串口状态（串口号）
             var portSelect = document.getElementById("portSelect")
+            if (!portSelect){
+                return;
+            }
             portSelect.innerHTML = ""
 
             // 解析返回的数据并且将可用串口添加到下拉选项中
@@ -221,7 +232,7 @@ class TerminalComponent extends React.Component {
             document.getElementById("serialOpenBtn").innerText = (status && status.status)? "关闭":"打开"
         })
 
-        setInterval(() => {
+        comInterval = setInterval(() => {
             // 请求获取当前设备的串口列表
             window.electron.requestSerialPortList();
         }, 1000);
@@ -306,7 +317,6 @@ class TerminalComponent extends React.Component {
                     classNames(styles.UDTerminal)
                 }
             >
-
             </div>
         );
     }
